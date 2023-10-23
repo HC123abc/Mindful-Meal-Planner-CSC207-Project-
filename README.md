@@ -42,4 +42,3 @@ The output was too long to capture in one screenshot. Basically prints out the i
 **List of any technical problems blocking progress:**
 
 We can foresee potential future challenges. For example, what if the API calls don't work due to issues on the provider's side, such as the website being down? Additionally, how can we efficiently extract and condense data to present to users? Parsing raw data from API calls and translating it to data we need and want to convey may be difficult. We also need to figure out a good way to store data. 
-
