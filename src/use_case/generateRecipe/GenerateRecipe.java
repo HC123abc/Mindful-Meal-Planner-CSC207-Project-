@@ -1,11 +1,6 @@
 package use_case.generateRecipe;
 
-import data_access.generateRecipe.GenerateRecipeDataAccessInterface;
 import entity.User;
-import interface_adapter.generateRecipe.GenerateRecipeOutputBoundary;
-
-
-import java.time.LocalDateTime;
 
 public class GenerateRecipe implements GenerateRecipeInputBoundary {
     //    private GenerateRecipeOutputData generateRecipeOutputData;
@@ -22,6 +17,9 @@ public class GenerateRecipe implements GenerateRecipeInputBoundary {
 
     @Override
     public void execute(GenerateRecipeInputData generateRecipeInputData) {
+//  the input data will be formatted as a string so we can just add it to the query when we call the API call
+
+
 
 
     }
