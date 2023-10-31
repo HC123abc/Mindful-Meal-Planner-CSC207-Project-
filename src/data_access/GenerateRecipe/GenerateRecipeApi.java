@@ -2,9 +2,12 @@ package data_access.GenerateRecipe;
 
 import okhttp3.*;
 
-public class GenerateRecipeApi {
+import org.json.JSONObject; // Add this import for JSON parsing
+import use_case.generateRecipe.GenerateRecipeDataAccessInterface;
 
-    public static String getRecipes(String apiKey, String tags, int number) {
+public class GenerateRecipeApi implements GenerateRecipeDataAccessInterface {
+
+    public JSONObject getRecipes(String apiKey, String tags, int number) {
         OkHttpClient client = new OkHttpClient();
 
         try {
@@ -22,9 +25,35 @@ public class GenerateRecipeApi {
                     .build();
 
             Response response = client.newCall(request).execute();
-            return response.body().string();
+
+            // Check if the response is successful (status code 200)
+            if (response.isSuccessful()) {
+                // Convert the response body to a JSON object
+                JSONObject jsonResponse = new JSONObject(response.body().string());
+                return jsonResponse;
+            } else {
+                System.out.println("Error: " + response.code() + " - " + response.message());
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
+
+        return null;
     }
+
+    public static void main(String[] args) {
+        String apiKey = "d6d8b743e3fd4afeac18d54cef0e21ff";
+        String tags = "chinese";
+        int number = 10;
+        GenerateRecipeApi api = new GenerateRecipeApi();
+
+        JSONObject response = api.getRecipes(apiKey, tags, number);
+
+        if (response != null) {
+            System.out.println(response.toString());
+        } else {
+            System.out.println("Error fetching recipes");
+        }
+        System.out.println();
+    }
+}
