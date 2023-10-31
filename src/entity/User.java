@@ -5,7 +5,7 @@ public class User {
     private final String password;
     private FavoriteRecipes favoriteRecipes;
     private Preference preference;
-    public User(String name, String password) {
+    User(String name, String password) {
         this.username = name;
         this.password = password;
     }
