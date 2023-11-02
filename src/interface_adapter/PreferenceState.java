@@ -35,16 +35,26 @@ public class PreferenceState {
         for (String i : this.intolerances) {
             this.selectedIntolerances.put(i, false);
         }
-
-
     }
+//  load one
+//    public PreferenceState(textfile) {
+////      default all False
+//        for (String i : this.cusisines) {
+//            this.selectedCuisines.put(i, false);
+//        }
+//        for (String i : this.diet) {
+//            this.selectedDiets.put(i, false);
+//        }
+//        for (String i : this.intolerances) {
+//            this.selectedIntolerances.put(i, false);
+//        }
 
     public Map<String, Boolean> getSelectedCuisines() {
         return selectedCuisines;
     }
 
-    public void setSelectedCuisines(Map<String, Boolean> selectedCuisines) {
-        this.selectedCuisines = selectedCuisines;
+    public void setSelectedCuisines(String type, Boolean selected) {
+        selectedCuisines.replace(type, selected);
     }
 
     public Map<String, Boolean> getSelectedDiets() {
