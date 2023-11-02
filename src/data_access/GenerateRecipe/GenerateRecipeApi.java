@@ -42,7 +42,7 @@ public class GenerateRecipeApi implements GenerateRecipeDataAccessInterface {
     }
 
     public static void main(String[] args) {
-        String apiKey = "d6d8b743e3fd4afeac18d54cef0e21ff";
+        String apiKey = "key";
         String tags = "chinese";
         int number = 10;
         GenerateRecipeApi api = new GenerateRecipeApi();
