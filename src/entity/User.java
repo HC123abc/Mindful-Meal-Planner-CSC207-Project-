@@ -9,7 +9,7 @@ public class User {
         this.username = name;
         this.password = password;
     }
-
+    public String getUsername() { return this.username; }
     void setPreference(Preference preference){ //this is for initial user creation
         this.preference = preference;
     }
