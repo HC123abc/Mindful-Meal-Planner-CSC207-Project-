@@ -1,4 +1,6 @@
 package data_access.User;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import use_case.signUp.signUpDataAccessInterface;
 import app.userFactory;
 import entity.User;
@@ -14,34 +16,38 @@ public class userDataAccessObject implements signUpDataAccessInterface {
     }
 
     @Override
-    public String storeUser(User user) {
-        try {
-            File myObj = new File("userFile.txt");
-            System.out.println(myObj.exists());
-            BufferedReader myReader = new BufferedReader(new FileReader(myObj));
+    public String storeUser(User user, String PasswordCheck) {
+        if (!user.verifyPassword(PasswordCheck)) {
+            return "Password not same";
+        }
+
+        // Check if the username is already taken in userFile.txt
+        try (BufferedReader myReader = new BufferedReader(new FileReader("userFile.txt"))) {
             String row;
             while ((row = myReader.readLine()) != null) {
                 if (user.getUsername().equals(row)) {
-                    System.out.println(row);
-                    System.out.println(user.getUsername());
                     return "Username already taken";
                 }
             }
-            myReader.close();
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
             e.printStackTrace();
             return "Unknown error occurred - Data File";
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        try {
-            BufferedWriter writer;
-            writer = new BufferedWriter(new FileWriter("userFile.txt"));
-            writer.write(user.getUsername());
-            writer.newLine();
-            writer.close();
-            return "Sign Up Success!";
+
+        try (BufferedWriter textFileWriter = new BufferedWriter(new FileWriter("userFile.txt", true))){
+            FileWriter jsonFileWriter = new FileWriter("./users/" + user.getUsername() + ".json", true);
+            textFileWriter.write(user.getUsername());
+            textFileWriter.newLine();
+
+            // Write the user object to the JSON file
+            Gson gson = new GsonBuilder().create();
+            gson.toJson(user, jsonFileWriter);
+            jsonFileWriter.flush();
+            jsonFileWriter.close();
+
+            return "Success!";
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
