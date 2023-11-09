@@ -30,7 +30,7 @@ public class signUpInteractor implements signUpInputBoundary {
         userDataAccessObject n = new userDataAccessObject();
         signUpOutputBoundary a = new signUpPresenter();
         signUpInteractor V = new signUpInteractor(n, a);
-        signUpInputData d = new signUpInputData("aaaaaaa", "pass", "pass");
+        signUpInputData d = new signUpInputData("test3", "pass", "pass");
         V.execute(d);
     }
 }
