@@ -14,7 +14,10 @@ public class userDataAccessObject implements signUpDataAccessInterface {
     }
 
     @Override
-    public String storeUser(User user) {
+    public String storeUser(User user, String PasswordCheck) {
+        if (!user.verifyPassword(PasswordCheck)){
+            return "Password not same";
+        }
         try {
             File myObj = new File("userFile.txt");
             System.out.println(myObj.exists());
@@ -41,7 +44,7 @@ public class userDataAccessObject implements signUpDataAccessInterface {
             writer.write(user.getUsername());
             writer.newLine();
             writer.close();
-            return "Sign Up Success!";
+            return "Success!";
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
