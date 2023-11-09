@@ -1,4 +1,5 @@
 package data_access.User;
+import com.google.gson.Gson;
 import use_case.signUp.signUpDataAccessInterface;
 import app.userFactory;
 import entity.User;
@@ -44,6 +45,9 @@ public class userDataAccessObject implements signUpDataAccessInterface {
             writer.write(user.getUsername());
             writer.newLine();
             writer.close();
+            Gson gson = new Gson();
+            gson.toJson(user, new FileWriter("./users/"+user.getUsername()));
+
             return "Success!";
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -1,6 +1,7 @@
 package use_case.signUp;
 import entity.User;
 import data_access.User.userDataAccessObject; // delete
+import interface_adapter.signUp.signUpPresenter;
 
 public class signUpInteractor implements signUpInputBoundary {
     signUpDataAccessInterface DAO;
@@ -27,8 +28,9 @@ public class signUpInteractor implements signUpInputBoundary {
 
     public static void main(String[] args) {
         userDataAccessObject n = new userDataAccessObject();
-        signUpInteractor V = new signUpInteractor(n);
-        signUpInputData d = new signUpInputData("woo", "pass", "pass");
+        signUpOutputBoundary a = new signUpPresenter();
+        signUpInteractor V = new signUpInteractor(n, a);
+        signUpInputData d = new signUpInputData("aaaaaaa", "pass", "pass");
         V.execute(d);
     }
 }
