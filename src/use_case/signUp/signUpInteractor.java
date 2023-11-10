@@ -4,8 +4,8 @@ import data_access.User.userDataAccessObject; // delete
 import interface_adapter.signUp.signUpPresenter;
 
 public class signUpInteractor implements signUpInputBoundary {
-    signUpDataAccessInterface DAO;
-    signUpOutputBoundary signUpPresenter;
+    private signUpDataAccessInterface DAO;
+    private signUpOutputBoundary signUpPresenter;
 
     public signUpInteractor(signUpDataAccessInterface DAO, signUpOutputBoundary SOB){
         this.DAO = DAO;
@@ -26,12 +26,5 @@ public class signUpInteractor implements signUpInputBoundary {
 
     }
 
-    public static void main(String[] args) {
-        userDataAccessObject n = new userDataAccessObject();
-        signUpOutputBoundary a = new signUpPresenter();
-        signUpInteractor V = new signUpInteractor(n, a);
-        signUpInputData d = new signUpInputData("test3", "pass", "pass");
-        V.execute(d);
-    }
 }
 
