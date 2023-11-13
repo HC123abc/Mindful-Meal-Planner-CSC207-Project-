@@ -14,7 +14,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PreferenceView extends JPanel implements ActionListener, PropertyChangeListener {
+public class PreferenceView extends JPanel implements PropertyChangeListener {
     private JFrame frame;
     private PreferenceViewModel preferenceViewModel;
 //    private PreferenceController preferenceController
@@ -96,6 +96,10 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
             }
         });
     }
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
+    }
 
 //  testing
     public static void main(String[] args) {
@@ -103,13 +107,9 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
         new PreferenceView(preferenceViewModel1);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
+//    @Override
+//    public void actionPerformed(ActionEvent e) {
+//
+//    }
 
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-
-    }
 }

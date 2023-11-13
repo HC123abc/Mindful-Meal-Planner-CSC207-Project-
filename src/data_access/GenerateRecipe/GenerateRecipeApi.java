@@ -41,8 +41,9 @@ public class GenerateRecipeApi implements GenerateRecipeDataAccessInterface {
         return null;
     }
 
+//  test
     public static void main(String[] args) {
-        String apiKey = "key";
+        String apiKey = "d6d8b743e3fd4afeac18d54cef0e21ff";
         String tags = "chinese";
         int number = 10;
         GenerateRecipeApi api = new GenerateRecipeApi();
