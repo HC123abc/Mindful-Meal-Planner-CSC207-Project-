@@ -6,7 +6,7 @@ import interface_adapter.signUp.signUpController;
 import interface_adapter.signUp.signUpPresenter;
 import interface_adapter.signUp.signUpState;
 import interface_adapter.signUp.signUpViewModel;
-import interface_adapter.viewManagerModel;
+import interface_adapter.ViewManagerModel;
 import use_case.signUp.signUpInteractor;
 
 import javax.swing.*;
@@ -24,14 +24,12 @@ public class signUpView extends JPanel implements ActionListener, PropertyChange
     private final JPasswordField checkPasswordInputField = new JPasswordField(15);
     private final signUpController signupController;
 
-    private JFrame frame;
-
     public signUpView(signUpController controller, signUpViewModel signupViewModel){
         this.signupViewModel = signupViewModel;
         this.signupController = controller;
 
         //Visibility of frame
-        frame = new JFrame("SignUp");
+        JFrame frame = new JFrame("SignUp");
         frame.setSize(500, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -48,7 +46,7 @@ public class signUpView extends JPanel implements ActionListener, PropertyChange
         signupViewModel.addPropertyChangeListener(this);
 
         JPanel buttons = new JPanel();
-        JButton signUp = new JButton(signupViewModel.SIGNUP_BUTTON_LABEL);
+        JButton signUp = new JButton(signUpViewModel.SIGNUP_BUTTON_LABEL);
         buttons.add(signUp);
 
         LabelTextPanel usernameInfo = new LabelTextPanel(
@@ -147,7 +145,7 @@ public class signUpView extends JPanel implements ActionListener, PropertyChange
         signUpViewModel s = new signUpViewModel();
         userDataAccessObject d = new userDataAccessObject();
         loginViewModel l = new loginViewModel();
-        viewManagerModel vmm = new viewManagerModel();
+        ViewManagerModel vmm = new ViewManagerModel();
         signUpPresenter p = new signUpPresenter(s, l, vmm);
         signUpInteractor i = new signUpInteractor(d, p);
         signUpController c = new signUpController(i);

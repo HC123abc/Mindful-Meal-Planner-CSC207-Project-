@@ -2,6 +2,7 @@ package use_case.generateRecipe;
 
 import data_access.GenerateRecipe.GenerateRecipeApi;
 import entity.*;
+import interface_adapter.CookThisOrReRoll.CookThisOrReRollPresenter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -63,17 +64,17 @@ public class GenerateRecipe implements GenerateRecipeInputBoundary {
     }
 
     public static void main(String[] args) {
-//        Preference preference = new Preference();
-//        GenerateRecipeDataAccessInterface generateRecipeAPI = new GenerateRecipeApi();
-//        RandomRecipe randomRecipe = new RandomRecipe();
-//        // Create your GenerateRecipeOutputBoundary implementation
-//        GenerateRecipeOutputBoundary generateRecipeOutputBoundary = new CookThisOrReRollPresenter();
-//        // Create an instance of GenerateRecipe
-//        RecipeFactory recipeFactory = new RecipeFactory();
-//        GenerateRecipe generateRecipe = new GenerateRecipe(generateRecipeAPI,generateRecipeOutputBoundary, preference, randomRecipe, recipeFactory);
-//
-//        // Execute the recipe generation
-//        generateRecipe.execute();
+        Preference preference = new Preference();
+        GenerateRecipeDataAccessInterface generateRecipeAPI = new GenerateRecipeApi();
+        RandomRecipe randomRecipe = new RandomRecipe();
+        // Create your GenerateRecipeOutputBoundary implementation
+        GenerateRecipeOutputBoundary generateRecipeOutputBoundary = new CookThisOrReRollPresenter();
+        // Create an instance of GenerateRecipe
+        RecipeFactory recipeFactory = new RecipeFactory();
+        GenerateRecipe generateRecipe = new GenerateRecipe(generateRecipeAPI,generateRecipeOutputBoundary, preference, randomRecipe, recipeFactory);
+
+        // Execute the recipe generation
+        generateRecipe.execute();
 
     }
 }
