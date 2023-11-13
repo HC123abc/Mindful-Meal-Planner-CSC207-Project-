@@ -1,8 +1,13 @@
 package view;
 
+import data_access.User.userDataAccessObject;
+import interface_adapter.loginViewModel;
 import interface_adapter.signUp.signUpController;
+import interface_adapter.signUp.signUpPresenter;
 import interface_adapter.signUp.signUpState;
 import interface_adapter.signUp.signUpViewModel;
+import interface_adapter.viewManagerModel;
+import use_case.signUp.signUpInteractor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,15 +24,31 @@ public class signUpView extends JPanel implements ActionListener, PropertyChange
     private final JPasswordField checkPasswordInputField = new JPasswordField(15);
     private final signUpController signupController;
 
-    private final JButton signUp;
+    private JFrame frame;
 
     public signUpView(signUpController controller, signUpViewModel signupViewModel){
         this.signupViewModel = signupViewModel;
         this.signupController = controller;
+
+        //Visibility of frame
+        frame = new JFrame("SignUp");
+        frame.setSize(500, 500);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Create a panel to hold the components
+        JPanel panel = new JPanel();
+        frame.add(panel);
+        placeComponents(panel);
+
+        frame.setVisible(true);
+
+    }
+
+    private void placeComponents(JPanel panel){
         signupViewModel.addPropertyChangeListener(this);
 
         JPanel buttons = new JPanel();
-        signUp = new JButton(signupViewModel.SIGNUP_BUTTON_LABEL);
+        JButton signUp = new JButton(signupViewModel.SIGNUP_BUTTON_LABEL);
         buttons.add(signUp);
 
         LabelTextPanel usernameInfo = new LabelTextPanel(
@@ -101,7 +122,7 @@ public class signUpView extends JPanel implements ActionListener, PropertyChange
                     public void keyTyped(KeyEvent e) {
                         signUpState  currentState = signupViewModel.getState();
                         currentState.setCheckPassword(checkPasswordInputField.getText() + e.getKeyChar());
-                        signupViewModel.setState(currentState); // Hmm, is this necessary?
+                        signupViewModel.setState(currentState);
                     }
 
                     @Override
@@ -115,8 +136,22 @@ public class signUpView extends JPanel implements ActionListener, PropertyChange
                     }
                 }
         );
+        panel.add(usernameInfo);
+        panel.add(passwordInfo);
+        panel.add(checkPasswordInfo);
+        panel.add(buttons);
 
+    }
 
+    public static void main(String[] args) {
+        signUpViewModel s = new signUpViewModel();
+        userDataAccessObject d = new userDataAccessObject();
+        loginViewModel l = new loginViewModel();
+        viewManagerModel vmm = new viewManagerModel();
+        signUpPresenter p = new signUpPresenter(s, l, vmm);
+        signUpInteractor i = new signUpInteractor(d, p);
+        signUpController c = new signUpController(i);
+        new signUpView(c, s);
     }
 
     @Override
