@@ -9,7 +9,13 @@ public class User {
         this.username = name;
         this.password = password;
     }
+    public String getUsername() { return this.username; }
 
+    public boolean verifyPassword(String checkPassword) {
+        System.out.println(checkPassword);
+        System.out.println(this.password);
+        return checkPassword.equals(this.password);
+    }
     void setPreference(Preference preference){ //this is for initial user creation
         this.preference = preference;
     }
