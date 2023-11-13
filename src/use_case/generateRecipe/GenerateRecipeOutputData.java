@@ -1,6 +1,6 @@
-package entity;
+package use_case.generateRecipe;
 
-public class Recipe {
+public class GenerateRecipeOutputData {
     private String title;
     private String readyInMinutes;
     private String servings;
@@ -9,7 +9,7 @@ public class Recipe {
     private String extendedInstructions;
     private String recipeImageURL;
 
-    public Recipe(String title, String readyInMinutes, String servings, String summary, String extendedIngredients, String extendedInstructions, String recipeImageURL) {
+    public GenerateRecipeOutputData(String title, String readyInMinutes, String servings, String summary, String extendedIngredients, String extendedInstructions, String recipeImageURL) {
         this.title = title;
         this.readyInMinutes = readyInMinutes;
         this.servings = servings;

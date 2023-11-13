@@ -8,7 +8,7 @@ import org.json.JSONObject;
 public class GenerateRecipe implements GenerateRecipeInputBoundary {
     //    private GenerateRecipeOutputData generateRecipeOutputData;
     private GenerateRecipeDataAccessInterface generateRecipeAPI;
-    private GenerateRecipeOutputBoundary generateRecipeOutputBoundary;
+    private GenerateRecipeOutputBoundary cookThisOrReRollPresenter;
     //    private User user;
     private Preference preference;
     private RandomRecipe randomRecipe;
@@ -20,7 +20,7 @@ public class GenerateRecipe implements GenerateRecipeInputBoundary {
         this.preference = preference;
         this.randomRecipe = randomRecipe;
         this.recipeFactory = recipeFactory;
-        this.generateRecipeOutputBoundary = generateRecipeOutputBoundary;
+        this.cookThisOrReRollPresenter = generateRecipeOutputBoundary;
 
     }
 
@@ -33,7 +33,8 @@ public class GenerateRecipe implements GenerateRecipeInputBoundary {
         String apiKey = "d6d8b743e3fd4afeac18d54cef0e21ff";
         JSONObject recipeJSON = generateRecipeAPI.getRecipes(apiKey,tags, 20);
         if (recipeJSON == null){
-//            prepare fail view
+//          prepare fail view
+            cookThisOrReRollPresenter.prepareFailView("Recipe Dont exist: 1. No recipe meet the preference 2. No more Api tokens (wait a day)");
         }
         else{
 //           do stuff
@@ -41,6 +42,8 @@ public class GenerateRecipe implements GenerateRecipeInputBoundary {
             randomRecipe.setRandomRecipeList(recipesArray);
             Recipe recipe = getRecipe();
 //          prepare success view
+            GenerateRecipeOutputData generateRecipeOutputData = new GenerateRecipeOutputData(recipe.getTitle(),recipe.getReadyInMinutes(), recipe.getServings(), recipe.getSummary(), recipe.getExtendedIngredients(), recipe.getExtendedIngredients(), recipe.getRecipeImageURL());;
+            cookThisOrReRollPresenter.prepareSuccessView(generateRecipeOutputData);
 
         }
     }
@@ -60,17 +63,17 @@ public class GenerateRecipe implements GenerateRecipeInputBoundary {
     }
 
     public static void main(String[] args) {
-        Preference preference = new Preference();
-        GenerateRecipeDataAccessInterface generateRecipeAPI = new GenerateRecipeApi();
-        RandomRecipe randomRecipe = new RandomRecipe();
-        // Create your GenerateRecipeOutputBoundary implementation
-        GenerateRecipeOutputBoundary generateRecipeOutputBoundary = new ();
-        // Create an instance of GenerateRecipe
-        RecipeFactory recipeFactory = new RecipeFactory();
-        GenerateRecipe generateRecipe = new GenerateRecipe(generateRecipeAPI,generateRecipeOutputBoundary, preference, randomRecipe, recipeFactory);
-
-        // Execute the recipe generation
-        generateRecipe.execute();
+//        Preference preference = new Preference();
+//        GenerateRecipeDataAccessInterface generateRecipeAPI = new GenerateRecipeApi();
+//        RandomRecipe randomRecipe = new RandomRecipe();
+//        // Create your GenerateRecipeOutputBoundary implementation
+//        GenerateRecipeOutputBoundary generateRecipeOutputBoundary = new CookThisOrReRollPresenter();
+//        // Create an instance of GenerateRecipe
+//        RecipeFactory recipeFactory = new RecipeFactory();
+//        GenerateRecipe generateRecipe = new GenerateRecipe(generateRecipeAPI,generateRecipeOutputBoundary, preference, randomRecipe, recipeFactory);
+//
+//        // Execute the recipe generation
+//        generateRecipe.execute();
 
     }
 }

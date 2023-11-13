@@ -1,7 +1,7 @@
 package view;
 
-import interface_adapter.PreferenceState;
-import interface_adapter.PreferenceViewModel;
+import interface_adapter.Preference.PreferenceState;
+import interface_adapter.Preference.PreferenceViewModel;
 
 import javax.swing.*;
 import java.awt.*;

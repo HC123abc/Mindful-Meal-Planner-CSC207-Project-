@@ -1,6 +1,7 @@
-package interface_adapter;
+package interface_adapter.CookThisOrReRoll;
 
 public class CookThisOrReRollState {
+    private String recipeError = "";
     private String title = "";
     private String summary = "";
     private String image = "";
@@ -59,6 +60,13 @@ public class CookThisOrReRollState {
 
     public void setReadyInMinutes(String readyInMinutes) {
         this.readyInMinutes = readyInMinutes;
+    }
+    public String getRecipeError() {
+        return recipeError;
+    }
+
+    public void setRecipeError(String recipeError) {
+        this.recipeError = recipeError;
     }
 
 

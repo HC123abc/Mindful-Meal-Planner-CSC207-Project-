@@ -1,7 +1,7 @@
 package view;
 
-import interface_adapter.CookThisOrReRollState;
-import interface_adapter.CookThisOrReRollViewModel;
+import interface_adapter.CookThisOrReRoll.CookThisOrReRollState;
+import interface_adapter.CookThisOrReRoll.CookThisOrReRollViewModel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

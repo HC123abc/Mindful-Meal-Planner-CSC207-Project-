@@ -1,4 +1,7 @@
-package interface_adapter;
+package interface_adapter.Preference;
+
+import interface_adapter.Preference.PreferenceState;
+import interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

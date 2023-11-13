@@ -1,4 +1,4 @@
-package interface_adapter;
+package interface_adapter.Preference;
 
 import java.util.HashMap;
 import java.util.Map;

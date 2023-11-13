@@ -1,9 +1,12 @@
-package interface_adapter;
+package interface_adapter.CookThisOrReRoll;
+
+import interface_adapter.CookThisOrReRoll.CookThisOrReRollState;
+import interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class CookThisOrReRollViewModel extends ViewModel{
+public class CookThisOrReRollViewModel extends ViewModel {
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     private CookThisOrReRollState state = new CookThisOrReRollState();
 
