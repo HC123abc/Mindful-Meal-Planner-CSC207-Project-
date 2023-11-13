@@ -10,7 +10,7 @@ public class signUpPresenter implements signUpOutputBoundary{
     private loginViewModel loginVM;
     private ViewManagerModel VMM;
 
-    public signUpPresenter(signUpViewModel signUpVM, loginViewModel loginVM, viewManagerModel VMM){
+    public signUpPresenter(signUpViewModel signUpVM, loginViewModel loginVM, ViewManagerModel VMM){
         this.signUpVM = signUpVM;
         this.loginVM = loginVM;
         this.VMM = VMM;
@@ -22,8 +22,8 @@ public class signUpPresenter implements signUpOutputBoundary{
         this.loginVM.setState(LoginState);
         loginVM.firePropertyChanged();
 
-        viewManagerModel.setActiveView(loginVM.getViewName());
-        viewManagerModel.firePropertyChanged();
+        VMM.setActiveView(loginVM.getViewName());
+        VMM.firePropertyChanged();
     }
 
     @Override
