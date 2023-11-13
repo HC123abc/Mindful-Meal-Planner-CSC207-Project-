@@ -3,8 +3,12 @@ package use_case.generateRecipe;
 import data_access.GenerateRecipe.GenerateRecipeApi;
 import entity.*;
 import interface_adapter.CookThisOrReRoll.CookThisOrReRollPresenter;
+import interface_adapter.CookThisOrReRoll.CookThisOrReRollState;
+import interface_adapter.CookThisOrReRoll.CookThisOrReRollViewModel;
+import interface_adapter.ViewManagerModel;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import view.CookThisOrReRollView;
 
 public class GenerateRecipe implements GenerateRecipeInputBoundary {
     //    private GenerateRecipeOutputData generateRecipeOutputData;
@@ -68,13 +72,16 @@ public class GenerateRecipe implements GenerateRecipeInputBoundary {
         GenerateRecipeDataAccessInterface generateRecipeAPI = new GenerateRecipeApi();
         RandomRecipe randomRecipe = new RandomRecipe();
         // Create your GenerateRecipeOutputBoundary implementation
-        GenerateRecipeOutputBoundary generateRecipeOutputBoundary = new CookThisOrReRollPresenter();
+        CookThisOrReRollViewModel cookThisOrReRollViewModel= new CookThisOrReRollViewModel();
+        ViewManagerModel viewManagerModel = new ViewManagerModel();
+        GenerateRecipeOutputBoundary generateRecipeOutputBoundary = new CookThisOrReRollPresenter(cookThisOrReRollViewModel,viewManagerModel);
         // Create an instance of GenerateRecipe
         RecipeFactory recipeFactory = new RecipeFactory();
         GenerateRecipe generateRecipe = new GenerateRecipe(generateRecipeAPI,generateRecipeOutputBoundary, preference, randomRecipe, recipeFactory);
 
         // Execute the recipe generation
         generateRecipe.execute();
+        new CookThisOrReRollView(cookThisOrReRollViewModel);
 
     }
 }
