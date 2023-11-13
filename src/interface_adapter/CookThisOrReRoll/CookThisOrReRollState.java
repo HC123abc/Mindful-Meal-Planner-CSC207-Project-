@@ -7,6 +7,8 @@ public class CookThisOrReRollState {
     private String image = "";
     private String servings = "";
     private String readyInMinutes = "";
+    private String ingredients = "";
+    private String insturction = "";
 
     // Constructors
     public CookThisOrReRollState(CookThisOrReRollState copy) {
@@ -15,6 +17,8 @@ public class CookThisOrReRollState {
         this.image = copy.image;
         this.servings = copy.servings;
         this.readyInMinutes = copy.readyInMinutes;
+        this.ingredients = copy.ingredients;
+        this.insturction = copy.insturction;
 
     }
 
@@ -69,6 +73,20 @@ public class CookThisOrReRollState {
         this.recipeError = recipeError;
     }
 
+    public String getIngredients() {
+        return ingredients;
+    }
 
+    public String getInsturction() {
+        return insturction;
+    }
+
+    public void setIngredients(String ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public void setInsturction(String insturction) {
+        this.insturction = insturction;
+    }
 }
 

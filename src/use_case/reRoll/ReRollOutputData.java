@@ -1,6 +1,6 @@
-package use_case.generateRecipe;
+package use_case.reRoll;
 
-public class GenerateRecipeOutputData {
+public class ReRollOutputData {
     private String title;
     private String readyInMinutes;
     private String servings;
@@ -9,7 +9,7 @@ public class GenerateRecipeOutputData {
     private String extendedInstructions;
     private String recipeImageURL;
 
-    public GenerateRecipeOutputData(String title, String readyInMinutes, String servings, String summary, String extendedIngredients, String extendedInstructions, String recipeImageURL) {
+    public ReRollOutputData(String title, String readyInMinutes, String servings, String summary, String extendedIngredients, String extendedInstructions, String recipeImageURL) {
         this.title = title;
         this.readyInMinutes = readyInMinutes;
         this.servings = servings;
