@@ -1,14 +1,14 @@
 package interface_adapter.signUp;
 import interface_adapter.loginState;
 import interface_adapter.loginViewModel;
-import interface_adapter.viewManagerModel;
+import interface_adapter.ViewManagerModel;
 import use_case.signUp.signUpOutputBoundary;
 import use_case.signUp.signUpOutputData;
 
 public class signUpPresenter implements signUpOutputBoundary{
     private signUpViewModel signUpVM;
     private loginViewModel loginVM;
-    private viewManagerModel VMM;
+    private ViewManagerModel VMM;
 
     public signUpPresenter(signUpViewModel signUpVM, loginViewModel loginVM, viewManagerModel VMM){
         this.signUpVM = signUpVM;
