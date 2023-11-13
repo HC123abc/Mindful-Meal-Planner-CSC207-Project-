@@ -1,4 +1,4 @@
-package interface_adapter;
+package interface_adapter.CookThisOrReRoll;
 
 public class CookThisOrReRollState {
     private String title = "";
