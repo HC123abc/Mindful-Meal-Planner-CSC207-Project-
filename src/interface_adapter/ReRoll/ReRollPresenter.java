@@ -1,18 +1,23 @@
-package interface_adapter.CookThisOrReRoll;
+package interface_adapter.ReRoll;
 
+import interface_adapter.CookThisOrReRoll.CookThisOrReRollState;
+import interface_adapter.CookThisOrReRoll.CookThisOrReRollViewModel;
 import interface_adapter.ViewManagerModel;
-import use_case.generateRecipe.GenerateRecipeOutputBoundary;
-import use_case.generateRecipe.GenerateRecipeOutputData;
 
-public class CookThisOrReRollPresenter implements GenerateRecipeOutputBoundary {
+import use_case.reRoll.ReRollOutputBoundary;
+import use_case.reRoll.ReRollOutputData;
+
+public class ReRollPresenter implements ReRollOutputBoundary {
     private final CookThisOrReRollViewModel cookThisOrReRollViewModel;
     private ViewManagerModel viewManagerModel;
-    public CookThisOrReRollPresenter(CookThisOrReRollViewModel cookThisOrReRollViewModel, ViewManagerModel viewManagerModel) {
+    public ReRollPresenter(CookThisOrReRollViewModel cookThisOrReRollViewModel, ViewManagerModel viewManagerModel) {
         this.cookThisOrReRollViewModel = cookThisOrReRollViewModel;
         this.viewManagerModel = viewManagerModel;
     }
+
+
     @Override
-    public void prepareSuccessView(GenerateRecipeOutputData recipeOutputData) {
+    public void prepareSuccessView(ReRollOutputData recipeOutputData) {
         CookThisOrReRollState cookThisOrReRollState = cookThisOrReRollViewModel.getState();
         cookThisOrReRollState.setTitle(recipeOutputData.getTitle());
         cookThisOrReRollState.setServings(recipeOutputData.getServings());
@@ -23,16 +28,5 @@ public class CookThisOrReRollPresenter implements GenerateRecipeOutputBoundary {
         cookThisOrReRollState.setInsturction(recipeOutputData.getExtendedInstructions());
         this.cookThisOrReRollViewModel.setState(cookThisOrReRollState);
         cookThisOrReRollViewModel.firePropertyChanged();
-        viewManagerModel.setActiveView(cookThisOrReRollViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
-    }
-
-    @Override
-    public void prepareFailView(String error) {
-//      main view model
-        CookThisOrReRollState cookThisOrReRollState = cookThisOrReRollViewModel.getState();
-        cookThisOrReRollState.setRecipeError(error);
-        cookThisOrReRollViewModel.firePropertyChanged();
-
     }
 }

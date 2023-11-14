@@ -3,14 +3,17 @@ package use_case.generateRecipe;
 import data_access.GenerateRecipe.GenerateRecipeApi;
 import entity.*;
 import interface_adapter.CookThisOrReRoll.CookThisOrReRollPresenter;
-import interface_adapter.CookThisOrReRoll.CookThisOrReRollState;
 import interface_adapter.CookThisOrReRoll.CookThisOrReRollViewModel;
+import interface_adapter.ReRoll.ReRollController;
+import interface_adapter.ReRoll.ReRollPresenter;
 import interface_adapter.ViewManagerModel;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import use_case.reRoll.ReRollInputBoundary;
+import use_case.reRoll.ReRollInteractor;
 import view.CookThisOrReRollView;
 
-public class GenerateRecipe implements GenerateRecipeInputBoundary {
+public class GenerateRecipeInteractor implements GenerateRecipeInputBoundary {
     //    private GenerateRecipeOutputData generateRecipeOutputData;
     private GenerateRecipeDataAccessInterface generateRecipeAPI;
     private GenerateRecipeOutputBoundary cookThisOrReRollPresenter;
@@ -20,7 +23,7 @@ public class GenerateRecipe implements GenerateRecipeInputBoundary {
     private RecipeFactory recipeFactory;
 
 
-    public GenerateRecipe(GenerateRecipeDataAccessInterface generateRecipeAPI,GenerateRecipeOutputBoundary generateRecipeOutputBoundary, Preference preference, RandomRecipe randomRecipe, RecipeFactory recipeFactory) {
+    public GenerateRecipeInteractor(GenerateRecipeDataAccessInterface generateRecipeAPI, GenerateRecipeOutputBoundary generateRecipeOutputBoundary, Preference preference, RandomRecipe randomRecipe, RecipeFactory recipeFactory) {
         this.generateRecipeAPI = generateRecipeAPI;
         this.preference = preference;
         this.randomRecipe = randomRecipe;
@@ -77,11 +80,13 @@ public class GenerateRecipe implements GenerateRecipeInputBoundary {
         GenerateRecipeOutputBoundary generateRecipeOutputBoundary = new CookThisOrReRollPresenter(cookThisOrReRollViewModel,viewManagerModel);
         // Create an instance of GenerateRecipe
         RecipeFactory recipeFactory = new RecipeFactory();
-        GenerateRecipe generateRecipe = new GenerateRecipe(generateRecipeAPI,generateRecipeOutputBoundary, preference, randomRecipe, recipeFactory);
-
+        GenerateRecipeInteractor generateRecipeInteractor = new GenerateRecipeInteractor(generateRecipeAPI,generateRecipeOutputBoundary, preference, randomRecipe, recipeFactory);
+        ReRollPresenter reRollPresenter = new ReRollPresenter(cookThisOrReRollViewModel,viewManagerModel);
+        ReRollInputBoundary reRollInputBoundary = new ReRollInteractor(randomRecipe,reRollPresenter,recipeFactory);
+        ReRollController reRollController = new ReRollController(reRollInputBoundary);
         // Execute the recipe generation
-        generateRecipe.execute();
-        new CookThisOrReRollView(cookThisOrReRollViewModel);
+        generateRecipeInteractor.execute();
+        new CookThisOrReRollView(cookThisOrReRollViewModel,reRollController);
 
     }
 }

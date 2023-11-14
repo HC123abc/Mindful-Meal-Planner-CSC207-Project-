@@ -10,7 +10,15 @@ public class RecipeFactory {
         int readyInMinutes = recipeObject.getInt("readyInMinutes");
         int servings = recipeObject.getInt("servings");
         String summary = recipeObject.getString("summary");
-        String recipeImageURL = recipeObject.getString("image");
+
+        // Replace <b> and </b> with bold formatting
+        summary = summary.replaceAll("<b>", "**").replaceAll("</b>", "**");
+        String recipeImageURL;
+        if (recipeObject.isNull("image")) {
+            recipeImageURL = "";
+        } else {
+            recipeImageURL = recipeObject.getString("image");
+        }
 
         // Extracting extendedIngredients
         JSONArray extendedIngredientsArray = recipeObject.getJSONArray("extendedIngredients");
@@ -20,9 +28,15 @@ public class RecipeFactory {
             String ingredientName = ingredientObject.getString("name");
             double amount = ingredientObject.getDouble("amount");
             String unit = ingredientObject.getString("unit");
-            String imageURL = buildIngredientImageURL(ingredientObject.getString("image"));
 
-            ingredientsBuilder.append(imageURL).append(" ").append(ingredientName).append(": ").append(amount).append(" ").append(unit).append("\n");
+            String ingredientImageURL;
+            if (ingredientObject.isNull("image")) {
+                ingredientImageURL = "";
+            } else {
+                ingredientImageURL = buildIngredientImageURL(ingredientObject.getString("image"));
+            }
+
+            ingredientsBuilder.append(ingredientImageURL).append(" ").append(ingredientName).append(": ").append(amount).append(" ").append(unit).append("\n");
         }
         String extendedIngredients = ingredientsBuilder.toString().trim();
 
