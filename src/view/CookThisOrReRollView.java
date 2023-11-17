@@ -1,10 +1,11 @@
 package view;
 
+import interface_adapter.CookThis.CookThisController;
 import interface_adapter.CookThisOrReRoll.CookThisOrReRollState;
 import interface_adapter.CookThisOrReRoll.CookThisOrReRollViewModel;
 import interface_adapter.ReRoll.ReRollController;
+import interface_adapter.ViewManagerModel;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,12 +14,14 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
-public class CookThisOrReRollView extends JFrame implements PropertyChangeListener {
+public class CookThisOrReRollView extends JPanel implements PropertyChangeListener {
+    public String viewName = "CookThisOrReRoll";
     private CookThisOrReRollViewModel cookThisOrReRollViewModel;
     private ReRollController reRollController;
+    private CookThisController cookThisController;
+    private ViewManagerModel viewManagerModel;
 
     private JLabel titleLabel;
     private JLabel imageLabel;
@@ -28,10 +31,13 @@ public class CookThisOrReRollView extends JFrame implements PropertyChangeListen
     private JButton cookButton;
     private JButton reRollButton;
 
-    public CookThisOrReRollView(CookThisOrReRollViewModel cookThisOrReRollViewModel,ReRollController reRollController) {
+    public CookThisOrReRollView(CookThisOrReRollViewModel cookThisOrReRollViewModel,ReRollController reRollController, CookThisController cookThisController,ViewManagerModel viewManagerModel) {
         this.cookThisOrReRollViewModel = cookThisOrReRollViewModel;
         this.cookThisOrReRollViewModel.addPropertyChangeListener(this);
         this.reRollController = reRollController;
+        this.cookThisController = cookThisController;
+        this.viewManagerModel = viewManagerModel;
+        this.viewManagerModel.addPropertyChangeListener(this);
 
         // Initialize components
         titleLabel = new JLabel("Title: ");
@@ -76,7 +82,8 @@ public class CookThisOrReRollView extends JFrame implements PropertyChangeListen
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Handle Cook This button click
-                // You can add the logic to handle cooking here
+                CookThisOrReRollState currentState = cookThisOrReRollViewModel.getState();
+                cookThisController.execute(currentState.getIngredients(),currentState.getInstruction());
             }
         });
 
@@ -87,15 +94,15 @@ public class CookThisOrReRollView extends JFrame implements PropertyChangeListen
             }
         });
 
-        // Set up the frame
-        setTitle("Recipe Viewer");
-        setSize(1000, 700);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setVisible(true);
+//        // Set up the frame for testing
+//        setTitle("Recipe Viewer");
+//        setSize(1000, 700);
+//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        setLocationRelativeTo(null);
+//        setVisible(true);
 
         // Update the view with initial state
-        updateView(cookThisOrReRollViewModel.getState());
+        updateView(this.cookThisOrReRollViewModel.getState());
     }
 
     private void updateView(CookThisOrReRollState cookThisOrReRollState) {
@@ -124,9 +131,11 @@ public class CookThisOrReRollView extends JFrame implements PropertyChangeListen
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        CookThisOrReRollState state1 = (CookThisOrReRollState) evt.getNewValue();
-        // Listen for changes in the RecipeState and update the view
-        updateView(state1);
+        if (evt.getNewValue() instanceof CookThisOrReRollState) {
+            CookThisOrReRollState state1 = (CookThisOrReRollState) evt.getNewValue();
+            // Listen for changes in the CookThisOrReRollState and update the view
+            updateView(state1);
+        }
     }
 
     public static void main(String[] args) {

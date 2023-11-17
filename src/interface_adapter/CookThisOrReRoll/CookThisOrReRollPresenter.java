@@ -7,10 +7,12 @@ import use_case.generateRecipe.GenerateRecipeOutputData;
 public class CookThisOrReRollPresenter implements GenerateRecipeOutputBoundary {
     private final CookThisOrReRollViewModel cookThisOrReRollViewModel;
     private ViewManagerModel viewManagerModel;
+
     public CookThisOrReRollPresenter(CookThisOrReRollViewModel cookThisOrReRollViewModel, ViewManagerModel viewManagerModel) {
         this.cookThisOrReRollViewModel = cookThisOrReRollViewModel;
         this.viewManagerModel = viewManagerModel;
     }
+
     @Override
     public void prepareSuccessView(GenerateRecipeOutputData recipeOutputData) {
         CookThisOrReRollState cookThisOrReRollState = cookThisOrReRollViewModel.getState();
@@ -20,7 +22,7 @@ public class CookThisOrReRollPresenter implements GenerateRecipeOutputBoundary {
         cookThisOrReRollState.setSummary(recipeOutputData.getSummary());
         cookThisOrReRollState.setReadyInMinutes(recipeOutputData.getReadyInMinutes());
         cookThisOrReRollState.setIngredients(recipeOutputData.getExtendedIngredients());
-        cookThisOrReRollState.setInsturction(recipeOutputData.getExtendedInstructions());
+        cookThisOrReRollState.setInstruction(recipeOutputData.getExtendedInstructions());
         this.cookThisOrReRollViewModel.setState(cookThisOrReRollState);
         cookThisOrReRollViewModel.firePropertyChanged();
         viewManagerModel.setActiveView(cookThisOrReRollViewModel.getViewName());

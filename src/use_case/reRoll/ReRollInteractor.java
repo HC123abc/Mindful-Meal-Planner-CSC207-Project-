@@ -21,7 +21,7 @@ public class ReRollInteractor implements ReRollInputBoundary {
     public void execute() {
 
         Recipe recipe = getRecipe();
-        ReRollOutputData reRollOutputData = new ReRollOutputData(recipe.getTitle(), recipe.getReadyInMinutes(), recipe.getServings(), recipe.getSummary(), recipe.getExtendedIngredients(), recipe.getExtendedIngredients(), recipe.getRecipeImageURL());
+        ReRollOutputData reRollOutputData = new ReRollOutputData(recipe.getTitle(), recipe.getReadyInMinutes(), recipe.getServings(), recipe.getSummary(), recipe.getExtendedIngredients(), recipe.getExtendedInstructions(), recipe.getRecipeImageURL());
         reRollPresenter.prepareSuccessView(reRollOutputData);
 
     }

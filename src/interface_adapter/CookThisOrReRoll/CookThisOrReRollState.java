@@ -1,14 +1,14 @@
 package interface_adapter.CookThisOrReRoll;
 
 public class CookThisOrReRollState {
-    private String recipeError = "";
+    private String recipeError = null;
     private String title = "";
     private String summary = "";
     private String image = "";
     private String servings = "";
     private String readyInMinutes = "";
     private String ingredients = "";
-    private String insturction = "";
+    private String instruction = "";
 
     // Constructors
     public CookThisOrReRollState(CookThisOrReRollState copy) {
@@ -18,7 +18,7 @@ public class CookThisOrReRollState {
         this.servings = copy.servings;
         this.readyInMinutes = copy.readyInMinutes;
         this.ingredients = copy.ingredients;
-        this.insturction = copy.insturction;
+        this.instruction = copy.instruction;
 
     }
 
@@ -77,16 +77,16 @@ public class CookThisOrReRollState {
         return ingredients;
     }
 
-    public String getInsturction() {
-        return insturction;
+    public String getInstruction() {
+        return instruction;
     }
 
     public void setIngredients(String ingredients) {
         this.ingredients = ingredients;
     }
 
-    public void setInsturction(String insturction) {
-        this.insturction = insturction;
+    public void setInstruction(String instruction) {
+        this.instruction = instruction;
     }
 }
 
