@@ -74,28 +74,4 @@ public class GenerateRecipeInteractor implements GenerateRecipeInputBoundary {
         return recipe;
     }
 
-    public static void main(String[] args) {
-//        Preference preference = new Preference();
-//        GenerateRecipeDataAccessInterface generateRecipeAPI = new GenerateRecipeApi();
-//        RandomRecipe randomRecipe = new RandomRecipe();
-//        // Create your GenerateRecipeOutputBoundary implementation
-//        CookThisOrReRollViewModel cookThisOrReRollViewModel= new CookThisOrReRollViewModel();
-//        ViewManagerModel viewManagerModel = new ViewManagerModel();
-//        GenerateRecipeOutputBoundary generateRecipeOutputBoundary = new CookThisOrReRollPresenter(cookThisOrReRollViewModel,viewManagerModel);
-//        // Create an instance of GenerateRecipe
-//        RecipeFactory recipeFactory = new RecipeFactory();
-//        GenerateRecipeInteractor generateRecipeInteractor = new GenerateRecipeInteractor(generateRecipeAPI,generateRecipeOutputBoundary, preference, randomRecipe, recipeFactory);
-//        ReRollPresenter reRollPresenter = new ReRollPresenter(cookThisOrReRollViewModel,viewManagerModel);
-//        ReRollInputBoundary reRollInputBoundary = new ReRollInteractor(randomRecipe,reRollPresenter,recipeFactory);
-//        ReRollController reRollController = new ReRollController(reRollInputBoundary);
-//        CookThisViewModel cookThisViewModel = new CookThisViewModel();
-//        CookThisPresenter cookThisPresenter = new CookThisPresenter(cookThisViewModel,viewManagerModel);
-//        CookThisInteractor cookThisInteractor = new CookThisInteractor(cookThisPresenter);
-//        CookThisController cookThisController = new CookThisController(cookThisInteractor);
-//
-//        // Execute the recipe generation
-//        generateRecipeInteractor.execute();
-//        new CookThisOrReRollView(cookThisOrReRollViewModel,reRollController,  cookThisController, viewManagerModel);
-
-    }
 }
