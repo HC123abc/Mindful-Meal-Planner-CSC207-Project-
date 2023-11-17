@@ -10,10 +10,14 @@ import interface_adapter.CookThis.CookThisViewModel;
 import interface_adapter.CookThisOrReRoll.CookThisOrReRollPresenter;
 import interface_adapter.CookThisOrReRoll.CookThisOrReRollViewModel;
 import interface_adapter.CookThisOrReRoll.GenerateRecipeController;
+import interface_adapter.Finish.FinishController;
+import interface_adapter.Finish.FinishPresenter;
+import interface_adapter.Finish.FinishViewModel;
 import interface_adapter.ReRoll.ReRollController;
 import interface_adapter.ReRoll.ReRollPresenter;
 import interface_adapter.ViewManagerModel;
 
+import use_case.Finish.FinishInteractor;
 import use_case.cookThis.CookThisInteractor;
 import use_case.generateRecipe.GenerateRecipeDataAccessInterface;
 import use_case.generateRecipe.GenerateRecipeInteractor;
@@ -71,7 +75,11 @@ public class Main {
         CookThisOrReRollView cookThisOrReRollView = new CookThisOrReRollView(cookThisOrReRollViewModel,reRollController,  cookThisController, viewManagerModel);
         views.add(cookThisOrReRollView, cookThisOrReRollView.viewName);
 
-        CookThisView cookThisView = new CookThisView(cookThisViewModel, viewManagerModel);
+        FinishViewModel finishViewModel = new FinishViewModel();
+        FinishPresenter finishPresenter = new FinishPresenter(viewManagerModel,finishViewModel );
+        FinishInteractor finishInteractor = new FinishInteractor(finishPresenter);
+        FinishController finishController = new FinishController(finishInteractor);
+        CookThisView cookThisView = new CookThisView(cookThisViewModel, finishController);
         views.add(cookThisView, cookThisView.viewName);
 
         GenerateRecipeController generateRecipeController = new GenerateRecipeController(generateRecipeInteractor);
