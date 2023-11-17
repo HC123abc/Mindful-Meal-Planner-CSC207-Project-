@@ -61,16 +61,16 @@ public class PreferenceState {
         return selectedDiets;
     }
 
-    public void setSelectedDiets(Map<String, Boolean> selectedDiets) {
-        this.selectedDiets = selectedDiets;
+    public void setSelectedDiets(String type, Boolean selected) {
+        selectedDiets.replace(type, selected);
     }
 
     public Map<String, Boolean> getSelectedIntolerances() {
         return selectedIntolerances;
     }
 
-    public void setSelectedIntolerances(Map<String, Boolean> selectedIntolerances) {
-        this.selectedIntolerances = selectedIntolerances;
+    public void setSelectedIntolerances(String type, Boolean selected) {
+        selectedIntolerances.replace(type, selected);
     }
 }
 

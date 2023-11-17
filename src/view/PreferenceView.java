@@ -34,7 +34,7 @@ public class PreferenceView extends JPanel implements PropertyChangeListener {
     }
 
     private void placeComponents(JPanel panel) {
-        panel.setLayout(new GridLayout(0, 2));
+        panel.setLayout(new GridLayout(0, 1));
 
         // label for cuisines
         JLabel cuisineLabel = new JLabel("Cuisine:");
@@ -62,14 +62,83 @@ public class PreferenceView extends JPanel implements PropertyChangeListener {
                     new ItemListener() {
                         @Override
                         public void itemStateChanged(ItemEvent e) {
-//                            if (e.getStateChange()==1){
+
                             System.out.println(checkBox.getText() + (e.getStateChange()== 1));
-//                            }
                             PreferenceState currentState = preferenceViewModel.getState();
                             currentState.setSelectedCuisines(checkBox.getText(),  e.getStateChange()== 1);
                             preferenceViewModel.setState(currentState);
 //          test to see if it updates
                             System.out.println(currentState.getSelectedCuisines());
+                        }
+                    }
+            );
+
+        }
+        ((GridLayout) panel.getLayout()).setColumns(1);
+        JLabel dietLabel = new JLabel("Diet:");
+        panel.add(dietLabel);
+
+        // labels checkboxes for  cuisine
+        String[] diets = {"Gluten Free", "Vegetarian", "Vegan", "Pescetarian"};
+
+        List<JCheckBox> dietCheckboxes = new ArrayList<>();
+//      adds the checkbox to the UI
+        for (String diet: diets) {
+            JCheckBox checkbox = new JCheckBox(diet);
+            PreferenceState currentState = preferenceViewModel.getState();
+//          loads the old cuisines the user checked
+            checkbox.setSelected(currentState.getSelectedDiets().get(diet));
+            panel.add(checkbox);
+            dietCheckboxes.add(checkbox);
+        }
+//      observes which cuisine the user selects so we can update the state
+        for (JCheckBox checkBox: dietCheckboxes){
+            checkBox.addItemListener(
+                    new ItemListener() {
+                        @Override
+                        public void itemStateChanged(ItemEvent e) {
+
+                            System.out.println(checkBox.getText() + (e.getStateChange()== 1));
+                            PreferenceState currentState = preferenceViewModel.getState();
+                            currentState.setSelectedDiets(checkBox.getText(),  e.getStateChange()== 1);
+                            preferenceViewModel.setState(currentState);
+//          test to see if it updates
+                            System.out.println(currentState.getSelectedCuisines());
+                        }
+                    }
+            );
+
+        }
+        JLabel intolerancesLabel = new JLabel("Intolerances:");
+        panel.add(intolerancesLabel);
+
+        // labels checkboxes for  cuisine
+        String[] intolerances = {"Dairy", "Egg", "Gluten", "Grain", "Peanut", "Seafood", "Sesame",
+                "Shellfish", "Soy", "Sulfite", "Tree Nut", "Wheat"};
+
+        List<JCheckBox> intoleranceCheckboxes = new ArrayList<>();
+//      adds the checkbox to the UI
+        for (String intolerance : intolerances) {
+            JCheckBox checkbox = new JCheckBox(intolerance);
+            PreferenceState currentState = preferenceViewModel.getState();
+//          loads the old cuisines the user checked
+            checkbox.setSelected(currentState.getSelectedIntolerances().get(intolerance));
+            panel.add(checkbox);
+            intoleranceCheckboxes.add(checkbox);
+        }
+//      observes which cuisine the user selects so we can update the state
+        for (JCheckBox checkBox: intoleranceCheckboxes){
+            checkBox.addItemListener(
+                    new ItemListener() {
+                        @Override
+                        public void itemStateChanged(ItemEvent e) {
+
+                            System.out.println(checkBox.getText() + (e.getStateChange()== 1));
+                            PreferenceState currentState = preferenceViewModel.getState();
+                            currentState.setSelectedIntolerances(checkBox.getText(),  e.getStateChange()== 1);
+                            preferenceViewModel.setState(currentState);
+//          test to see if it updates
+                            System.out.println(currentState.getSelectedIntolerances());
                         }
                     }
             );
