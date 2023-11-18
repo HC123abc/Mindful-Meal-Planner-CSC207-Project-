@@ -3,6 +3,7 @@ package view;
 import interface_adapter.CookThis.CookThisController;
 import interface_adapter.CookThisOrReRoll.CookThisOrReRollState;
 import interface_adapter.CookThisOrReRoll.CookThisOrReRollViewModel;
+import interface_adapter.Finish.FinishController;
 import interface_adapter.ReRoll.ReRollController;
 import interface_adapter.ViewManagerModel;
 
@@ -21,6 +22,7 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
     private CookThisOrReRollViewModel cookThisOrReRollViewModel;
     private ReRollController reRollController;
     private CookThisController cookThisController;
+    private FinishController finishController;
     private ViewManagerModel viewManagerModel;
 
     private JLabel titleLabel;
@@ -30,12 +32,15 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
     private JTextArea summaryTextArea;
     private JButton cookButton;
     private JButton reRollButton;
+    private JButton finishButton;
+    private JButton favouriteButton;
 
-    public CookThisOrReRollView(CookThisOrReRollViewModel cookThisOrReRollViewModel,ReRollController reRollController, CookThisController cookThisController,ViewManagerModel viewManagerModel) {
+    public CookThisOrReRollView(CookThisOrReRollViewModel cookThisOrReRollViewModel, ReRollController reRollController, CookThisController cookThisController, FinishController finishController, ViewManagerModel viewManagerModel) {
         this.cookThisOrReRollViewModel = cookThisOrReRollViewModel;
         this.cookThisOrReRollViewModel.addPropertyChangeListener(this);
         this.reRollController = reRollController;
         this.cookThisController = cookThisController;
+        this.finishController = finishController;
         this.viewManagerModel = viewManagerModel;
         this.viewManagerModel.addPropertyChangeListener(this);
 
@@ -50,6 +55,8 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
 
         cookButton = new JButton("Cook This");
         reRollButton = new JButton("Reroll");
+        finishButton = new JButton("Go Back to Main Page");
+        favouriteButton = new JButton("Add to Favourite");
 
         // Set up the layout
         setLayout(new BorderLayout());
@@ -70,8 +77,18 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
         otherComponentsPanel.add(servingsLabel);
         otherComponentsPanel.add(readyInMinutesLabel);
         otherComponentsPanel.add(summaryTextArea);
-        otherComponentsPanel.add(cookButton);
-        otherComponentsPanel.add(reRollButton);
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.LINE_AXIS));
+        buttonsPanel.add(Box.createHorizontalGlue()); // Aligns buttons to the right
+
+        // Add buttons to the buttonsPanel
+        buttonsPanel.add(cookButton);
+        buttonsPanel.add(reRollButton);
+        buttonsPanel.add(finishButton);
+        buttonsPanel.add(favouriteButton);
+        // Add the buttonsPanel to the main frame
+        add(buttonsPanel, BorderLayout.SOUTH);
+
 
         // Add the panels to the main frame
         add(titleImagePanel, BorderLayout.NORTH);
@@ -83,7 +100,7 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
             public void actionPerformed(ActionEvent e) {
                 // Handle Cook This button click
                 CookThisOrReRollState currentState = cookThisOrReRollViewModel.getState();
-                cookThisController.execute(currentState.getIngredients(),currentState.getInstruction());
+                cookThisController.execute(currentState.getIngredients(), currentState.getInstruction());
             }
         });
 
@@ -94,12 +111,18 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
             }
         });
 
-//        // Set up the frame for testing
-//        setTitle("Recipe Viewer");
-//        setSize(1000, 700);
-//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        setLocationRelativeTo(null);
-//        setVisible(true);
+        finishButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                finishController.execute();
+            }
+        });
+        favouriteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+
 
         // Update the view with initial state
         updateView(this.cookThisOrReRollViewModel.getState());
