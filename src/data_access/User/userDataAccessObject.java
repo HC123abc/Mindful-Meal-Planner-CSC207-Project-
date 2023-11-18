@@ -73,7 +73,7 @@ public class userDataAccessObject implements signUpDataAccessInterface, loginDat
 
     private String userCheck(String user, String password){
         Gson gson = new GsonBuilder().create();
-        try (Reader reader = new FileReader("./users/"+user)) {
+        try (Reader reader = new FileReader("./users/"+user+".json")) {
             // Convert JSON File to Java Object
             User userCheck = gson.fromJson(reader, User.class);
             if (userCheck.verifyPassword(password)) {
