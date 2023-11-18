@@ -18,7 +18,7 @@ public class signUpPresenter implements signUpOutputBoundary{
     @Override
     public void prepareSuccessView(signUpOutputData data) {
         loginState LoginState = loginVM.getState();
-        loginState.setUsername(data.getUsername());
+        //loginState.setUsername(data.getUsername());
         this.loginVM.setState(LoginState);
         loginVM.firePropertyChanged();
         VMM.setActiveView(loginVM.getViewName());
