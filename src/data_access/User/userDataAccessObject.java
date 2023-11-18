@@ -4,10 +4,13 @@ import com.google.gson.GsonBuilder;
 import use_case.signUp.signUpDataAccessInterface;
 import app.userFactory;
 import entity.User;
+import use_case.login.loginDataAccessInterface;
 
 import java.io.*;
 
-public class userDataAccessObject implements signUpDataAccessInterface {
+public class userDataAccessObject implements signUpDataAccessInterface, loginDataAccessInterface {
+
+    private User currentUser = null; // current user
     @Override
     public User createUser(String username, String password){
         userFactory factory = new userFactory();
@@ -51,5 +54,39 @@ public class userDataAccessObject implements signUpDataAccessInterface {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public String getUser(String user, String password) {
+        try (BufferedReader myReader = new BufferedReader(new FileReader("userFile.txt"))) {
+            String row;
+            while ((row = myReader.readLine()) != null) {
+                if (user.equals(row)) {
+                    return userCheck(user, password);
+                }
+            }
+            return "User does not exist error.";
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private String userCheck(String user, String password){
+        Gson gson = new GsonBuilder().create();
+        try (Reader reader = new FileReader("./users/"+user)) {
+            // Convert JSON File to Java Object
+            User userCheck = gson.fromJson(reader, User.class);
+            if (userCheck.verifyPassword(password)) {
+                this.currentUser = userCheck;
+                return "Success!";
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "Passwords are not matching.";
+    }
+    @Override
+    public User setUser(){
+        return currentUser;
     }
 }
