@@ -8,8 +8,9 @@ public class GenerateRecipeOutputData {
     private String extendedIngredients;
     private String extendedInstructions;
     private String recipeImageURL;
+    private String id;
 
-    public GenerateRecipeOutputData(String title, String readyInMinutes, String servings, String summary, String extendedIngredients, String extendedInstructions, String recipeImageURL) {
+    public GenerateRecipeOutputData(String title, String readyInMinutes, String servings, String summary, String extendedIngredients, String extendedInstructions, String recipeImageURL, String id) {
         this.title = title;
         this.readyInMinutes = readyInMinutes;
         this.servings = servings;
@@ -17,6 +18,7 @@ public class GenerateRecipeOutputData {
         this.extendedIngredients = extendedIngredients;
         this.extendedInstructions = extendedInstructions;
         this.recipeImageURL = recipeImageURL;
+        this.id = id;
     }
 
     public String getTitle() {
@@ -45,5 +47,13 @@ public class GenerateRecipeOutputData {
 
     public String getRecipeImageURL() {
         return recipeImageURL;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

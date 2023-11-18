@@ -10,6 +10,7 @@ public class RecipeFactory {
         int readyInMinutes = recipeObject.getInt("readyInMinutes");
         int servings = recipeObject.getInt("servings");
         String summary = recipeObject.getString("summary");
+        int id = recipeObject.getInt("id");
 
         // Replace <b> and </b> with bold formatting
         summary = summary.replaceAll("<b>", "**").replaceAll("</b>", "**");
@@ -56,7 +57,7 @@ public class RecipeFactory {
         String extendedInstructions = instructionsBuilder.toString().trim();
 
         // Create and return the Recipe object
-        return new Recipe(title, String.valueOf(readyInMinutes), String.valueOf(servings), summary, extendedIngredients, extendedInstructions, recipeImageURL);
+        return new Recipe(title, String.valueOf(readyInMinutes), String.valueOf(servings), summary, extendedIngredients, extendedInstructions, recipeImageURL, String.valueOf(id));
     }
     private static String buildIngredientImageURL(String imageName) {
         // Assuming SIZE is 100x100, you can change it to the desired size

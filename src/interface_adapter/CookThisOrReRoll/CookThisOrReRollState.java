@@ -9,6 +9,7 @@ public class CookThisOrReRollState {
     private String readyInMinutes = "";
     private String ingredients = "";
     private String instruction = "";
+    private String id = "";
 
     // Constructors
     public CookThisOrReRollState(CookThisOrReRollState copy) {
@@ -19,6 +20,7 @@ public class CookThisOrReRollState {
         this.readyInMinutes = copy.readyInMinutes;
         this.ingredients = copy.ingredients;
         this.instruction = copy.instruction;
+        this.id = copy.id;
 
     }
 
@@ -87,6 +89,14 @@ public class CookThisOrReRollState {
 
     public void setInstruction(String instruction) {
         this.instruction = instruction;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
     }
 }
 

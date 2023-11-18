@@ -1,18 +1,18 @@
 package use_case.reRoll;
 
-import entity.Preference;
-import entity.RandomRecipe;
-import entity.Recipe;
-import entity.RecipeFactory;
+import data_access.InMemoryDataAccess.InMemoryDataAccessUserInterface;
+import entity.*;
 
 
 public class ReRollInteractor implements ReRollInputBoundary {
     private RandomRecipe randomRecipe;
+    private User user;
     private RecipeFactory recipeFactory;
     private ReRollOutputBoundary reRollPresenter;
 
-    public ReRollInteractor(RandomRecipe randomRecipe,ReRollOutputBoundary reRollPresenter, RecipeFactory recipeFactory) {
-        this.randomRecipe = randomRecipe;
+    public ReRollInteractor(InMemoryDataAccessUserInterface inMemoryDataAccessUser, ReRollOutputBoundary reRollPresenter, RecipeFactory recipeFactory) {
+        this.user = inMemoryDataAccessUser.getActiveUser();
+        this.randomRecipe = user.getRandomRecipe();
         this.recipeFactory = recipeFactory;
         this.reRollPresenter = reRollPresenter;
     }
