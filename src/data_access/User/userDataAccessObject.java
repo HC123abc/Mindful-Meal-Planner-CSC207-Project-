@@ -9,6 +9,8 @@ import use_case.login.loginDataAccessInterface;
 import java.io.*;
 
 public class userDataAccessObject implements signUpDataAccessInterface, loginDataAccessInterface {
+
+    private User currentUser = null; // current user
     @Override
     public User createUser(String username, String password){
         userFactory factory = new userFactory();
@@ -71,8 +73,20 @@ public class userDataAccessObject implements signUpDataAccessInterface, loginDat
 
     private String userCheck(String user, String password){
         Gson gson = new GsonBuilder().create();
-
-
-        return "Success!";
+        try (Reader reader = new FileReader("./users/"+user)) {
+            // Convert JSON File to Java Object
+            User userCheck = gson.fromJson(reader, User.class);
+            if (userCheck.verifyPassword(password)) {
+                this.currentUser = userCheck;
+                return "Success!";
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "Passwords are not matching.";
+    }
+    @Override
+    public User setUser(){
+        return currentUser;
     }
 }

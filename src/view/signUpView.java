@@ -1,7 +1,7 @@
 package view;
 
 import data_access.User.userDataAccessObject;
-import interface_adapter.loginViewModel;
+import interface_adapter.Login.loginViewModel;
 import interface_adapter.signUp.signUpController;
 import interface_adapter.signUp.signUpPresenter;
 import interface_adapter.signUp.signUpState;
@@ -10,7 +10,6 @@ import interface_adapter.ViewManagerModel;
 import use_case.signUp.signUpInteractor;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
