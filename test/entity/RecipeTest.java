@@ -17,7 +17,7 @@ class RecipeTest {
                 "A classic Italian pasta dish...",
                 "Spaghetti, Eggs, Bacon, Parmesan Cheese",
                 "1. Boil spaghetti... 2. Fry bacon...",
-                "https://example.com/spaghetti-carbonara.jpg"
+                "https://example.com/spaghetti-carbonara.jpg","231"
         );
     }
 
@@ -54,5 +54,9 @@ class RecipeTest {
     @Test
     void getRecipeImageURLTest() {
         assertEquals("https://example.com/spaghetti-carbonara.jpg", recipe.getRecipeImageURL());
+    }
+    @Test
+    void getId() {
+        assertEquals("231", recipe.getId());
     }
 }

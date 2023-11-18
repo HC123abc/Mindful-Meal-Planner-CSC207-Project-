@@ -2,6 +2,7 @@ package entity;
 
 public class Recipe {
     private String title;
+    private String id;
     private String readyInMinutes;
     private String servings;
     private String summary;
@@ -9,7 +10,7 @@ public class Recipe {
     private String extendedInstructions;
     private String recipeImageURL;
 
-    public Recipe(String title, String readyInMinutes, String servings, String summary, String extendedIngredients, String extendedInstructions, String recipeImageURL) {
+    public Recipe(String title, String readyInMinutes, String servings, String summary, String extendedIngredients, String extendedInstructions, String recipeImageURL, String id) {
         this.title = title;
         this.readyInMinutes = readyInMinutes;
         this.servings = servings;
@@ -17,6 +18,7 @@ public class Recipe {
         this.extendedIngredients = extendedIngredients;
         this.extendedInstructions = extendedInstructions;
         this.recipeImageURL = recipeImageURL;
+        this.id = id;
     }
 
     public String getTitle() {
@@ -44,5 +46,13 @@ public class Recipe {
     }
     public String getRecipeImageURL() {
         return recipeImageURL;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

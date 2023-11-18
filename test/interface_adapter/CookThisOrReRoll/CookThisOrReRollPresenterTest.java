@@ -18,7 +18,7 @@ public class CookThisOrReRollPresenterTest {
         CookThisOrReRollPresenter presenter = new CookThisOrReRollPresenter(mockViewModel, mockViewManagerModel);
 
         // Creating GenerateRecipeOutputData
-        GenerateRecipeOutputData outputData = new GenerateRecipeOutputData("Test Recipe","25","4", "Test Summary", "https//A: Ingredient A 10, https//B: Ingredient B 30","Step 1: Do something","https://example.com/test.jpg");
+        GenerateRecipeOutputData outputData = new GenerateRecipeOutputData("Test Recipe","25","4", "Test Summary", "https//A: Ingredient A 10, https//B: Ingredient B 30","Step 1: Do something","https://example.com/test.jpg","231");
 
         // Invoking the method to be tested
         presenter.prepareSuccessView(outputData);
@@ -34,6 +34,7 @@ public class CookThisOrReRollPresenterTest {
         assertEquals("25", cookThisOrReRollState.getReadyInMinutes());
         assertEquals("https//A: Ingredient A 10, https//B: Ingredient B 30", cookThisOrReRollState.getIngredients());
         assertEquals("Step 1: Do something", cookThisOrReRollState.getInstruction());
+        assertEquals("231", cookThisOrReRollState.getId());
 
     }
 

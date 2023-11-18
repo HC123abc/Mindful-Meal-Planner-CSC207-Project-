@@ -1,7 +1,10 @@
 package use_case.reRoll;
 
+import data_access.InMemoryDataAccess.InMemoryDataAccessUser;
+import data_access.InMemoryDataAccess.InMemoryDataAccessUserInterface;
 import entity.RandomRecipe;
 import entity.RecipeFactory;
+import entity.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -16,6 +19,9 @@ class ReRollInteractorTest {
     @Test
     void executeReturnsNextRecipe() {
         // Mock dependencies
+        User mockUser = new User("test", "test");
+        InMemoryDataAccessUserInterface mockInMemoryDataAccessUser = new InMemoryDataAccessUser();
+        mockInMemoryDataAccessUser.setActiveUser(mockUser);
         RandomRecipe mockRandomRecipe = new RandomRecipe();
         RecipeFactory mockRecipeFactory = new RecipeFactory();
         ReRollOutputBoundary mockReRollPresenter = new ReRollOutputBoundary() {
@@ -55,6 +61,7 @@ class ReRollInteractorTest {
             recipeObject.put("servings", 2 + i);
             recipeObject.put("summary", "Recipe summary " + (i + 1));
             recipeObject.put("extendedIngredients", ingredientsArray);
+            recipeObject.put("id", i);
             JSONObject analyzedInstructions = new JSONObject();
             JSONArray analyzedInstructionsArray = new JSONArray();
             analyzedInstructionsArray.put(analyzedInstructions);
@@ -65,15 +72,18 @@ class ReRollInteractorTest {
             mockedRecipes.put(recipeObject);
         }
         mockRandomRecipe.setRandomRecipeList(mockedRecipes);
+        mockUser.setRandomRecipe(mockRandomRecipe);
 
-
-        ReRollInteractor interactor = new ReRollInteractor(mockRandomRecipe, mockReRollPresenter, mockRecipeFactory);
+        ReRollInteractor interactor = new ReRollInteractor(mockInMemoryDataAccessUser, mockReRollPresenter, mockRecipeFactory);
         interactor.execute();
     }
 
     @Test
     void executeUpdatesMultiple() {
         // Mock dependencies
+        InMemoryDataAccessUserInterface mockInMemoryDataAccessUser = new InMemoryDataAccessUser();
+        User mockUser = new User("test", "test");
+        mockInMemoryDataAccessUser.setActiveUser(mockUser);
         RandomRecipe mockRandomRecipe = new RandomRecipe();
         RecipeFactory mockRecipeFactory = new RecipeFactory();
 
@@ -108,13 +118,14 @@ class ReRollInteractorTest {
             analyzedInstructions.put("steps", instructionsArray);
             recipeObject.put("analyzedInstructions", analyzedInstructionsArray);
             recipeObject.put("image", "https://example.com/recipe" + (i + 1) + ".jpg");
+            recipeObject.put("id", (i + 1));
 
             mockedRecipes.put(recipeObject);
         }
         mockRandomRecipe.setRandomRecipeList(mockedRecipes);
 
-        // Set the mocked recipes in RandomRecipe
-        mockRandomRecipe.setRandomRecipeList(mockedRecipes);
+        // Set the mocked recipes in activeUser
+        mockUser.setRandomRecipe(mockRandomRecipe);
         ReRollOutputBoundary mockReRollPresenter = new ReRollOutputBoundary() {
             @Override
             public void prepareSuccessView(ReRollOutputData reRollOutputData) {
@@ -122,8 +133,8 @@ class ReRollInteractorTest {
 
                 for (int i = 0; i < 5; i++) {
                     String recipe = String.format(
-                            "{\"title\":\"Recipe %d\",\"readyInMinutes\":%d,\"servings\":%d,\"summary\":\"Recipe summary %d\",\"extendedIngredients\":\"Ingredient %c\",\"extendedInstructions\":\"Step 1: Do something\",\"recipeImageURL\":\"https://example.com/recipe%d.jpg\"}",
-                            i + 1, 20 + i * 5, 2 + i, i + 1, 'A' + i, i + 1
+                            "{\"title\":\"Recipe %d\",\"readyInMinutes\":%d,\"servings\":%d,\"id\":%d,\"summary\":\"Recipe summary %d\",\"extendedIngredients\":\"Ingredient %c\",\"extendedInstructions\":\"Step 1: Do something\",\"recipeImageURL\":\"https://example.com/recipe%d.jpg\"}",
+                            i + 1, 20 + i * 5, 2 + i,i, i + 1, 'A' + i, i + 1
                     );
                     mockedRecipes.put(new JSONObject(recipe));
                 }
@@ -146,7 +157,7 @@ class ReRollInteractorTest {
                 // Validate output data attributes if needed
             }
         };
-        ReRollInteractor interactor = new ReRollInteractor(mockRandomRecipe, mockReRollPresenter, mockRecipeFactory);
+        ReRollInteractor interactor = new ReRollInteractor(mockInMemoryDataAccessUser, mockReRollPresenter, mockRecipeFactory);
 
         // Execute multiple times and check if the output data and current index of RandomRecipe are consistent
         for (int i = 0; i < 10; i++) {

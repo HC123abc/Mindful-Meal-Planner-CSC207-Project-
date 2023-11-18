@@ -17,6 +17,7 @@ class RecipeFactoryTest {
         recipeObject.put("servings", 4);
         recipeObject.put("summary", "This is a test recipe summary.");
         recipeObject.put("image", "test_image.jpg");
+        recipeObject.put("id", 0);
 
         JSONArray extendedIngredientsArray = new JSONArray();
         JSONObject ingredient1 = new JSONObject();
@@ -59,6 +60,7 @@ class RecipeFactoryTest {
         assertEquals(expectedInstructions, recipe.getExtendedInstructions());
 
         assertEquals("test_image.jpg", recipe.getRecipeImageURL());
+        assertEquals("0", recipe.getId());
     }
 
 }

@@ -18,6 +18,7 @@ class MockGenerateRecipeAPI implements GenerateRecipeDataAccessInterface {
             recipeObject.put("servings", 2 + i);
             recipeObject.put("summary", "This is a wonderful recipe with fantastic flavors. <b>Enjoy!</b>");
             recipeObject.put("image", "https://example.com/recipe_" + (i + 1) + ".jpg");
+            recipeObject.put("id",  (i + 1));
 
             // Simulate extended ingredients
             JSONArray extendedIngredientsArray = new JSONArray();

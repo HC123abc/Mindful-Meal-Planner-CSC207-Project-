@@ -3,8 +3,9 @@ package entity;
 public class User {
     private final String username;
     private final String password;
-    private FavoriteRecipes favoriteRecipes;
-    private Preference preference;
+    private FavoriteRecipes favoriteRecipes = new FavoriteRecipes();
+    private Preference preference = new Preference();
+    private RandomRecipe randomRecipe = new RandomRecipe();
     public User(String name, String password) {
         this.username = name;
         this.password = password;
@@ -20,20 +21,23 @@ public class User {
         this.preference = preference;
     }
 
-    void addPreference(String type, String name){
-        //implement me
+    public Preference getPreference() {
+        return this.preference;
     }
 
-    void removePreference(String type, String name){
-        //implement me
+    public void setRandomRecipe(RandomRecipe randomRecipe) {
+        this.randomRecipe = randomRecipe;
     }
 
-    void addFavourite(Recipe recipe){
-        //implement me
+    public RandomRecipe getRandomRecipe() {
+        return randomRecipe;
     }
 
-    void removeFavourite(Recipe recipe){
-        //implement me
+    public FavoriteRecipes getFavoriteRecipes() {
+        return favoriteRecipes;
     }
 
+    public void setFavoriteRecipes(FavoriteRecipes favoriteRecipes) {
+        this.favoriteRecipes = favoriteRecipes;
+    }
 }

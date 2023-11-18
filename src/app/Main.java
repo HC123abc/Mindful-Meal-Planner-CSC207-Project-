@@ -1,9 +1,12 @@
 package app;
 
 import data_access.GenerateRecipe.GenerateRecipeApi;
+import data_access.InMemoryDataAccess.InMemoryDataAccessUser;
+import data_access.InMemoryDataAccess.InMemoryDataAccessUserInterface;
 import entity.Preference;
 import entity.RandomRecipe;
 import entity.RecipeFactory;
+import entity.User;
 import interface_adapter.CookThis.CookThisController;
 import interface_adapter.CookThis.CookThisPresenter;
 import interface_adapter.CookThis.CookThisViewModel;
@@ -51,6 +54,10 @@ public class Main {
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         new ViewManager(views, cardLayout, viewManagerModel);
 
+        InMemoryDataAccessUserInterface inMemoryDataAccessUser = new InMemoryDataAccessUser();
+        User user= new User("test","test");
+        inMemoryDataAccessUser.setActiveUser(user);
+
         // The data for the views, such as username and password, are in the ViewModels.
         // This information will be changed by a presenter object that is reporting the
         // results from the use case. The ViewModels are observable, and will
@@ -63,9 +70,9 @@ public class Main {
         GenerateRecipeOutputBoundary generateRecipeOutputBoundary = new CookThisOrReRollPresenter(cookThisOrReRollViewModel,viewManagerModel);
         // Create an instance of GenerateRecipe
         RecipeFactory recipeFactory = new RecipeFactory();
-        GenerateRecipeInteractor generateRecipeInteractor = new GenerateRecipeInteractor(generateRecipeAPI,generateRecipeOutputBoundary, preference, randomRecipe, recipeFactory);
+        GenerateRecipeInteractor generateRecipeInteractor = new GenerateRecipeInteractor(generateRecipeAPI,generateRecipeOutputBoundary, inMemoryDataAccessUser, recipeFactory);
         ReRollPresenter reRollPresenter = new ReRollPresenter(cookThisOrReRollViewModel,viewManagerModel);
-        ReRollInputBoundary reRollInputBoundary = new ReRollInteractor(randomRecipe,reRollPresenter,recipeFactory);
+        ReRollInputBoundary reRollInputBoundary = new ReRollInteractor(inMemoryDataAccessUser,reRollPresenter,recipeFactory);
         ReRollController reRollController = new ReRollController(reRollInputBoundary);
         CookThisViewModel cookThisViewModel = new CookThisViewModel();
         CookThisPresenter cookThisPresenter = new CookThisPresenter(cookThisViewModel,viewManagerModel);

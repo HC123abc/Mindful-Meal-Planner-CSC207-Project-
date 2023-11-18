@@ -1,11 +1,14 @@
 package use_case.generateRecipe;
 
 
+import data_access.InMemoryDataAccess.InMemoryDataAccessUser;
+import data_access.InMemoryDataAccess.InMemoryDataAccessUserInterface;
 import entity.Preference;
 import entity.RandomRecipe;
 import entity.RecipeFactory;
 import data_access.GenerateRecipe.GenerateRecipeApi;
 
+import entity.User;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
@@ -20,11 +23,10 @@ class GenerateRecipeInteractorTest {
     void successTest() {
         // Create mock dependencies
         GenerateRecipeDataAccessInterface generateRecipeAPI = new MockGenerateRecipeAPI();
-//      this doesn't matter because we will create mock recipes, preference are just need when we do the api calls
-//      so i will let the preference be default preference
-        Preference preference = new Preference();
-        RandomRecipe randomRecipe = new RandomRecipe();
         RecipeFactory recipeFactory = new RecipeFactory();
+        InMemoryDataAccessUserInterface mockInMemoryDataAccessUser = new InMemoryDataAccessUser();
+        User mockUser = new User("test", "test");
+        mockInMemoryDataAccessUser.setActiveUser(mockUser);
         GenerateRecipeOutputBoundary generateRecipePresenter = new GenerateRecipeOutputBoundary() {
 
             @Override
@@ -54,11 +56,11 @@ class GenerateRecipeInteractorTest {
                 fail("Use case failure is unexpected.");
             }
         };
+
         GenerateRecipeInputBoundary interactor = new GenerateRecipeInteractor(
                 generateRecipeAPI,
                 generateRecipePresenter,
-                preference,
-                randomRecipe,
+                mockInMemoryDataAccessUser,
                 recipeFactory
         );
 
@@ -76,10 +78,9 @@ class GenerateRecipeInteractorTest {
                 return null; // Implement the behavior you desire for this method
             }
         };
-//      this doesn't matter because we will create mock recipes, preference are just need when we do the api calls
-//      so i will let the preference be default preference
-        Preference preference = new Preference();
-        RandomRecipe randomRecipe = new RandomRecipe();
+        InMemoryDataAccessUserInterface mockInMemoryDataAccessUser = new InMemoryDataAccessUser();
+        User mockUser = new User("test", "test");
+        mockInMemoryDataAccessUser.setActiveUser(mockUser);
         RecipeFactory recipeFactory = new RecipeFactory();
         GenerateRecipeOutputBoundary generateRecipePresenter = new GenerateRecipeOutputBoundary() {
 
@@ -90,14 +91,13 @@ class GenerateRecipeInteractorTest {
 
             @Override
             public void prepareFailView(String error) {
-                assertEquals("Error Message: Recipe dont exist: 1. Most likely No more Api tokens (Fix: wait a day) 2. No recipe meet the specified preference (Fix: reduce preferences)",error);
+                assertEquals("Error Message: Recipe dont exist: 1. Most likely No more Api tokens (Fix: wait a day) 2. No recipe meet the specified preference (Fix: reduce preferences)", error);
             }
         };
         GenerateRecipeInputBoundary interactor = new GenerateRecipeInteractor(
                 generateRecipeAPI,
                 generateRecipePresenter,
-                preference,
-                randomRecipe,
+                mockInMemoryDataAccessUser,
                 recipeFactory
         );
 
