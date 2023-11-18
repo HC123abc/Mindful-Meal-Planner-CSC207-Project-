@@ -2,7 +2,7 @@ package view;
 
 import interface_adapter.CookThis.CookThisState;
 import interface_adapter.CookThis.CookThisViewModel;
-import interface_adapter.ViewManagerModel;
+import interface_adapter.Finish.FinishController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,10 +16,12 @@ public class CookThisView extends JPanel implements PropertyChangeListener {
     private JPanel ingredientsPanel;
     private JTextArea instructionsTextArea;
     private CookThisViewModel cookThisViewModel;
+    private FinishController finishController;
 
-    public CookThisView(CookThisViewModel cookThisViewModel, ViewManagerModel viewManagerModel) {
+    public CookThisView(CookThisViewModel cookThisViewModel, FinishController finishController) {
         this.cookThisViewModel = cookThisViewModel;
         this.cookThisViewModel.addPropertyChangeListener(this);
+        this.finishController = finishController;
 
         setLayout(new BorderLayout());
 
@@ -27,6 +29,14 @@ public class CookThisView extends JPanel implements PropertyChangeListener {
         JLabel instructionsTitleLabel = new JLabel("Instructions");
 
         ingredientsPanel = new JPanel(new GridBagLayout());
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 3;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(10, 100, 10, 10);
 
         JScrollPane ingredientsScrollPane = new JScrollPane(ingredientsPanel);
         ingredientsScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -41,11 +51,18 @@ public class CookThisView extends JPanel implements PropertyChangeListener {
         add(instructionsTitleLabel, BorderLayout.CENTER);
         add(instructionsScrollPane, BorderLayout.CENTER);
 
+        JButton finishButton = new JButton("Finish");
+        finishButton.addActionListener(e -> {
+            finishController.execute();
+        });
+        add(finishButton, BorderLayout.SOUTH);
+
         updateView(this.cookThisViewModel.getState());
     }
 
     public void updateView(CookThisState state) {
         ingredientsPanel.removeAll();
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -69,18 +86,14 @@ public class CookThisView extends JPanel implements PropertyChangeListener {
                 e.printStackTrace();
             }
 
-            JLabel ingredientLabel = new JLabel("<html>" + ingredient + "</html>");
-            ingredientLabel.setPreferredSize(new Dimension(150, 50));
-            ingredientLabel.setVerticalAlignment(SwingConstants.TOP);
-            ingredientLabel.setVerticalTextPosition(SwingConstants.TOP);
-            ingredientLabel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 0));
-            ingredientLabel.setOpaque(true);
-            ingredientLabel.setBackground(Color.WHITE);
-            ingredientLabel.setHorizontalAlignment(SwingConstants.LEFT);
-            ingredientLabel.setToolTipText(ingredient); // Add tooltip for full text view on hover
+            JTextArea ingredientArea = new JTextArea(ingredient);
+            ingredientArea.setLineWrap(true);
+            ingredientArea.setWrapStyleWord(true);
+            ingredientArea.setEditable(false);
+            ingredientArea.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
             ingredientPanel.add(imageLabel, BorderLayout.WEST);
-            ingredientPanel.add(ingredientLabel, BorderLayout.CENTER);
+            ingredientPanel.add(ingredientArea, BorderLayout.CENTER);
 
             ingredientsPanel.add(ingredientPanel, gbc);
             gbc.gridy++;
@@ -104,6 +117,5 @@ public class CookThisView extends JPanel implements PropertyChangeListener {
 
     public static void main(String[] args) {
         // Example usage:
-
     }
 }
