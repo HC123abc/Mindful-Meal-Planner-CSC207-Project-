@@ -6,6 +6,8 @@ import interface_adapter.Finish.FinishController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.URL;
@@ -52,8 +54,11 @@ public class CookThisView extends JPanel implements PropertyChangeListener {
         add(instructionsScrollPane, BorderLayout.CENTER);
 
         JButton finishButton = new JButton("Finish");
-        finishButton.addActionListener(e -> {
-            finishController.execute();
+        finishButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                finishController.execute();
+            }
         });
         add(finishButton, BorderLayout.SOUTH);
 
