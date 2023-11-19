@@ -22,7 +22,6 @@ public class loginViewModel extends ViewModel {
 
     @Override
     public void firePropertyChanged() {
-        System.out.println("hi");
         support.firePropertyChange("LoginStateChanged", null, this.state);
     }
 

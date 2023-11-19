@@ -25,6 +25,7 @@ public class LoginInteractor implements LoginInputBoundary {
         else if (UIDState.equals("Success!")){
             User cloneUser = DAO.setUser();
             IMDAU.setActiveUser(cloneUser);
+            System.out.println(IMDAU.getActiveUser());
             loginPresenter.prepareSuccessView(data.getUsername());
         } else {
             loginPresenter.prepareFailView(UIDState);
