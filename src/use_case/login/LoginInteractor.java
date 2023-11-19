@@ -19,7 +19,10 @@ public class LoginInteractor implements LoginInputBoundary {
     @Override
     public void execute(LoginInputData data) {
         String UIDState = DAO.getUser(data.getUsername(), data.getPassword());
-        if (UIDState.equals("Success!")){
+        if (data.getUsername().equals("")){
+            loginPresenter.prepapreEmptyView();
+        }
+        else if (UIDState.equals("Success!")){
             User cloneUser = DAO.setUser();
             IMDAU.setActiveUser(cloneUser);
             loginPresenter.prepareSuccessView(data.getUsername());

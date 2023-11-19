@@ -22,12 +22,13 @@ public class loginViewModel extends ViewModel {
 
     @Override
     public void firePropertyChanged() {
-
+        System.out.println("hi");
+        support.firePropertyChange("LoginStateChanged", null, this.state);
     }
 
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
-        support.firePropertyChange("LoginStateChanged", null, this.state);
+        support.addPropertyChangeListener(listener);
     }
     public loginState getState(){ return this.state; }
 

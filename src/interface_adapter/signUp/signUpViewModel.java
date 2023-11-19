@@ -31,6 +31,8 @@ public class signUpViewModel extends ViewModel {
 
     @Override
     public void firePropertyChanged() {
+        System.out.println(this.state.getError()+"error");
+        System.out.println(this.state.getEmpty()+"empty");
         support.firePropertyChange("SignUpStateChanged", null, this.state);
     }
 

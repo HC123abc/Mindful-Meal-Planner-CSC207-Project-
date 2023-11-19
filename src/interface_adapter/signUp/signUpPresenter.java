@@ -25,6 +25,7 @@ public class signUpPresenter implements signUpOutputBoundary{
     public void prepareFailView(String error) {
         signUpState SignupState = signUpVM.getState();
         SignupState.setError(error);
+        System.out.println(SignupState.getError());
         signUpVM.firePropertyChanged();
     }
 
@@ -33,5 +34,7 @@ public class signUpPresenter implements signUpOutputBoundary{
         signUpState SignupState = signUpVM.getState();
         SignupState.setEmpty(msg);
         signUpVM.firePropertyChanged();
+        VMM.setActiveView(signUpVM.getViewName());
+        VMM.firePropertyChanged();
     }
 }

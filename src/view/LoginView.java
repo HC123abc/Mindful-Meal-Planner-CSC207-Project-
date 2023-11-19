@@ -31,16 +31,12 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         this.LVM = LVM;
         this.LController = LController;
         this.SignUpController = SignUpController;
-        JFrame frame = new JFrame("Login");
-        frame.setSize(500, 500);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         // Create a panel to hold the components
         JPanel panel = new JPanel();
-        frame.add(panel);
         placeComponents(panel);
-
-        frame.setVisible(true);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); // Using BoxLayout for vertical arrangement
+        add(panel);
+        setVisible(true);
         this.viewName = LVM.getViewName();
 
     }
@@ -139,7 +135,9 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         loginState state = (loginState) evt.getNewValue();
+        System.out.println(state.getError() == null);
         if (state.getError() != null) {
+            System.out.println(state.getError());
             JOptionPane.showMessageDialog(this, state.getError());
         }
     }

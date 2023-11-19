@@ -31,4 +31,10 @@ public class loginPresenter implements loginOutputBoundary {
         VMM.setActiveView(mainView);
         VMM.firePropertyChanged();
     }
+
+    @Override
+    public void prepapreEmptyView() {
+        VMM.setActiveView(LVM.getViewName());
+        VMM.firePropertyChanged();
+    }
 }

@@ -129,7 +129,7 @@ public class Main {
 
         loginViewModel LVM = new loginViewModel();
         userDataAccessObject UDAO = new userDataAccessObject();
-        loginPresenter LoginPresenter = new loginPresenter(LVM, viewManagerModel, "main");
+        loginPresenter LoginPresenter = new loginPresenter(LVM, viewManagerModel, mainPageView.viewName);
         LoginInteractor loginInteractor = new LoginInteractor(UDAO, LoginPresenter, inMemoryDataAccessUser);
         loginController LoginController = new loginController(loginInteractor);
 
@@ -137,11 +137,12 @@ public class Main {
         signUpPresenter signUpPresenter = new signUpPresenter(SVM, mainPageView.viewName, viewManagerModel);
         signUpInteractor signUpInteractor = new signUpInteractor(UDAO, signUpPresenter, inMemoryDataAccessUser);
         signUpController signUpController = new signUpController(signUpInteractor);
-        signUpView SignUpView = new signUpView(signUpController, SVM);
-        views.add(SignUpView, SVM.getViewName());
+        signUpView SignUpView = new signUpView(signUpController, SVM, LoginController);
         LoginView loginView = new LoginView(LVM, LoginController, signUpController);
         views.add(loginView, LVM.getViewName());
+        views.add(SignUpView, SVM.getViewName());
 
+        System.out.println(loginView.viewName);
         viewManagerModel.setActiveView(loginView.viewName);
         viewManagerModel.firePropertyChanged();
 
