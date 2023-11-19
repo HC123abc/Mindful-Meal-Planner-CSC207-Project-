@@ -28,7 +28,7 @@ public class PreferenceInteractor implements PreferenceInputBoundary {
         List<String> selectedCuisines = convertMapToList(input.getSelectedCusines());
         List<String> selectedDiets = convertMapToList(input.getSelectedDiet());
         List<String> selectedIntolerances = convertMapToList(input.getSelectedIntolerance());
-
+        System.out.println(this.user.getPreference().getSelectedCuisines());
         // Update the preference entity
         this.preference.setSelectedCuisines(selectedCuisines);
         this.preference.setSelectedDiets(selectedDiets);
