@@ -143,8 +143,8 @@ public class Main {
         views.add(SignUpView, SVM.getViewName());
 
         System.out.println(loginView.viewName);
-//        viewManagerModel.setActiveView(loginView.viewName);
-        viewManagerModel.setActiveView(mainPageView.viewName);
+        viewManagerModel.setActiveView(loginView.viewName);
+//        viewManagerModel.setActiveView(mainPageView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
