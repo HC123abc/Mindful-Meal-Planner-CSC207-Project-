@@ -19,14 +19,16 @@ public class userDataAccessObject implements signUpDataAccessInterface, loginDat
     }
 
     @Override
-    public String storeUser(User user, String PasswordCheck) {
+    public String storeUser(User user, String password, String PasswordCheck) {
         if (!user.verifyPassword(PasswordCheck)) {
             return "Password not same";
         }
         if (user.getUsername().equals("")){
             return "Empty";
         }
-
+        if (password.length() < 5){
+            return "Your password is too small. 🦑";
+        }
         // Check if the username is already taken in userFile.txt
         try (BufferedReader myReader = new BufferedReader(new FileReader("userFile.txt"))) {
             String row;

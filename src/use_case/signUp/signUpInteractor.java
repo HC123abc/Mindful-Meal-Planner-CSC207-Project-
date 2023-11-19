@@ -18,7 +18,7 @@ public class signUpInteractor implements signUpInputBoundary {
     @Override
     public void execute(signUpInputData s){
         User user = DAO.createUser(s.getUsername(), s.getPassword());
-        String state = DAO.storeUser(user, s.getPasswordChecker());
+        String state = DAO.storeUser(user, s.getPassword(), s.getPasswordChecker());
         if (state.equals("Success!")){
             IMDAU.setActiveUser(user);
             signUpOutputData data = new signUpOutputData(user);
