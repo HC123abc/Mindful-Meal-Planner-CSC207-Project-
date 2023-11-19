@@ -3,13 +3,14 @@ package interface_adapter.signUp;
 public class signUpState {
 
     private String username = "";
-    private String Error = null;
+    private String error = null;
     private String password = "";
     private String checkPassword = "";
-    public void setError(String error) {
+    private String empty = null;
+    public void setError(String error) { this.error = error;
     }
     public String getError(){
-        return this.Error;
+        return this.error;
     }
 
     public String getUsername() {
@@ -31,5 +32,11 @@ public class signUpState {
     }
 
     public void setCheckPassword(String s) { this.checkPassword = s;
+    }
+
+    public void setEmpty(String msg) { this.empty = msg;
+    }
+    public String getEmpty(){
+        return this.empty;
     }
 }

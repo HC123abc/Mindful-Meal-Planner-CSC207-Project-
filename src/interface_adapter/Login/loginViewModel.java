@@ -14,6 +14,7 @@ public class loginViewModel extends ViewModel {
     public static final String PASSWORD_LABEL = "Choose password";
     public static final String LOGIN_BUTTON_LABEL = "Log in";
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+    public String viewName = "Login";
     private loginState state = new loginState();
     public loginViewModel() {
         super("login");
@@ -21,16 +22,19 @@ public class loginViewModel extends ViewModel {
 
     @Override
     public void firePropertyChanged() {
-
+        System.out.println("hi");
+        support.firePropertyChange("LoginStateChanged", null, this.state);
     }
 
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
-        support.firePropertyChange("LoginStateChanged", null, this.state);
+        support.addPropertyChangeListener(listener);
     }
     public loginState getState(){ return this.state; }
 
     public void setState(loginState LoginState) {
         this.state = LoginState;
     }
+
+
 }

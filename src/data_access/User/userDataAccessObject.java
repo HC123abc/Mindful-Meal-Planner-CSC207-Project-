@@ -23,6 +23,9 @@ public class userDataAccessObject implements signUpDataAccessInterface, loginDat
         if (!user.verifyPassword(PasswordCheck)) {
             return "Password not same";
         }
+        if (user.getUsername().equals("")){
+            return "Empty";
+        }
 
         // Check if the username is already taken in userFile.txt
         try (BufferedReader myReader = new BufferedReader(new FileReader("userFile.txt"))) {
@@ -65,6 +68,7 @@ public class userDataAccessObject implements signUpDataAccessInterface, loginDat
                     return userCheck(user, password);
                 }
             }
+            System.out.println("No user");
             return "User does not exist error.";
         } catch (IOException e) {
             throw new RuntimeException(e);

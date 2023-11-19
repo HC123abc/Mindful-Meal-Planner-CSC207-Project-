@@ -11,7 +11,7 @@ public class loginState {
     }
 
     public void setError(String uidState) {
-        this.error = null;
+        this.error = uidState;
     }
 
     public String getUsername() { return this.username;

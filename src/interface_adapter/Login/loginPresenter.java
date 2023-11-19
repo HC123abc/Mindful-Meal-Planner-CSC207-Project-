@@ -1,4 +1,5 @@
 package interface_adapter.Login;
+import data_access.InMemoryDataAccess.InMemoryDataAccessUserInterface;
 import interface_adapter.ViewManagerModel;
 import use_case.login.loginOutputBoundary;
 
@@ -8,6 +9,7 @@ public class loginPresenter implements loginOutputBoundary {
     private loginViewModel LVM;
     private ViewManagerModel VMM;
     private String mainView;
+
 
     public loginPresenter(loginViewModel LVM, ViewManagerModel VMM, String mainView){
         this.LVM = LVM;
@@ -27,6 +29,12 @@ public class loginPresenter implements loginOutputBoundary {
         this.LVM.setState(LoginState);
         LVM.firePropertyChanged();
         VMM.setActiveView(mainView);
+        VMM.firePropertyChanged();
+    }
+
+    @Override
+    public void prepapreEmptyView() {
+        VMM.setActiveView(LVM.getViewName());
         VMM.firePropertyChanged();
     }
 }

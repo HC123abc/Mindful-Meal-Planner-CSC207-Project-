@@ -3,6 +3,7 @@ package app;
 import data_access.GenerateRecipe.GenerateRecipeApi;
 import data_access.InMemoryDataAccess.InMemoryDataAccessUser;
 import data_access.InMemoryDataAccess.InMemoryDataAccessUserInterface;
+import data_access.User.userDataAccessObject;
 import entity.Preference;
 import entity.RandomRecipe;
 import entity.RecipeFactory;
@@ -16,6 +17,9 @@ import interface_adapter.CookThisOrReRoll.GenerateRecipeController;
 import interface_adapter.Finish.FinishController;
 import interface_adapter.Finish.FinishPresenter;
 import interface_adapter.Finish.FinishViewModel;
+import interface_adapter.Login.loginController;
+import interface_adapter.Login.loginPresenter;
+import interface_adapter.Login.loginViewModel;
 import interface_adapter.Preference.PreferenceController;
 import interface_adapter.Preference.PreferencePresenter;
 import interface_adapter.Preference.PreferenceViewModel;
@@ -26,6 +30,9 @@ import interface_adapter.RedirectToPreference.RedirectToPreferencePresenter;
 import interface_adapter.RedirectToPreference.RedirectToPreferenceViewModel;
 import interface_adapter.ViewManagerModel;
 
+import interface_adapter.signUp.signUpController;
+import interface_adapter.signUp.signUpPresenter;
+import interface_adapter.signUp.signUpViewModel;
 import use_case.Finish.FinishInteractor;
 import use_case.Preference.PreferenceInteractor;
 import use_case.RedirectToPreference.RedirectToPreferenceInteractor;
@@ -33,8 +40,10 @@ import use_case.cookThis.CookThisInteractor;
 import use_case.generateRecipe.GenerateRecipeDataAccessInterface;
 import use_case.generateRecipe.GenerateRecipeInteractor;
 import use_case.generateRecipe.GenerateRecipeOutputBoundary;
+import use_case.login.LoginInteractor;
 import use_case.reRoll.ReRollInputBoundary;
 import use_case.reRoll.ReRollInteractor;
+import use_case.signUp.signUpInteractor;
 import view.*;
 
 import javax.swing.*;
@@ -118,7 +127,23 @@ public class Main {
         MainPageView mainPageView = new MainPageView(generateRecipeController,cookThisOrReRollViewModel,redirectToPreferenceController);
         views.add(mainPageView, mainPageView.viewName);
 
-        viewManagerModel.setActiveView(mainPageView.viewName);
+        loginViewModel LVM = new loginViewModel();
+        userDataAccessObject UDAO = new userDataAccessObject();
+        loginPresenter LoginPresenter = new loginPresenter(LVM, viewManagerModel, mainPageView.viewName);
+        LoginInteractor loginInteractor = new LoginInteractor(UDAO, LoginPresenter, inMemoryDataAccessUser);
+        loginController LoginController = new loginController(loginInteractor);
+
+        signUpViewModel SVM = new signUpViewModel();
+        signUpPresenter signUpPresenter = new signUpPresenter(SVM, mainPageView.viewName, viewManagerModel);
+        signUpInteractor signUpInteractor = new signUpInteractor(UDAO, signUpPresenter, inMemoryDataAccessUser);
+        signUpController signUpController = new signUpController(signUpInteractor);
+        signUpView SignUpView = new signUpView(signUpController, SVM, LoginController);
+        LoginView loginView = new LoginView(LVM, LoginController, signUpController);
+        views.add(loginView, LVM.getViewName());
+        views.add(SignUpView, SVM.getViewName());
+
+        System.out.println(loginView.viewName);
+        viewManagerModel.setActiveView(loginView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
