@@ -126,7 +126,7 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
                 String ingredients = state.getIngredients();
                 String instruction = state.getInstruction();
                 String id = state.getId();
-                boolean isFavourited = state.getIsFavourited();
+                boolean isFavourite = state.getIsFavourite();
                 favouriteThisController.execute(
                         title,
                         summary,
@@ -136,7 +136,7 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
                         ingredients,
                         instruction,
                         id,
-                        isFavourited
+                        isFavourite
                 );
             }
         });
@@ -177,7 +177,7 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
 
         // Update favourite button icon
         CookThisOrReRollState state = cookThisOrReRollViewModel.getState();
-        if (state.getIsFavourited()) {
+        if (state.getIsFavourite()) {
             favouriteButton.setIcon(favouriteIconOn);
         } else {
             favouriteButton.setIcon(favouriteIconOff);
