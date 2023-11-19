@@ -31,11 +31,17 @@ public class GenerateRecipeInteractor implements GenerateRecipeInputBoundary {
     public void execute() {
 //  the input data will be formatted as a string so we can just add it to the query when we call the API call
         String tags = preference.getTags();
+        System.out.println(tags);
         String apiKey = "d6d8b743e3fd4afeac18d54cef0e21ff";
         JSONObject recipeJSON = generateRecipeAPI.getRecipes(apiKey,tags, 20);
         if (recipeJSON == null){
 //          prepare fail view
-            cookThisOrReRollPresenter.prepareFailView("Error Message: Recipe dont exist: 1. Most likely No more Api tokens (Fix: wait a day) 2. No recipe meet the specified preference (Fix: reduce preferences)" );
+            cookThisOrReRollPresenter.prepareFailView("Error Message:  Most likely No more Api tokens (Fix: wait a day)" );
+        }
+
+        else if (recipeJSON.getJSONArray("recipes").isEmpty()){
+//          prepare fail view
+            cookThisOrReRollPresenter.prepareFailView("Error Message: No recipe meet the specified preference (Fix: reduce preferences)" );
         }
         else{
 //           do stuff

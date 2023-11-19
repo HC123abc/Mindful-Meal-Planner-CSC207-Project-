@@ -3,6 +3,7 @@ package view;
 import interface_adapter.CookThisOrReRoll.CookThisOrReRollState;
 import interface_adapter.CookThisOrReRoll.CookThisOrReRollViewModel;
 import interface_adapter.CookThisOrReRoll.GenerateRecipeController;
+import interface_adapter.RedirectToPreference.RedirectToPreferenceController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,9 +16,11 @@ public class MainPageView extends JPanel  implements PropertyChangeListener {
     private GenerateRecipeController generateRecipeController;
     public String viewName = "MainPage";
     private CookThisOrReRollViewModel cookThisOrReRollViewModel;
+    private RedirectToPreferenceController redirectToPreferenceController;
 
-    public MainPageView(GenerateRecipeController generateRecipeController, CookThisOrReRollViewModel cookThisOrReRollViewModel) {
+    public MainPageView(GenerateRecipeController generateRecipeController, CookThisOrReRollViewModel cookThisOrReRollViewModel, RedirectToPreferenceController redirectToPreferenceController) {
         this.generateRecipeController = generateRecipeController;
+        this.redirectToPreferenceController = redirectToPreferenceController;
         this.cookThisOrReRollViewModel = cookThisOrReRollViewModel;
         this.cookThisOrReRollViewModel.addPropertyChangeListener(this);
         JPanel panel = new JPanel(new GridLayout(4, 1, 10, 10));
@@ -48,6 +51,7 @@ public class MainPageView extends JPanel  implements PropertyChangeListener {
             public void actionPerformed(ActionEvent e) {
                 // Handle Preferences button click
                 // Open the Preferences page or perform related actions
+                redirectToPreferenceController.execute();
             }
         });
 

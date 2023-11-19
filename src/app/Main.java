@@ -16,21 +16,26 @@ import interface_adapter.CookThisOrReRoll.GenerateRecipeController;
 import interface_adapter.Finish.FinishController;
 import interface_adapter.Finish.FinishPresenter;
 import interface_adapter.Finish.FinishViewModel;
+import interface_adapter.Preference.PreferenceController;
+import interface_adapter.Preference.PreferencePresenter;
+import interface_adapter.Preference.PreferenceViewModel;
 import interface_adapter.ReRoll.ReRollController;
 import interface_adapter.ReRoll.ReRollPresenter;
+import interface_adapter.RedirectToPreference.RedirectToPreferenceController;
+import interface_adapter.RedirectToPreference.RedirectToPreferencePresenter;
+import interface_adapter.RedirectToPreference.RedirectToPreferenceViewModel;
 import interface_adapter.ViewManagerModel;
 
 import use_case.Finish.FinishInteractor;
+import use_case.Preference.PreferenceInteractor;
+import use_case.RedirectToPreference.RedirectToPreferenceInteractor;
 import use_case.cookThis.CookThisInteractor;
 import use_case.generateRecipe.GenerateRecipeDataAccessInterface;
 import use_case.generateRecipe.GenerateRecipeInteractor;
 import use_case.generateRecipe.GenerateRecipeOutputBoundary;
 import use_case.reRoll.ReRollInputBoundary;
 import use_case.reRoll.ReRollInteractor;
-import view.CookThisOrReRollView;
-import view.CookThisView;
-import view.MainPageView;
-import view.ViewManager;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -93,8 +98,24 @@ public class Main {
         CookThisView cookThisView = new CookThisView(cookThisViewModel, finishController);
         views.add(cookThisView, cookThisView.viewName);
 
+        RedirectToPreferenceViewModel redirectToPreferenceViewModel = new RedirectToPreferenceViewModel();
+        RedirectToPreferencePresenter redirectToPreferencePresenter = new RedirectToPreferencePresenter(redirectToPreferenceViewModel,viewManagerModel);
+        RedirectToPreferenceInteractor redirectToPreferenceInteractor = new RedirectToPreferenceInteractor(inMemoryDataAccessUser,redirectToPreferencePresenter);
+        RedirectToPreferenceController redirectToPreferenceController = new RedirectToPreferenceController(redirectToPreferenceInteractor);
+
+        FinishViewModel finishViewModel2 = new FinishViewModel();
+        FinishPresenter finishPresenter2 = new FinishPresenter(viewManagerModel,finishViewModel2);
+        FinishInteractor finishInteractor2 = new FinishInteractor(finishPresenter2);
+        FinishController finishController2 = new FinishController(finishInteractor2);
+        PreferenceViewModel preferenceViewModel = new PreferenceViewModel();
+        PreferencePresenter preferencePresenter = new PreferencePresenter(preferenceViewModel,viewManagerModel);
+        PreferenceInteractor preferenceInteractor = new PreferenceInteractor(inMemoryDataAccessUser,preferencePresenter);
+        PreferenceController preferenceController = new PreferenceController(preferenceInteractor);
+        PreferenceView preferenceView = new PreferenceView(preferenceViewModel,preferenceController ,finishController2);
+        views.add(preferenceView, preferenceView.viewName);
+
         GenerateRecipeController generateRecipeController = new GenerateRecipeController(generateRecipeInteractor);
-        MainPageView mainPageView = new MainPageView(generateRecipeController,cookThisOrReRollViewModel);
+        MainPageView mainPageView = new MainPageView(generateRecipeController,cookThisOrReRollViewModel,redirectToPreferenceController);
         views.add(mainPageView, mainPageView.viewName);
 
         viewManagerModel.setActiveView(mainPageView.viewName);
