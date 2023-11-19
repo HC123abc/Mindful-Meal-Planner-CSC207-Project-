@@ -36,6 +36,5 @@ public class CookThisOrReRollPresenter implements GenerateRecipeOutputBoundary {
         CookThisOrReRollState cookThisOrReRollState = cookThisOrReRollViewModel.getState();
         cookThisOrReRollState.setRecipeError(error);
         cookThisOrReRollViewModel.firePropertyChanged();
-
     }
 }

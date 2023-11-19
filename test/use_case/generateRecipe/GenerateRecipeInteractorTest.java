@@ -9,6 +9,7 @@ import entity.RecipeFactory;
 import data_access.GenerateRecipe.GenerateRecipeApi;
 
 import entity.User;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
@@ -70,12 +71,12 @@ class GenerateRecipeInteractorTest {
     }
 
     @Test
-    void failureTest() {
+    void failureTestBecauseNoMoreApiTokens() {
         // Create mock dependencies or simplified implementations
         GenerateRecipeDataAccessInterface generateRecipeAPI = new GenerateRecipeApi() {
             @Override
             public JSONObject getRecipes(String apiKey, String tags, int count) {
-                return null; // Implement the behavior you desire for this method
+                return null;
             }
         };
         InMemoryDataAccessUserInterface mockInMemoryDataAccessUser = new InMemoryDataAccessUser();
@@ -91,8 +92,44 @@ class GenerateRecipeInteractorTest {
 
             @Override
             public void prepareFailView(String error) {
-                assertEquals("Error Message: Recipe dont exist: 1. Most likely No more Api tokens (Fix: wait a day) 2. No recipe meet the specified preference (Fix: reduce preferences)", error);
+                assertEquals("Error Message:  Most likely No more Api tokens (Fix: wait a day)", error);}
+        };
+        GenerateRecipeInputBoundary interactor = new GenerateRecipeInteractor(
+                generateRecipeAPI,
+                generateRecipePresenter,
+                mockInMemoryDataAccessUser,
+                recipeFactory
+        );
+
+        // Simulate executing the interactor
+        interactor.execute();
+
+    }
+    @Test
+    void failureTestBecauseNoRecipesAlignPreference() {
+        // Create mock dependencies or simplified implementations
+        GenerateRecipeDataAccessInterface generateRecipeAPI = new GenerateRecipeApi() {
+            @Override
+            public JSONObject getRecipes(String apiKey, String tags, int count) {
+                JSONObject response = new JSONObject();
+                response.put("recipes", new JSONArray());
+                return response;
             }
+        };
+        InMemoryDataAccessUserInterface mockInMemoryDataAccessUser = new InMemoryDataAccessUser();
+        User mockUser = new User("test", "test");
+        mockInMemoryDataAccessUser.setActiveUser(mockUser);
+        RecipeFactory recipeFactory = new RecipeFactory();
+        GenerateRecipeOutputBoundary generateRecipePresenter = new GenerateRecipeOutputBoundary() {
+
+            @Override
+            public void prepareSuccessView(GenerateRecipeOutputData recipeOutputData) {
+                fail("Use case success is unexpected.");
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                assertEquals("Error Message: No recipe meet the specified preference (Fix: reduce preferences)", error);}
         };
         GenerateRecipeInputBoundary interactor = new GenerateRecipeInteractor(
                 generateRecipeAPI,
