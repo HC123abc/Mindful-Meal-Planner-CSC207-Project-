@@ -75,7 +75,7 @@ class GenerateRecipeInteractorTest {
         // Create mock dependencies or simplified implementations
         GenerateRecipeDataAccessInterface generateRecipeAPI = new GenerateRecipeApi() {
             @Override
-            public JSONObject getRecipes(String apiKey, String tags, int count) {
+            public JSONObject getRecipes(String apiKey, String tags,String intolerances, int count) {
                 return null;
             }
         };
@@ -110,7 +110,7 @@ class GenerateRecipeInteractorTest {
         // Create mock dependencies or simplified implementations
         GenerateRecipeDataAccessInterface generateRecipeAPI = new GenerateRecipeApi() {
             @Override
-            public JSONObject getRecipes(String apiKey, String tags, int count) {
+            public JSONObject getRecipes(String apiKey, String tags, String intolerances, int count) {
                 JSONObject response = new JSONObject();
                 response.put("recipes", new JSONArray());
                 return response;

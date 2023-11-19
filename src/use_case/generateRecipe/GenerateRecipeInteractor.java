@@ -31,9 +31,9 @@ public class GenerateRecipeInteractor implements GenerateRecipeInputBoundary {
     public void execute() {
 //  the input data will be formatted as a string so we can just add it to the query when we call the API call
         String tags = preference.getTags();
-        System.out.println(tags);
+        String intolerances = preference.getIntolerances();
         String apiKey = "d6d8b743e3fd4afeac18d54cef0e21ff";
-        JSONObject recipeJSON = generateRecipeAPI.getRecipes(apiKey,tags, 20);
+        JSONObject recipeJSON = generateRecipeAPI.getRecipes(apiKey,tags, intolerances,20);
         if (recipeJSON == null){
 //          prepare fail view
             cookThisOrReRollPresenter.prepareFailView("Error Message:  Most likely No more Api tokens (Fix: wait a day)" );
@@ -44,9 +44,9 @@ public class GenerateRecipeInteractor implements GenerateRecipeInputBoundary {
             cookThisOrReRollPresenter.prepareFailView("Error Message: No recipe meet the specified preference (Fix: reduce preferences)" );
         }
         else{
-//           do stuff
             JSONArray recipesArray = recipeJSON.getJSONArray("recipes");
             this.randomRecipe.setRandomRecipeList(recipesArray);
+            this.randomRecipe.setCurrentRecipeIndex(0);
             user.setRandomRecipe(this.randomRecipe);
             Recipe recipe = getRecipe();
 //          prepare success view
