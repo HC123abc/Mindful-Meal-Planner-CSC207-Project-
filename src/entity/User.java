@@ -15,7 +15,7 @@ public class User {
     public boolean verifyPassword(String checkPassword) {
         return checkPassword.equals(this.password);
     }
-    void setPreference(Preference preference){ //this is for initial user creation
+    public void setPreference(Preference preference){ //this is for initial user creation
         this.preference = preference;
     }
 
