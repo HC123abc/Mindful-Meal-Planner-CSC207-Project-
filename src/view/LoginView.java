@@ -41,6 +41,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         placeComponents(panel);
 
         frame.setVisible(true);
+        this.viewName = LVM.getViewName();
+
     }
 
     private void placeComponents(JPanel panel){

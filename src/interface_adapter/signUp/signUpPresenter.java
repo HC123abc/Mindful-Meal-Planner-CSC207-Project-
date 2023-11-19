@@ -7,21 +7,17 @@ import use_case.signUp.signUpOutputData;
 
 public class signUpPresenter implements signUpOutputBoundary{
     private signUpViewModel signUpVM;
-    private loginViewModel loginVM;
     private ViewManagerModel VMM;
+    private String mainView;
 
-    public signUpPresenter(signUpViewModel signUpVM, loginViewModel loginVM, ViewManagerModel VMM){
+    public signUpPresenter(signUpViewModel signUpVM, String main, ViewManagerModel VMM){
         this.signUpVM = signUpVM;
-        this.loginVM = loginVM;
+        this.mainView = main;
         this.VMM = VMM;
     }
     @Override
     public void prepareSuccessView(signUpOutputData data) {
-        loginState LoginState = loginVM.getState();
-        //loginState.setUsername(data.getUsername());
-        this.loginVM.setState(LoginState);
-        loginVM.firePropertyChanged();
-        VMM.setActiveView(loginVM.getViewName());
+        VMM.setActiveView(mainView);
         VMM.firePropertyChanged();
     }
 
@@ -29,6 +25,13 @@ public class signUpPresenter implements signUpOutputBoundary{
     public void prepareFailView(String error) {
         signUpState SignupState = signUpVM.getState();
         SignupState.setError(error);
+        signUpVM.firePropertyChanged();
+    }
+
+    @Override
+    public void prepareEmptyView(String msg) {
+        signUpState SignupState = signUpVM.getState();
+        SignupState.setEmpty(msg);
         signUpVM.firePropertyChanged();
     }
 }

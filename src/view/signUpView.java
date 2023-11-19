@@ -22,6 +22,8 @@ public class signUpView extends JPanel implements ActionListener, PropertyChange
     private final JPasswordField passwordInputField = new JPasswordField(15);
     private final JPasswordField checkPasswordInputField = new JPasswordField(15);
     private final signUpController signupController;
+    private String viewName = "Sign Up";
+    private String instructionsText = "Please Input a Username.";
 
     public signUpView(signUpController controller, signUpViewModel signupViewModel){
         this.signupViewModel = signupViewModel;
@@ -38,6 +40,7 @@ public class signUpView extends JPanel implements ActionListener, PropertyChange
         placeComponents(panel);
 
         frame.setVisible(true);
+        this.viewName = signupViewModel.getViewName();
 
     }
 
@@ -47,6 +50,8 @@ public class signUpView extends JPanel implements ActionListener, PropertyChange
         JPanel buttons = new JPanel();
         JButton signUp = new JButton(signUpViewModel.SIGNUP_BUTTON_LABEL);
         buttons.add(signUp);
+
+        JLabel instructions = new JLabel(instructionsText);
 
         LabelTextPanel usernameInfo = new LabelTextPanel(
                 new JLabel(signUpViewModel.USERNAME_LABEL), usernameInputField);
@@ -150,6 +155,9 @@ public class signUpView extends JPanel implements ActionListener, PropertyChange
         signUpState state = (signUpState) evt.getNewValue();
         if (state.getError() != null) {
             JOptionPane.showMessageDialog(this, state.getError());
+        }
+        if (state.getEmpty() != null){
+            this.instructionsText = "Please Input a Username. 🪿";
         }
     }
 }

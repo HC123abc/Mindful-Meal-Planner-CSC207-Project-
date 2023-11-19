@@ -6,6 +6,7 @@ public class signUpState {
     private String Error = null;
     private String password = "";
     private String checkPassword = "";
+    private String empty = null;
     public void setError(String error) {
     }
     public String getError(){
@@ -31,5 +32,11 @@ public class signUpState {
     }
 
     public void setCheckPassword(String s) { this.checkPassword = s;
+    }
+
+    public void setEmpty(String msg) { this.empty = msg;
+    }
+    public String getEmpty(){
+        return this.empty;
     }
 }
