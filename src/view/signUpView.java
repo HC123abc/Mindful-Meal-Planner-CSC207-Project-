@@ -140,17 +140,6 @@ public class signUpView extends JPanel implements ActionListener, PropertyChange
 
     }
 
-    public static void main(String[] args) {
-        signUpViewModel s = new signUpViewModel();
-        userDataAccessObject d = new userDataAccessObject();
-        loginViewModel l = new loginViewModel();
-        ViewManagerModel vmm = new ViewManagerModel();
-        signUpPresenter p = new signUpPresenter(s, l, vmm);
-        signUpInteractor i = new signUpInteractor(d, p);
-        signUpController c = new signUpController(i);
-        new signUpView(c, s);
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
 

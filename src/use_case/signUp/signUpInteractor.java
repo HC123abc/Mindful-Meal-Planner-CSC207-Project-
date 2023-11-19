@@ -20,6 +20,9 @@ public class signUpInteractor implements signUpInputBoundary {
             signUpOutputData data = new signUpOutputData(user);
             signUpPresenter.prepareSuccessView(data);
         }
+        if (state.equals("Empty Username")){
+
+        }
         else{
             signUpPresenter.prepareFailView(state);
         }

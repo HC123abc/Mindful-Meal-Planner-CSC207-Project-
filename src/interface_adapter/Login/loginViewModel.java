@@ -14,6 +14,7 @@ public class loginViewModel extends ViewModel {
     public static final String PASSWORD_LABEL = "Choose password";
     public static final String LOGIN_BUTTON_LABEL = "Log in";
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+    public String viewName = "Login";
     private loginState state = new loginState();
     public loginViewModel() {
         super("login");
@@ -33,4 +34,6 @@ public class loginViewModel extends ViewModel {
     public void setState(loginState LoginState) {
         this.state = LoginState;
     }
+
+
 }
