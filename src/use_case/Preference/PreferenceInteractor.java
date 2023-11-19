@@ -33,6 +33,8 @@ public class PreferenceInteractor implements PreferenceInputBoundary {
         this.preference.setSelectedCuisines(selectedCuisines);
         this.preference.setSelectedDiets(selectedDiets);
         this.preference.setSelectedIntolerances(selectedIntolerances);
+        System.out.println(this.user.getPreference().getSelectedCuisines());
+        System.out.println(this.user.getPreference());
 
         // Create output data and use the presenter
         this.preferencePresenter.prepareSuccessView("Successfully updated your preferences!");

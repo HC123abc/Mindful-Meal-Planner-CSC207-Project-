@@ -26,6 +26,7 @@ public class loginPresenter implements loginOutputBoundary {
     @Override
     public void prepareSuccessView(String username) {
         loginState LoginState = LVM.getState();
+        LoginState.setError(null);
         this.LVM.setState(LoginState);
         LVM.firePropertyChanged();
         VMM.setActiveView(mainView);
