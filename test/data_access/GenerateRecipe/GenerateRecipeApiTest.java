@@ -15,7 +15,7 @@ public class GenerateRecipeApiTest {
         int number = 1;
 
         GenerateRecipeApi api = new GenerateRecipeApi();
-        JSONObject response = api.getRecipes(apiKey, tags, number);
+        JSONObject response = api.getRecipes(apiKey, tags,"", number);
 
         assertNotNull(response);
 
@@ -39,7 +39,7 @@ public class GenerateRecipeApiTest {
         int number = 10;
 
         GenerateRecipeApi api = new GenerateRecipeApi();
-        JSONObject response = api.getRecipes(apiKey, tags, number);
+        JSONObject response = api.getRecipes(apiKey, tags, "",number);
 
         assertNull(response);
     }

@@ -144,6 +144,7 @@ public class Main {
 
         System.out.println(loginView.viewName);
         viewManagerModel.setActiveView(loginView.viewName);
+//        viewManagerModel.setActiveView(mainPageView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();

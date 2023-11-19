@@ -37,6 +37,7 @@ public class Preference {
     }
     public String getTags() {
         StringBuilder tags = new StringBuilder();
+        StringBuilder intolerances = new StringBuilder();
 
         Random random = new Random();
         String randomCuisine = "";
@@ -49,16 +50,32 @@ public class Preference {
             tags.append(",").append(diet.toLowerCase());
         }
 
-        for (String intolerance : selectedIntolerances) {
-            tags.append(",").append(intolerance.toLowerCase());
-        }
-
         // Remove the trailing comma if it exists
         if (tags.length() > 0 && tags.charAt(tags.length() - 1) == ',') {
             tags.deleteCharAt(tags.length() - 1);
         }
+
         // Remove whitespaces
-        return tags.toString().trim();
+        String tagsString = tags.toString().trim();
+        String intolerancesString = intolerances.toString().trim();
+
+        // Return both tags and intolerances separately
+        return tagsString ;
+    }
+    public String getIntolerances() {
+        StringBuilder intolerances = new StringBuilder();
+
+        for (String intolerance : selectedIntolerances) {
+            intolerances.append(",").append(intolerance.toLowerCase());
+        }
+
+        // Remove the trailing comma if it exists
+        if (intolerances.length() > 0 && intolerances.charAt(0) == ',') {
+            intolerances.deleteCharAt(0);
+        }
+
+        // Remove whitespaces
+        return intolerances.toString().trim();
     }
 
 }
