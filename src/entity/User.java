@@ -35,4 +35,6 @@ public class User {
         return favouriteRecipes;
     }
 
+    public void setFavouriteRecipes(FavouriteRecipes fave) { this.favouriteRecipes = fave;
+    }
 }
