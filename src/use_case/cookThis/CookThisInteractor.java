@@ -12,6 +12,7 @@ public class CookThisInteractor implements CookThisInputBoundary{
     public void execute(CookThisInputData input) {
         String extendedIngredients = input.getIngredients();
         String extendedInstructions = input.getInstructions();
+        String previousView = input.getPreviousView();
         // Initialize the Map to hold ingredient names and their image URLs
         Map<String, String> ingredientsWithImage = new HashMap<>();
 
@@ -30,7 +31,7 @@ public class CookThisInteractor implements CookThisInputBoundary{
                 ingredientsWithImage.put(ingredientDetails, ingredientImageURL);
             }
         }
-        CookThisOutputData cookThisOutputData = new CookThisOutputData(ingredientsWithImage,extendedInstructions);
+        CookThisOutputData cookThisOutputData = new CookThisOutputData(ingredientsWithImage,extendedInstructions,previousView);
         cookThisPresenter.prepareSuccessView(cookThisOutputData);
 
     }
