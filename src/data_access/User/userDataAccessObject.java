@@ -21,6 +21,10 @@ import java.util.List;
 public class userDataAccessObject implements signUpDataAccessInterface, loginDataAccessInterface {
 
     private User currentUser = null; // current user
+    private String txt = "userFile.txt";
+    public void txtChange(String fileName){
+        this.txt = fileName;
+    }
     @Override
     public User createUser(String username, String password){
         userFactory factory = new userFactory();
@@ -40,7 +44,7 @@ public class userDataAccessObject implements signUpDataAccessInterface, loginDat
             return "Your password is too small. 🦑";
         }
         // Check if the username is already taken in userFile.txt
-        try (BufferedReader myReader = new BufferedReader(new FileReader("userFile.txt"))) {
+        try (BufferedReader myReader = new BufferedReader(new FileReader(txt))) {
             String row;
             while ((row = myReader.readLine()) != null) {
                 if (user.getUsername().equals(row)) {
@@ -54,7 +58,7 @@ public class userDataAccessObject implements signUpDataAccessInterface, loginDat
             throw new RuntimeException(e);
         }
 
-        try (BufferedWriter textFileWriter = new BufferedWriter(new FileWriter("userFile.txt", true))){
+        try (BufferedWriter textFileWriter = new BufferedWriter(new FileWriter(txt, true))){
             FileWriter jsonFileWriter = new FileWriter("./users/" + user.getUsername() + ".json", true);
             textFileWriter.write(user.getUsername());
             textFileWriter.newLine();
@@ -73,7 +77,7 @@ public class userDataAccessObject implements signUpDataAccessInterface, loginDat
 
     @Override
     public String getUser(String user, String password) {
-        try (BufferedReader myReader = new BufferedReader(new FileReader("userFile.txt"))) {
+        try (BufferedReader myReader = new BufferedReader(new FileReader(txt))) {
             String row;
             while ((row = myReader.readLine()) != null) {
                 if (user.equals(row)) {

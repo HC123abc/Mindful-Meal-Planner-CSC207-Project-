@@ -3,7 +3,8 @@ package data_access.GenerateRecipe;
 import entity.Recipe;
 import entity.RecipeFactory;
 import org.json.JSONObject;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GenerateRecipeApiTest {
