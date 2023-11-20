@@ -36,8 +36,8 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
 
 
     //may need to add .getScaledInstance(60, 60, java.awt.Image.SCALE_SMOOTH);
-    ImageIcon favouriteIconOn = new ImageIcon("assets/favouritesAssets/favourite_star_on_temp.png");
-    ImageIcon favouriteIconOff = new ImageIcon("assets/favouritesAssets/favourite_star_off_temp.png");
+//    private ImageIcon favouriteIconOn = new ImageIcon("assets/favouritesAssets/favourite_star_on_temp.png");
+//    private ImageIcon favouriteIconOff = new ImageIcon("assets/favouritesAssets/favourite_star_off_temp.png");
 
 
     public CookThisOrReRollView(CookThisOrReRollViewModel cookThisOrReRollViewModel,
@@ -67,7 +67,7 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
         reRollButton = new JButton("Reroll");
 
         favouriteButton = new JButton("Favourite this recipe");
-        favouriteButton.setIcon(favouriteIconOff);
+//        favouriteButton.setIcon(favouriteIconOff);
 
         // Set up the layout
         setLayout(new BorderLayout());
@@ -117,7 +117,9 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
         favouriteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("favBtn clicked");
                 CookThisOrReRollState state = cookThisOrReRollViewModel.getState();
+                System.out.println(state.getIsFavourite());
                 String title = state.getTitle();
                 String summary = state.getSummary();
                 String image = state.getImage();
@@ -126,20 +128,10 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
                 String ingredients = state.getIngredients();
                 String instruction = state.getInstruction();
                 String id = state.getId();
-
-                boolean isFavourite = !state.getIsFavourite(); // on click, we'll switch the recipe's isFavourite status
-
-                favouriteThisController.execute(
-                        title,
-                        summary,
-                        image,
-                        servings,
-                        readyInMinutes,
-                        ingredients,
-                        instruction,
-                        id,
-                        isFavourite
-                );
+                boolean isFavourite = state.getIsFavourite();
+                favouriteThisController.execute(title, summary, image, servings,
+                        readyInMinutes, ingredients, instruction, id, isFavourite);
+                System.out.println(state.getIsFavourite());
             }
         });
 
@@ -180,10 +172,21 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
         // Update favourite button icon
         CookThisOrReRollState state = cookThisOrReRollViewModel.getState();
         if (state.getIsFavourite()) {
-            favouriteButton.setIcon(favouriteIconOn);
+//            favouriteButton.setIcon(favouriteIconOn);
+            System.out.println("On");
+//            JOptionPane.showMessageDialog(null,
+//                    "This recipe was favourited",
+//                    "Recipe favourited",
+//                    JOptionPane.INFORMATION_MESSAGE);
         } else {
-            favouriteButton.setIcon(favouriteIconOff);
+//            favouriteButton.setIcon(favouriteIconOff);
+            System.out.println("Off");
+//            JOptionPane.showMessageDialog(null,
+//                    "This recipe was unfavourited",
+//                    "Recipe unfavourited",
+//                    JOptionPane.INFORMATION_MESSAGE);
         }
+        //titleImagePanel, otherComponentsPanel
     }
 
     @Override

@@ -11,10 +11,10 @@ public class favouriteThisInteractor implements favouriteThisInputBoundary{
     private favouriteThisOutputBoundary fTPresenter;
 
     public favouriteThisInteractor(InMemoryDataAccessUserInterface inMemoryDataAccessUser,
-                                   favouriteThisOutputBoundary fTOutputBoundary) {
+                                   favouriteThisOutputBoundary fTPresenter) {
         this.user = inMemoryDataAccessUser.getActiveUser();
         this.favouriteRecipes = user.getFavouriteRecipes();
-        this.fTPresenter = fTOutputBoundary;
+        this.fTPresenter = fTPresenter;
     }
 
 //    private void execute(Recipe recipe) {
@@ -29,18 +29,22 @@ public class favouriteThisInteractor implements favouriteThisInputBoundary{
 
     @Override
     public void execute(favouriteThisInputData fTInputData) {
+        favouriteThisOutputData fTOutputData;
         boolean isFavourite = fTInputData.getIsFavourite();
         Recipe recipe = new Recipe(fTInputData.getTitle(), fTInputData.getReadyInMinutes(),
                 fTInputData.getServings(),fTInputData.getSummary(), fTInputData.getIngredients(),
                 fTInputData.getInstructions(), fTInputData.getImage(), fTInputData.getId());
 
         if (isFavourite) {
-            favouriteRecipes.setOneFavouriteRecipe(recipe);
-            favouriteThisOutputData fTOutputData = new favouriteThisOutputData(true);
-        } else {
             favouriteRecipes.removeOneRecipe(recipe);
-            favouriteThisOutputData fTOutputData = new favouriteThisOutputData(false);
+            fTOutputData = new favouriteThisOutputData(false);
+
+        } else {
+            favouriteRecipes.setOneFavouriteRecipe(recipe);
+            fTOutputData = new favouriteThisOutputData(true);
         }
+
+        fTPresenter.prepareSuccessView(fTOutputData);
     }
 
 
