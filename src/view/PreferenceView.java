@@ -1,11 +1,10 @@
 package view;
 
-import interface_adapter.CookThis.CookThisState;
 import interface_adapter.Finish.FinishController;
-import interface_adapter.Login.loginState;
 import interface_adapter.Preference.PreferenceController;
 import interface_adapter.Preference.PreferenceState;
 import interface_adapter.Preference.PreferenceViewModel;
+import interface_adapter.RedirectToPreference.RedirectToPreferenceViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,17 +22,21 @@ public class PreferenceView extends JPanel implements PropertyChangeListener {
     private PreferenceViewModel preferenceViewModel;
     private PreferenceController preferenceController;
     private FinishController finishController;
+    private RedirectToPreferenceViewModel redirectToPreferenceViewModel;
     public String viewName = "Preference";
+    private JPanel panel;
 
-    public PreferenceView(PreferenceViewModel preferenceViewModel, PreferenceController preferenceController, FinishController finishController) {
+    public PreferenceView(PreferenceViewModel preferenceViewModel, RedirectToPreferenceViewModel redirectToPreferenceViewModel, PreferenceController preferenceController, FinishController finishController) {
         this.preferenceViewModel = preferenceViewModel;
         this.preferenceController = preferenceController;
         this.finishController = finishController;
+        this.redirectToPreferenceViewModel = redirectToPreferenceViewModel;
         this.preferenceViewModel.addPropertyChangeListener(this);
+        this.redirectToPreferenceViewModel.addPropertyChangeListener(this);
 
 
         // Create a panel to hold the components
-        JPanel panel = new JPanel();
+        panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); // Using BoxLayout for vertical arrangement
 
         placeComponents(panel);
@@ -198,11 +201,23 @@ public class PreferenceView extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getNewValue() instanceof PreferenceState) {
+        if (evt.getPropertyName().equals("PreferenceStateChanged")) {
             PreferenceState state = (PreferenceState) evt.getNewValue();
             JOptionPane.showMessageDialog(this, state.getSaved());
             state.setSaved("");
         }
+        if (evt.getPropertyName().equals("RedirectToPreferenceStateChanged")) {
+            PreferenceState state = redirectToPreferenceViewModel.getState();
+            preferenceViewModel.setState(state);
+            resetCheckboxes();
+        }
+
+    }
+    private void resetCheckboxes() {
+        panel.removeAll(); // Clear the existing components
+        placeComponents(panel); // Reinitialize the checkboxes based on the updated state
+        revalidate(); // Refresh the view
+        repaint(); // Repaint the view
     }
 
     //  testing

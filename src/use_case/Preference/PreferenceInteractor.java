@@ -16,15 +16,17 @@ public class PreferenceInteractor implements PreferenceInputBoundary {
     private User user;
 
     private PreferenceOutputBoundary preferencePresenter;
+    private InMemoryDataAccessUserInterface inMemoryDataAccessUser;
 
     public PreferenceInteractor(InMemoryDataAccessUserInterface inMemoryDataAccessUser, PreferenceOutputBoundary preferencePresenter) {
-        this.user = inMemoryDataAccessUser.getActiveUser();
-        this.preference = user.getPreference();
+        this.inMemoryDataAccessUser = inMemoryDataAccessUser;
         this.preferencePresenter = preferencePresenter;
     }
 
     @Override
     public void execute(PreferenceInputData input) {
+        this.user = inMemoryDataAccessUser.getActiveUser();
+        this.preference = user.getPreference();
         List<String> selectedCuisines = convertMapToList(input.getSelectedCusines());
         List<String> selectedDiets = convertMapToList(input.getSelectedDiet());
         List<String> selectedIntolerances = convertMapToList(input.getSelectedIntolerance());

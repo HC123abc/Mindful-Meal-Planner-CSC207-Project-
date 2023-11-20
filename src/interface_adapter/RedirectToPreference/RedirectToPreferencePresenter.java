@@ -10,22 +10,22 @@ import use_case.RedirectToPreference.RedirectToPreferenceOutputBoundary;
 import use_case.RedirectToPreference.RedirectToPreferenceOutputData;
 
 public class RedirectToPreferencePresenter implements RedirectToPreferenceOutputBoundary {
-    private final RedirectToPreferenceViewModel preferenceViewModel;
+    private final RedirectToPreferenceViewModel redirectToPreferenceViewModel;
     private ViewManagerModel viewManagerModel;
 
-    public RedirectToPreferencePresenter(RedirectToPreferenceViewModel preferenceViewModel, ViewManagerModel viewManagerModel) {
-        this.preferenceViewModel = preferenceViewModel;
+    public RedirectToPreferencePresenter(RedirectToPreferenceViewModel redirectToPreferenceViewModel, ViewManagerModel viewManagerModel) {
+        this.redirectToPreferenceViewModel = redirectToPreferenceViewModel;
         this.viewManagerModel = viewManagerModel;
     }
     public void prepareSuccessView(RedirectToPreferenceOutputData preferenceOutputdata) {
 //      main view model
-        PreferenceState preferenceState = preferenceViewModel.getState();
+        PreferenceState preferenceState = redirectToPreferenceViewModel.getState();
         preferenceState.setSelectedCuisinesMap(preferenceOutputdata.getSelectedCusines());
         preferenceState.setSelectedDietsMap(preferenceOutputdata.getSelectedDiet());
         preferenceState.setSelectedIntolerancesMap(preferenceOutputdata.getSelectedIntolerance());
-        this.preferenceViewModel.setState(preferenceState);
-        preferenceViewModel.firePropertyChanged();
-        viewManagerModel.setActiveView(preferenceViewModel.getViewName());
+        this.redirectToPreferenceViewModel.setState(preferenceState);
+        redirectToPreferenceViewModel.firePropertyChanged();
+        viewManagerModel.setActiveView(redirectToPreferenceViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 }

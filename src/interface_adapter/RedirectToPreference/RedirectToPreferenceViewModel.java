@@ -7,7 +7,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 
-public class RedirectToPreferenceViewModel extends ViewModel {
+public class RedirectToPreferenceViewModel extends ViewModel  {
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     private PreferenceState state = new PreferenceState();
 
@@ -23,7 +23,7 @@ public class RedirectToPreferenceViewModel extends ViewModel {
 
     @Override
     public void firePropertyChanged() {
-        support.firePropertyChange("PreferenceStateChanged", null, this.state);
+        support.firePropertyChange("RedirectToPreferenceStateChanged", null, this.state);
     }
 
     @Override

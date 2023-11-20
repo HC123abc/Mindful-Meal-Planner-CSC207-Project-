@@ -17,18 +17,20 @@ import java.util.Map;
 
 public class RedirectToPreferenceInteractor implements RedirectToPreferenceInputBoundary {
     private Preference preference;
+    private InMemoryDataAccessUserInterface inMemoryDataAccessUser;
     private User user;
 
     private RedirectToPreferenceOutputBoundary redirectToPreferenceOutputPresenter;
 
     public RedirectToPreferenceInteractor(InMemoryDataAccessUserInterface inMemoryDataAccessUser, RedirectToPreferenceOutputBoundary redirectToPreferenceOutputPresenter) {
-        this.user = inMemoryDataAccessUser.getActiveUser();
-        this.preference = user.getPreference();
+        this.inMemoryDataAccessUser = inMemoryDataAccessUser;
         this.redirectToPreferenceOutputPresenter = redirectToPreferenceOutputPresenter;
     }
 
     @Override
     public void execute() {
+        this.user = inMemoryDataAccessUser.getActiveUser();
+        this.preference = user.getPreference();
         List<String> selectedCuisines = this.preference.getSelectedCuisines();
         List<String> selectedDiets = this.preference.getSelectedDiets();
         List<String> selectedIntolerances = this.preference.getSelectedIntolerances();

@@ -120,7 +120,7 @@ public class Main {
         PreferencePresenter preferencePresenter = new PreferencePresenter(preferenceViewModel,viewManagerModel);
         PreferenceInteractor preferenceInteractor = new PreferenceInteractor(inMemoryDataAccessUser,preferencePresenter);
         PreferenceController preferenceController = new PreferenceController(preferenceInteractor);
-        PreferenceView preferenceView = new PreferenceView(preferenceViewModel,preferenceController ,finishController2);
+        PreferenceView preferenceView = new PreferenceView(preferenceViewModel,redirectToPreferenceViewModel,preferenceController ,finishController2 );
         views.add(preferenceView, preferenceView.viewName);
 
         GenerateRecipeController generateRecipeController = new GenerateRecipeController(generateRecipeInteractor);
@@ -132,7 +132,7 @@ public class Main {
         loginPresenter LoginPresenter = new loginPresenter(LVM, viewManagerModel, mainPageView.viewName);
         LoginInteractor loginInteractor = new LoginInteractor(UDAO, LoginPresenter, inMemoryDataAccessUser);
         loginController LoginController = new loginController(loginInteractor);
-
+        System.out.println(inMemoryDataAccessUser.getActiveUser().getUsername());
         signUpViewModel SVM = new signUpViewModel();
         signUpPresenter signUpPresenter = new signUpPresenter(SVM, mainPageView.viewName, viewManagerModel);
         signUpInteractor signUpInteractor = new signUpInteractor(UDAO, signUpPresenter, inMemoryDataAccessUser);

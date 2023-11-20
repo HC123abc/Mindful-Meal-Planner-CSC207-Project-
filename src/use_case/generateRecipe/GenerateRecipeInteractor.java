@@ -9,17 +9,16 @@ public class GenerateRecipeInteractor implements GenerateRecipeInputBoundary {
     //    private GenerateRecipeOutputData generateRecipeOutputData;
     private GenerateRecipeDataAccessInterface generateRecipeAPI;
     private GenerateRecipeOutputBoundary cookThisOrReRollPresenter;
+    private InMemoryDataAccessUserInterface inMemoryDataAccessUser;
     private User user;
     private Preference preference;
     private RandomRecipe randomRecipe;
     private RecipeFactory recipeFactory;
 
 
-    public GenerateRecipeInteractor(GenerateRecipeDataAccessInterface generateRecipeAPI, GenerateRecipeOutputBoundary generateRecipeOutputBoundary, InMemoryDataAccessUserInterface inMemoryDataAccessUserInterface, RecipeFactory recipeFactory) {
+    public GenerateRecipeInteractor(GenerateRecipeDataAccessInterface generateRecipeAPI, GenerateRecipeOutputBoundary generateRecipeOutputBoundary, InMemoryDataAccessUserInterface inMemoryDataAccessUser, RecipeFactory recipeFactory) {
         this.generateRecipeAPI = generateRecipeAPI;
-        this.user = inMemoryDataAccessUserInterface.getActiveUser();
-        this.preference = user.getPreference();
-        this.randomRecipe = user.getRandomRecipe();
+        this.inMemoryDataAccessUser = inMemoryDataAccessUser;
         this.recipeFactory = recipeFactory;
         this.cookThisOrReRollPresenter = generateRecipeOutputBoundary;
 
@@ -29,6 +28,9 @@ public class GenerateRecipeInteractor implements GenerateRecipeInputBoundary {
 
     @Override
     public void execute() {
+        this.user = inMemoryDataAccessUser.getActiveUser();
+        this.preference = user.getPreference();
+        this.randomRecipe = user.getRandomRecipe();
 //  the input data will be formatted as a string so we can just add it to the query when we call the API call
         String tags = preference.getTags();
         String intolerances = preference.getIntolerances();
