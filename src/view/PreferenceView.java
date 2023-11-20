@@ -1,7 +1,10 @@
 package view;
 
+import interface_adapter.Finish.FinishController;
+import interface_adapter.Preference.PreferenceController;
 import interface_adapter.Preference.PreferenceState;
 import interface_adapter.Preference.PreferenceViewModel;
+import interface_adapter.RedirectToPreference.RedirectToPreferenceViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,23 +18,76 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PreferenceView extends JPanel implements PropertyChangeListener {
-    private JFrame frame;
-    private PreferenceViewModel preferenceViewModel;
-//    private PreferenceController preferenceController
 
-    public PreferenceView(PreferenceViewModel preferenceViewModel) {
+    private PreferenceViewModel preferenceViewModel;
+    private PreferenceController preferenceController;
+    private FinishController finishController;
+    private RedirectToPreferenceViewModel redirectToPreferenceViewModel;
+    public String viewName = "Preference";
+    private JPanel panel;
+
+    public PreferenceView(PreferenceViewModel preferenceViewModel, RedirectToPreferenceViewModel redirectToPreferenceViewModel, PreferenceController preferenceController, FinishController finishController) {
         this.preferenceViewModel = preferenceViewModel;
-        frame = new JFrame("Preference Selection");
-        frame.setSize(500, 500);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.preferenceController = preferenceController;
+        this.finishController = finishController;
+        this.redirectToPreferenceViewModel = redirectToPreferenceViewModel;
+        this.preferenceViewModel.addPropertyChangeListener(this);
+        this.redirectToPreferenceViewModel.addPropertyChangeListener(this);
+
 
         // Create a panel to hold the components
-        JPanel panel = new JPanel();
-        frame.add(panel);
+        panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); // Using BoxLayout for vertical arrangement
+
         placeComponents(panel);
 
-        frame.setVisible(true);
+        JScrollPane scrollPane = new JScrollPane(panel); // Wrap the panel in a scroll pane
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED); // Show vertical scrollbar as needed
+
+        this.setLayout(new BorderLayout());
+        this.add(scrollPane, BorderLayout.CENTER);
+        // Create a panel to hold fixed components (buttons in this case)
+        JPanel fixedPanel = new JPanel();
+        fixedPanel.setLayout(new FlowLayout()); // You can use any layout you prefer
+
+        // Create buttons
+        JButton submitButton = new JButton("Save Preferences");
+        JButton returnMain = new JButton("Return to Main Menu");
+
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Process selected cuisines
+                PreferenceState currentState = preferenceViewModel.getState();
+                preferenceController.execute(currentState.getSelectedCuisines(), currentState.getSelectedDiets(), currentState.getSelectedIntolerances());
+            }
+        });
+
+        panel.add(returnMain); // Corrected the panel addition here
+
+// Add action listener to the returnMain button
+        returnMain.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Process returning to the main menu
+                finishController.execute();
+            }
+        });
+
+        // Add buttons to the fixed panel
+        fixedPanel.add(submitButton);
+        fixedPanel.add(returnMain);
+
+        // Set layout for the PreferenceView
+        this.setLayout(new BorderLayout());
+
+        // Add the scroll pane to the PreferenceView
+        this.add(scrollPane, BorderLayout.CENTER);
+
+        // Add the fixed panel containing buttons to the SOUTH of the PreferenceView
+        this.add(fixedPanel, BorderLayout.SOUTH);
     }
+
 
     private void placeComponents(JPanel panel) {
         panel.setLayout(new GridLayout(0, 1));
@@ -57,18 +113,16 @@ public class PreferenceView extends JPanel implements PropertyChangeListener {
             cuisineCheckboxes.add(checkbox);
         }
 //      observes which cuisine the user selects so we can update the state
-        for (JCheckBox checkBox: cuisineCheckboxes){
+        for (JCheckBox checkBox : cuisineCheckboxes) {
             checkBox.addItemListener(
                     new ItemListener() {
                         @Override
                         public void itemStateChanged(ItemEvent e) {
 
-                            System.out.println(checkBox.getText() + (e.getStateChange()== 1));
                             PreferenceState currentState = preferenceViewModel.getState();
-                            currentState.setSelectedCuisines(checkBox.getText(),  e.getStateChange()== 1);
+                            currentState.setSelectedCuisines(checkBox.getText(), e.getStateChange() == 1);
                             preferenceViewModel.setState(currentState);
 //          test to see if it updates
-                            System.out.println(currentState.getSelectedCuisines());
                         }
                     }
             );
@@ -83,7 +137,7 @@ public class PreferenceView extends JPanel implements PropertyChangeListener {
 
         List<JCheckBox> dietCheckboxes = new ArrayList<>();
 //      adds the checkbox to the UI
-        for (String diet: diets) {
+        for (String diet : diets) {
             JCheckBox checkbox = new JCheckBox(diet);
             PreferenceState currentState = preferenceViewModel.getState();
 //          loads the old cuisines the user checked
@@ -92,18 +146,16 @@ public class PreferenceView extends JPanel implements PropertyChangeListener {
             dietCheckboxes.add(checkbox);
         }
 //      observes which cuisine the user selects so we can update the state
-        for (JCheckBox checkBox: dietCheckboxes){
+        for (JCheckBox checkBox : dietCheckboxes) {
             checkBox.addItemListener(
                     new ItemListener() {
                         @Override
                         public void itemStateChanged(ItemEvent e) {
 
-                            System.out.println(checkBox.getText() + (e.getStateChange()== 1));
                             PreferenceState currentState = preferenceViewModel.getState();
-                            currentState.setSelectedDiets(checkBox.getText(),  e.getStateChange()== 1);
+                            currentState.setSelectedDiets(checkBox.getText(), e.getStateChange() == 1);
                             preferenceViewModel.setState(currentState);
 //          test to see if it updates
-                            System.out.println(currentState.getSelectedCuisines());
                         }
                     }
             );
@@ -127,15 +179,15 @@ public class PreferenceView extends JPanel implements PropertyChangeListener {
             intoleranceCheckboxes.add(checkbox);
         }
 //      observes which cuisine the user selects so we can update the state
-        for (JCheckBox checkBox: intoleranceCheckboxes){
+        for (JCheckBox checkBox : intoleranceCheckboxes) {
             checkBox.addItemListener(
                     new ItemListener() {
                         @Override
                         public void itemStateChanged(ItemEvent e) {
 
-                            System.out.println(checkBox.getText() + (e.getStateChange()== 1));
+                            System.out.println(checkBox.getText() + (e.getStateChange() == 1));
                             PreferenceState currentState = preferenceViewModel.getState();
-                            currentState.setSelectedIntolerances(checkBox.getText(),  e.getStateChange()== 1);
+                            currentState.setSelectedIntolerances(checkBox.getText(), e.getStateChange() == 1);
                             preferenceViewModel.setState(currentState);
 //          test to see if it updates
                             System.out.println(currentState.getSelectedIntolerances());
@@ -145,40 +197,34 @@ public class PreferenceView extends JPanel implements PropertyChangeListener {
 
         }
 
-        // Create a button to submit preferences
-        JButton submitButton = new JButton("Submit Preferences");
-        panel.add(submitButton);
-
-        // Add action listener to the submit button
-        submitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Process selected cuisines
-                for (JCheckBox checkbox : cuisineCheckboxes) {
-                    if (checkbox.isSelected()) {
-//                      test
-                        System.out.println(checkbox.getText() + " is selected");
-//                      need a controller
-
-                    }
-                }
-            }
-        });
     }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("PreferenceStateChanged")) {
+            PreferenceState state = (PreferenceState) evt.getNewValue();
+            JOptionPane.showMessageDialog(this, state.getSaved());
+            state.setSaved("");
+        }
+        if (evt.getPropertyName().equals("RedirectToPreferenceStateChanged")) {
+            PreferenceState state = redirectToPreferenceViewModel.getState();
+            preferenceViewModel.setState(state);
+            resetCheckboxes();
+        }
 
     }
-
-//  testing
-    public static void main(String[] args) {
-        PreferenceViewModel preferenceViewModel1 = new PreferenceViewModel();
-        new PreferenceView(preferenceViewModel1);
+    private void resetCheckboxes() {
+        panel.removeAll(); // Clear the existing components
+        placeComponents(panel); // Reinitialize the checkboxes based on the updated state
+        revalidate(); // Refresh the view
+        repaint(); // Repaint the view
     }
 
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
+    //  testing
+//    public static void main(String[] args) {
 //
 //    }
 
+
 }
+

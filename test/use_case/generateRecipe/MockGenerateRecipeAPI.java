@@ -6,7 +6,7 @@ import org.json.JSONObject;
 class MockGenerateRecipeAPI implements GenerateRecipeDataAccessInterface {
     @Override
 //  simulate the json that the api call returns
-    public JSONObject getRecipes(String apiKey, String tags, int count) {
+    public JSONObject getRecipes(String apiKey, String tags, String intolerances, int count) {
         // Simulate a response JSON for successful scenario
         JSONObject response = new JSONObject();
 

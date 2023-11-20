@@ -1,13 +1,9 @@
 package view;
 
-import data_access.User.userDataAccessObject;
-import interface_adapter.Login.loginViewModel;
+import interface_adapter.Login.loginController;
 import interface_adapter.signUp.signUpController;
-import interface_adapter.signUp.signUpPresenter;
 import interface_adapter.signUp.signUpState;
 import interface_adapter.signUp.signUpViewModel;
-import interface_adapter.ViewManagerModel;
-import use_case.signUp.signUpInteractor;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -22,22 +18,24 @@ public class signUpView extends JPanel implements ActionListener, PropertyChange
     private final JPasswordField passwordInputField = new JPasswordField(15);
     private final JPasswordField checkPasswordInputField = new JPasswordField(15);
     private final signUpController signupController;
+    private final loginController LoginController;
+    private String viewName = "Sign Up";
+    private String instructionsText;
 
-    public signUpView(signUpController controller, signUpViewModel signupViewModel){
+    public signUpView(signUpController controller, signUpViewModel signupViewModel, loginController loginController){
         this.signupViewModel = signupViewModel;
         this.signupController = controller;
-
-        //Visibility of frame
-        JFrame frame = new JFrame("SignUp");
-        frame.setSize(500, 500);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.LoginController = loginController;
+        this.instructionsText = "Please input a username. 🪿";
 
         // Create a panel to hold the components
         JPanel panel = new JPanel();
-        frame.add(panel);
         placeComponents(panel);
 
-        frame.setVisible(true);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); // Using BoxLayout for vertical arrangement
+        add(panel);
+        setVisible(true);
+        this.viewName = signupViewModel.getViewName();
 
     }
 
@@ -47,6 +45,10 @@ public class signUpView extends JPanel implements ActionListener, PropertyChange
         JPanel buttons = new JPanel();
         JButton signUp = new JButton(signUpViewModel.SIGNUP_BUTTON_LABEL);
         buttons.add(signUp);
+        JButton login = new JButton("To Login");
+        buttons.add(login);
+
+        JLabel instructions = new JLabel(instructionsText);
 
         LabelTextPanel usernameInfo = new LabelTextPanel(
                 new JLabel(signUpViewModel.USERNAME_LABEL), usernameInputField);
@@ -54,6 +56,16 @@ public class signUpView extends JPanel implements ActionListener, PropertyChange
                 new JLabel(signUpViewModel.PASSWORD_LABEL), passwordInputField);
         LabelTextPanel checkPasswordInfo = new LabelTextPanel(
                 new JLabel(signUpViewModel.CHECK_PASSWORD_LABEL), checkPasswordInputField);
+
+        login.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(login)) {
+                            LoginController.execute("", "");
+                        }
+                    }
+                }
+        );
 
         signUp.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -137,18 +149,8 @@ public class signUpView extends JPanel implements ActionListener, PropertyChange
         panel.add(passwordInfo);
         panel.add(checkPasswordInfo);
         panel.add(buttons);
+        panel.add(instructions);
 
-    }
-
-    public static void main(String[] args) {
-        signUpViewModel s = new signUpViewModel();
-        userDataAccessObject d = new userDataAccessObject();
-        loginViewModel l = new loginViewModel();
-        ViewManagerModel vmm = new ViewManagerModel();
-        signUpPresenter p = new signUpPresenter(s, l, vmm);
-        signUpInteractor i = new signUpInteractor(d, p);
-        signUpController c = new signUpController(i);
-        new signUpView(c, s);
     }
 
     @Override
@@ -159,8 +161,13 @@ public class signUpView extends JPanel implements ActionListener, PropertyChange
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         signUpState state = (signUpState) evt.getNewValue();
+        System.out.println(state.getError());;
         if (state.getError() != null) {
             JOptionPane.showMessageDialog(this, state.getError());
+        }
+        if (state.getEmpty() != null){
+            System.out.println("askjhbfkajf!");
+            this.instructionsText = "Please Input a Username.";
         }
     }
 }

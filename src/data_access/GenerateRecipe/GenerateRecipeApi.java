@@ -7,13 +7,14 @@ import use_case.generateRecipe.GenerateRecipeDataAccessInterface;
 
 public class GenerateRecipeApi implements GenerateRecipeDataAccessInterface {
 
-    public JSONObject getRecipes(String apiKey, String tags, int number) {
+    public JSONObject getRecipes(String apiKey, String tags, String intolerances, int number) {
         OkHttpClient client = new OkHttpClient();
 
         try {
             HttpUrl.Builder urlBuilder = HttpUrl.parse("https://api.spoonacular.com/recipes/random").newBuilder();
             urlBuilder.addQueryParameter("limitLicense", "true");
             urlBuilder.addQueryParameter("tags", tags);
+            urlBuilder.addQueryParameter("intolerances", intolerances);
             urlBuilder.addQueryParameter("number", String.valueOf(number));
             urlBuilder.addQueryParameter("apiKey", apiKey);
 
@@ -44,11 +45,11 @@ public class GenerateRecipeApi implements GenerateRecipeDataAccessInterface {
 //  test
     public static void main(String[] args) {
         String apiKey = "d6d8b743e3fd4afeac18d54cef0e21ff";
-        String tags = "chinese";
-        int number = 10;
+        String tags = "";
+        int number = 1;
         GenerateRecipeApi api = new GenerateRecipeApi();
 
-        JSONObject response = api.getRecipes(apiKey, tags, number);
+        JSONObject response = api.getRecipes(apiKey, tags, "", number);
 
         if (response != null) {
             System.out.println(response.toString());

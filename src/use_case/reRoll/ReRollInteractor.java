@@ -9,17 +9,18 @@ public class ReRollInteractor implements ReRollInputBoundary {
     private User user;
     private RecipeFactory recipeFactory;
     private ReRollOutputBoundary reRollPresenter;
+    private InMemoryDataAccessUserInterface inMemoryDataAccessUser;
 
     public ReRollInteractor(InMemoryDataAccessUserInterface inMemoryDataAccessUser, ReRollOutputBoundary reRollPresenter, RecipeFactory recipeFactory) {
-        this.user = inMemoryDataAccessUser.getActiveUser();
-        this.randomRecipe = user.getRandomRecipe();
+        this.inMemoryDataAccessUser = inMemoryDataAccessUser;
         this.recipeFactory = recipeFactory;
         this.reRollPresenter = reRollPresenter;
     }
 
     @Override
     public void execute() {
-
+        this.user = inMemoryDataAccessUser.getActiveUser();
+        this.randomRecipe = user.getRandomRecipe();
         Recipe recipe = getRecipe();
         ReRollOutputData reRollOutputData = new ReRollOutputData(recipe.getTitle(), recipe.getReadyInMinutes(), recipe.getServings(), recipe.getSummary(), recipe.getExtendedIngredients(), recipe.getExtendedInstructions(), recipe.getRecipeImageURL());
         reRollPresenter.prepareSuccessView(reRollOutputData);

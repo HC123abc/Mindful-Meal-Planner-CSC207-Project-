@@ -3,6 +3,7 @@ package view;
 import interface_adapter.CookThis.CookThisController;
 import interface_adapter.CookThisOrReRoll.CookThisOrReRollState;
 import interface_adapter.CookThisOrReRoll.CookThisOrReRollViewModel;
+import interface_adapter.Finish.FinishController;
 import interface_adapter.ReRoll.ReRollController;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.FavouriteThis.*;
@@ -22,6 +23,7 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
     private CookThisOrReRollViewModel cookThisOrReRollViewModel;
     private ReRollController reRollController;
     private CookThisController cookThisController;
+    private FinishController finishController;
     private ViewManagerModel viewManagerModel;
     private favouriteThisController favouriteThisController;
 
@@ -36,20 +38,27 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
 
 
     //may need to add .getScaledInstance(60, 60, java.awt.Image.SCALE_SMOOTH);
-//    private ImageIcon favouriteIconOn = new ImageIcon("assets/favouritesAssets/favourite_star_on_temp.png");
-//    private ImageIcon favouriteIconOff = new ImageIcon("assets/favouritesAssets/favourite_star_off_temp.png");
+    //    private ImageIcon favouriteIconOn = new ImageIcon("assets/favouritesAssets/favourite_star_on_temp.png");
+    //    private ImageIcon favouriteIconOff = new ImageIcon("assets/favouritesAssets/favourite_star_off_temp.png");
 
+//Ryan's cTORView method, needs to be fixed.
+//     public CookThisOrReRollView(CookThisOrReRollViewModel cookThisOrReRollViewModel,
+//                                 ReRollController reRollController,
+//                                 CookThisController cookThisController,
+//                                 favouriteThisController favouriteThisController,
+//                                 ViewManagerModel viewManagerModel) {
 
-    public CookThisOrReRollView(CookThisOrReRollViewModel cookThisOrReRollViewModel,
-                                ReRollController reRollController,
-                                CookThisController cookThisController,
-                                favouriteThisController favouriteThisController,
-                                ViewManagerModel viewManagerModel) {
+    private JButton finishButton;
+
+    public CookThisOrReRollView(CookThisOrReRollViewModel cookThisOrReRollViewModel, ReRollController reRollController, CookThisController cookThisController, FinishController finishController, ViewManagerModel viewManagerModel) {
+
         this.cookThisOrReRollViewModel = cookThisOrReRollViewModel;
         this.cookThisOrReRollViewModel.addPropertyChangeListener(this);
         this.reRollController = reRollController;
         this.cookThisController = cookThisController;
         this.favouriteThisController = favouriteThisController;
+        this.finishController = finishController;
+
         this.viewManagerModel = viewManagerModel;
         this.viewManagerModel.addPropertyChangeListener(this);
 
@@ -65,6 +74,8 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
 
         cookButton = new JButton("Cook This");
         reRollButton = new JButton("Reroll");
+        finishButton = new JButton("Go Back to Main Page");
+        favouriteButton = new JButton("Add to Favourite");
 
         favouriteButton = new JButton("Favourite this recipe");
 //        favouriteButton.setIcon(favouriteIconOff);
@@ -88,8 +99,18 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
         otherComponentsPanel.add(servingsLabel);
         otherComponentsPanel.add(readyInMinutesLabel);
         otherComponentsPanel.add(summaryTextArea);
-        otherComponentsPanel.add(cookButton);
-        otherComponentsPanel.add(reRollButton);
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.LINE_AXIS));
+        buttonsPanel.add(Box.createHorizontalGlue()); // Aligns buttons to the right
+
+        // Add buttons to the buttonsPanel
+        buttonsPanel.add(cookButton);
+        buttonsPanel.add(reRollButton);
+        buttonsPanel.add(finishButton);
+        buttonsPanel.add(favouriteButton);
+        // Add the buttonsPanel to the main frame
+        add(buttonsPanel, BorderLayout.SOUTH);
+
 
         otherComponentsPanel.add(favouriteButton);
 
@@ -103,7 +124,7 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
             public void actionPerformed(ActionEvent e) {
                 // Handle Cook This button click
                 CookThisOrReRollState currentState = cookThisOrReRollViewModel.getState();
-                cookThisController.execute(currentState.getIngredients(),currentState.getInstruction());
+                cookThisController.execute(currentState.getIngredients(), currentState.getInstruction());
             }
         });
 
@@ -113,6 +134,7 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
                 reRollController.execute();
             }
         });
+
 
         favouriteButton.addActionListener(new ActionListener() {
             @Override
@@ -141,6 +163,13 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
 //        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //        setLocationRelativeTo(null);
 //        setVisible(true);
+
+        finishButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                finishController.execute();
+            }
+        });
 
         // Update the view with initial state
         updateView(this.cookThisOrReRollViewModel.getState());

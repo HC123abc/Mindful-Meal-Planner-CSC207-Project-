@@ -7,6 +7,7 @@ public class InMemoryDataAccessUser implements InMemoryDataAccessUserInterface {
 
     public void setActiveUser(User user) {
         activeUser = user;
+        System.out.println(user.getUsername());
     }
 
     public User getActiveUser() {

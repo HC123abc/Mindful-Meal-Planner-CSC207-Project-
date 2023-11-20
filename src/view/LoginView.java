@@ -7,11 +7,7 @@ import interface_adapter.Login.loginState;
 import interface_adapter.Login.loginViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.signUp.signUpController;
-import interface_adapter.signUp.signUpPresenter;
-import interface_adapter.signUp.signUpState;
-import interface_adapter.signUp.signUpViewModel;
 import use_case.login.LoginInteractor;
-import use_case.signUp.signUpInteractor;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -27,28 +23,31 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private final JTextField usernameInputField = new JTextField(15);
     private final JPasswordField passwordInputField = new JPasswordField(15);
     private final loginController LController;
+    private signUpController SignUpController;
 
-    public LoginView(loginViewModel LVM, loginController LController) {
+    public String viewName = "Login";
+
+    public LoginView(loginViewModel LVM, loginController LController, signUpController SignUpController) {
         this.LVM = LVM;
         this.LController = LController;
-        JFrame frame = new JFrame("Login");
-        frame.setSize(500, 500);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        this.SignUpController = SignUpController;
         // Create a panel to hold the components
         JPanel panel = new JPanel();
-        frame.add(panel);
         placeComponents(panel);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); // Using BoxLayout for vertical arrangement
+        add(panel);
+        setVisible(true);
+        this.viewName = LVM.getViewName();
 
-        frame.setVisible(true);
     }
 
     private void placeComponents(JPanel panel){
         LVM.addPropertyChangeListener(this);
-
         JPanel buttons = new JPanel();
         JButton login = new JButton(LVM.LOGIN_BUTTON_LABEL);
+        JButton SignUp = new JButton("Sign Up");
         buttons.add(login);
+        buttons.add(SignUp);
 
         LabelTextPanel usernameInfo = new LabelTextPanel(
                 new JLabel(LVM.USERNAME_LABEL), usernameInputField);
@@ -67,6 +66,16 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                                     currentState.getPassword()
                             );
 
+                        }
+                    }
+                }
+        );
+        SignUp.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(SignUp)) {
+                            SignUpController.execute("","","");
                         }
                     }
                 }
@@ -118,16 +127,6 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     }
 
-    public static void main(String[] args) {
-        loginViewModel s = new loginViewModel();
-        userDataAccessObject d = new userDataAccessObject();
-        ViewManagerModel vmm = new ViewManagerModel();
-        loginPresenter p = new loginPresenter(s, vmm, "main");
-        LoginInteractor i = new LoginInteractor(d, p);
-        loginController c = new loginController(i);
-        new LoginView(s, c);
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -136,7 +135,9 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         loginState state = (loginState) evt.getNewValue();
+        System.out.println(state.getError() == null);
         if (state.getError() != null) {
+            System.out.println(state.getError());
             JOptionPane.showMessageDialog(this, state.getError());
         }
     }

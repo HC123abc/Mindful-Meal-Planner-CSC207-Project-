@@ -3,6 +3,7 @@ package app;
 import data_access.GenerateRecipe.GenerateRecipeApi;
 import data_access.InMemoryDataAccess.InMemoryDataAccessUser;
 import data_access.InMemoryDataAccess.InMemoryDataAccessUserInterface;
+import data_access.User.userDataAccessObject;
 import entity.Preference;
 import entity.RandomRecipe;
 import entity.RecipeFactory;
@@ -17,23 +18,36 @@ import interface_adapter.FavouriteThis.favouriteThisController;
 import interface_adapter.Finish.FinishController;
 import interface_adapter.Finish.FinishPresenter;
 import interface_adapter.Finish.FinishViewModel;
+import interface_adapter.Login.loginController;
+import interface_adapter.Login.loginPresenter;
+import interface_adapter.Login.loginViewModel;
+import interface_adapter.Preference.PreferenceController;
+import interface_adapter.Preference.PreferencePresenter;
+import interface_adapter.Preference.PreferenceViewModel;
 import interface_adapter.ReRoll.ReRollController;
 import interface_adapter.ReRoll.ReRollPresenter;
+import interface_adapter.RedirectToPreference.RedirectToPreferenceController;
+import interface_adapter.RedirectToPreference.RedirectToPreferencePresenter;
+import interface_adapter.RedirectToPreference.RedirectToPreferenceViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.FavouriteThis.*; // may need to change from wildcard to explicit, double check later
 
+import interface_adapter.signUp.signUpController;
+import interface_adapter.signUp.signUpPresenter;
+import interface_adapter.signUp.signUpViewModel;
 import use_case.Finish.FinishInteractor;
+import use_case.Preference.PreferenceInteractor;
+import use_case.RedirectToPreference.RedirectToPreferenceInteractor;
 import use_case.cookThis.CookThisInteractor;
 import use_case.favouriteThis.favouriteThisInteractor;
 import use_case.generateRecipe.GenerateRecipeDataAccessInterface;
 import use_case.generateRecipe.GenerateRecipeInteractor;
 import use_case.generateRecipe.GenerateRecipeOutputBoundary;
+import use_case.login.LoginInteractor;
 import use_case.reRoll.ReRollInputBoundary;
 import use_case.reRoll.ReRollInteractor;
-import view.CookThisOrReRollView;
-import view.CookThisView;
-import view.MainPageView;
-import view.ViewManager;
+import use_case.signUp.signUpInteractor;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -88,22 +102,62 @@ public class Main {
         favouriteThisPresenter favouriteThisPresenter = new favouriteThisPresenter(cookThisOrReRollViewModel,viewManagerModel);
         favouriteThisInteractor favouriteThisInteractor = new favouriteThisInteractor(inMemoryDataAccessUser,favouriteThisPresenter);
         favouriteThisController favouriteThisController = new favouriteThisController(favouriteThisInteractor);
+        // Ryan's changed signature, to be fixed. CookThisOrReRollView cookThisOrReRollView = new CookThisOrReRollView(cookThisOrReRollViewModel,reRollController, cookThisController, favouriteThisController, viewManagerModel);
 
-        CookThisOrReRollView cookThisOrReRollView = new CookThisOrReRollView(cookThisOrReRollViewModel,reRollController, cookThisController, favouriteThisController, viewManagerModel);
+        FinishViewModel finishViewModel1 = new FinishViewModel();
+        FinishPresenter finishPresenter1 = new FinishPresenter(viewManagerModel,finishViewModel1);
+        FinishInteractor finishInteractor1 = new FinishInteractor(finishPresenter1);
+        FinishController finishController1 = new FinishController(finishInteractor1);
+      
+        CookThisOrReRollView cookThisOrReRollView = new CookThisOrReRollView(cookThisOrReRollViewModel,reRollController,  cookThisController, finishController1, viewManagerModel);
         views.add(cookThisOrReRollView, cookThisOrReRollView.viewName);
 
         FinishViewModel finishViewModel = new FinishViewModel();
-        FinishPresenter finishPresenter = new FinishPresenter(viewManagerModel,finishViewModel );
+        FinishPresenter finishPresenter = new FinishPresenter(viewManagerModel,finishViewModel);
         FinishInteractor finishInteractor = new FinishInteractor(finishPresenter);
         FinishController finishController = new FinishController(finishInteractor);
         CookThisView cookThisView = new CookThisView(cookThisViewModel, finishController);
         views.add(cookThisView, cookThisView.viewName);
 
+        RedirectToPreferenceViewModel redirectToPreferenceViewModel = new RedirectToPreferenceViewModel();
+        RedirectToPreferencePresenter redirectToPreferencePresenter = new RedirectToPreferencePresenter(redirectToPreferenceViewModel,viewManagerModel);
+        RedirectToPreferenceInteractor redirectToPreferenceInteractor = new RedirectToPreferenceInteractor(inMemoryDataAccessUser,redirectToPreferencePresenter);
+        RedirectToPreferenceController redirectToPreferenceController = new RedirectToPreferenceController(redirectToPreferenceInteractor);
+
+        FinishViewModel finishViewModel2 = new FinishViewModel();
+        FinishPresenter finishPresenter2 = new FinishPresenter(viewManagerModel,finishViewModel2);
+        FinishInteractor finishInteractor2 = new FinishInteractor(finishPresenter2);
+        FinishController finishController2 = new FinishController(finishInteractor2);
+        
+        PreferenceViewModel preferenceViewModel = new PreferenceViewModel();
+        PreferencePresenter preferencePresenter = new PreferencePresenter(preferenceViewModel,viewManagerModel);
+        PreferenceInteractor preferenceInteractor = new PreferenceInteractor(inMemoryDataAccessUser,preferencePresenter);
+        PreferenceController preferenceController = new PreferenceController(preferenceInteractor);
+        PreferenceView preferenceView = new PreferenceView(preferenceViewModel,redirectToPreferenceViewModel,preferenceController ,finishController2 );
+        views.add(preferenceView, preferenceView.viewName);
+
         GenerateRecipeController generateRecipeController = new GenerateRecipeController(generateRecipeInteractor);
-        MainPageView mainPageView = new MainPageView(generateRecipeController,cookThisOrReRollViewModel);
+        MainPageView mainPageView = new MainPageView(generateRecipeController,cookThisOrReRollViewModel,redirectToPreferenceController);
         views.add(mainPageView, mainPageView.viewName);
 
-        viewManagerModel.setActiveView(mainPageView.viewName);
+        loginViewModel LVM = new loginViewModel();
+        userDataAccessObject UDAO = new userDataAccessObject();
+        loginPresenter LoginPresenter = new loginPresenter(LVM, viewManagerModel, mainPageView.viewName);
+        LoginInteractor loginInteractor = new LoginInteractor(UDAO, LoginPresenter, inMemoryDataAccessUser);
+        loginController LoginController = new loginController(loginInteractor);
+        System.out.println(inMemoryDataAccessUser.getActiveUser().getUsername());
+        signUpViewModel SVM = new signUpViewModel();
+        signUpPresenter signUpPresenter = new signUpPresenter(SVM, mainPageView.viewName, viewManagerModel);
+        signUpInteractor signUpInteractor = new signUpInteractor(UDAO, signUpPresenter, inMemoryDataAccessUser);
+        signUpController signUpController = new signUpController(signUpInteractor);
+        signUpView SignUpView = new signUpView(signUpController, SVM, LoginController);
+        LoginView loginView = new LoginView(LVM, LoginController, signUpController);
+        views.add(loginView, LVM.getViewName());
+        views.add(SignUpView, SVM.getViewName());
+
+        System.out.println(loginView.viewName);
+        viewManagerModel.setActiveView(loginView.viewName);
+//        viewManagerModel.setActiveView(mainPageView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();

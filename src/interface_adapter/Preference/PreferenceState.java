@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PreferenceState {
+    private String saved = "";
     private final String[] cusisines = {"African", "Asian", "American", "British", "Cajun", "Caribbean", "Chinese",
             "Eastern European", "European", "French", "German", "Greek", "Indian", "Irish", "Italian",
             "Japanese", "Jewish", "Korean", "Latin American", "Mediterranean", "Mexican",
@@ -25,29 +26,16 @@ public class PreferenceState {
 
     // default PreferenceState
     public PreferenceState() {
-//      default all False
-        for (String i : this.cusisines) {
-            this.selectedCuisines.put(i, false);
+        for (String i : cusisines) {
+            selectedCuisines.put(i, false);
         }
-        for (String i : this.diet) {
-            this.selectedDiets.put(i, false);
+        for (String i : diet) {
+            selectedDiets.put(i, false);
         }
-        for (String i : this.intolerances) {
-            this.selectedIntolerances.put(i, false);
+        for (String i : intolerances) {
+            selectedIntolerances.put(i, false);
         }
     }
-//  load one
-//    public PreferenceState(textfile) {
-////      default all False
-//        for (String i : this.cusisines) {
-//            this.selectedCuisines.put(i, false);
-//        }
-//        for (String i : this.diet) {
-//            this.selectedDiets.put(i, false);
-//        }
-//        for (String i : this.intolerances) {
-//            this.selectedIntolerances.put(i, false);
-//        }
 
     public Map<String, Boolean> getSelectedCuisines() {
         return selectedCuisines;
@@ -72,5 +60,23 @@ public class PreferenceState {
     public void setSelectedIntolerances(String type, Boolean selected) {
         selectedIntolerances.replace(type, selected);
     }
+
+    public String getSaved() {
+        return saved;
+    }
+
+    public void setSaved(String saved) {
+        this.saved = saved;
+    }
+    public void setSelectedCuisinesMap(Map<String, Boolean> selectedCuisinesMap) {
+        this.selectedCuisines = selectedCuisinesMap;
+    }
+    public void setSelectedDietsMap(Map<String, Boolean> selectedDietsMap) {
+        this.selectedDiets = selectedDietsMap;
+    }
+    public void setSelectedIntolerancesMap(Map<String, Boolean> selectedIntolerancesMap) {
+        this.selectedIntolerances = selectedIntolerancesMap;
+    }
+
 }
 

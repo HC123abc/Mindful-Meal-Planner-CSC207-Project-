@@ -12,6 +12,7 @@ public class signUpViewModel extends ViewModel {
     public static final String PASSWORD_LABEL = "Choose password";
     public static final String CHECK_PASSWORD_LABEL = "Enter password again";
     public static final String SIGNUP_BUTTON_LABEL = "Sign up";
+    public String viewName = "Sign Up";
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     private signUpState state = new signUpState();
@@ -30,6 +31,8 @@ public class signUpViewModel extends ViewModel {
 
     @Override
     public void firePropertyChanged() {
+        System.out.println(this.state.getError()+"error");
+        System.out.println(this.state.getEmpty()+"empty");
         support.firePropertyChange("SignUpStateChanged", null, this.state);
     }
 
@@ -37,4 +40,6 @@ public class signUpViewModel extends ViewModel {
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
+
+
 }
