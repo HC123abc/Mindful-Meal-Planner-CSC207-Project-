@@ -28,6 +28,9 @@ import interface_adapter.ReRoll.ReRollPresenter;
 import interface_adapter.RedirectToPreference.RedirectToPreferenceController;
 import interface_adapter.RedirectToPreference.RedirectToPreferencePresenter;
 import interface_adapter.RedirectToPreference.RedirectToPreferenceViewModel;
+import interface_adapter.ReturnToPreviousView.ReturnToPreviousViewController;
+import interface_adapter.ReturnToPreviousView.ReturnToPreviousViewPresenter;
+import interface_adapter.ReturnToPreviousView.ReturnToPreviousViewViewModel;
 import interface_adapter.ViewManagerModel;
 
 import interface_adapter.signUp.signUpController;
@@ -36,6 +39,7 @@ import interface_adapter.signUp.signUpViewModel;
 import use_case.Finish.FinishInteractor;
 import use_case.Preference.PreferenceInteractor;
 import use_case.RedirectToPreference.RedirectToPreferenceInteractor;
+import use_case.ReturnToPreviousView.ReturnToPreviousViewInteractor;
 import use_case.cookThis.CookThisInteractor;
 import use_case.generateRecipe.GenerateRecipeDataAccessInterface;
 import use_case.generateRecipe.GenerateRecipeInteractor;
@@ -104,7 +108,11 @@ public class Main {
         FinishPresenter finishPresenter = new FinishPresenter(viewManagerModel,finishViewModel );
         FinishInteractor finishInteractor = new FinishInteractor(finishPresenter);
         FinishController finishController = new FinishController(finishInteractor);
-        CookThisView cookThisView = new CookThisView(cookThisViewModel, finishController);
+        ReturnToPreviousViewViewModel returnToPreviousViewViewModel = new ReturnToPreviousViewViewModel();
+        ReturnToPreviousViewPresenter returnToPreviousViewPresenter = new ReturnToPreviousViewPresenter(viewManagerModel,returnToPreviousViewViewModel);
+        ReturnToPreviousViewInteractor returnToPreviousViewInteractor = new ReturnToPreviousViewInteractor(returnToPreviousViewPresenter);
+        ReturnToPreviousViewController returnToPreviousViewController = new ReturnToPreviousViewController(returnToPreviousViewInteractor);
+        CookThisView cookThisView = new CookThisView(cookThisViewModel, finishController, returnToPreviousViewController);
         views.add(cookThisView, cookThisView.viewName);
 
         RedirectToPreferenceViewModel redirectToPreferenceViewModel = new RedirectToPreferenceViewModel();
