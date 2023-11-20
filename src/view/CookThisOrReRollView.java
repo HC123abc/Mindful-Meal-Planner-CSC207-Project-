@@ -137,9 +137,9 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
         favouriteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("favBtn clicked");
+//                System.out.println("favBtn clicked");
                 CookThisOrReRollState state = cookThisOrReRollViewModel.getState();
-                System.out.println(state.getIsFavourite());
+//                System.out.println(state.getIsFavourite());
                 String title = state.getTitle();
                 String summary = state.getSummary();
                 String image = state.getImage();
@@ -151,7 +151,7 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
                 boolean isFavourite = state.getIsFavourite();
                 favouriteThisController.execute(title, summary, image, servings,
                         readyInMinutes, ingredients, instruction, id, isFavourite);
-                System.out.println(state.getIsFavourite());
+//                System.out.println(state.getIsFavourite());
             }
         });
 
@@ -201,17 +201,17 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
         if (state.getIsFavourite()) {
 //            favouriteButton.setIcon(favouriteIconOn);
             System.out.println("On");
-            JOptionPane.showMessageDialog(null,
-                    "This recipe was favourited",
-                    "Recipe favourited",
-                    JOptionPane.INFORMATION_MESSAGE);
+//            JOptionPane.showMessageDialog(null,
+//                    "This recipe was favourited",
+//                    "Recipe favourited",
+//                    JOptionPane.INFORMATION_MESSAGE);
         } else {
 //            favouriteButton.setIcon(favouriteIconOff);
             System.out.println("Off");
-            JOptionPane.showMessageDialog(null,
-                    "This recipe was unfavourited",
-                    "Recipe unfavourited",
-                    JOptionPane.INFORMATION_MESSAGE);
+//            JOptionPane.showMessageDialog(null,
+//                    "This recipe was unfavourited",
+//                    "Recipe unfavourited",
+//                    JOptionPane.INFORMATION_MESSAGE);
         }
         //titleImagePanel, otherComponentsPanel
     }
