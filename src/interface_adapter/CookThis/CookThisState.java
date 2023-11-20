@@ -6,11 +6,13 @@ import java.util.Map;
 public class CookThisState {
     private Map<String, String> ingredientsWithImage = new HashMap<>();
     private String instruction = "";
+    private String previousView = "";
 
     // Constructors
     public CookThisState(CookThisState copy) {
         this.ingredientsWithImage = copy.ingredientsWithImage;
         this.instruction = copy.instruction;
+        this.previousView = copy.previousView;
 
     }
 
@@ -32,6 +34,13 @@ public class CookThisState {
     }
     public String getInstruction(){
         return instruction;
+    }
+    public String getPreviousView() {
+        return previousView;
+    }
+
+    public void setPreviousView(String previousView) {
+        this.previousView = previousView;
     }
 }
 

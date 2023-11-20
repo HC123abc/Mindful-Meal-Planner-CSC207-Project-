@@ -3,6 +3,7 @@ package view;
 import interface_adapter.CookThis.CookThisState;
 import interface_adapter.CookThis.CookThisViewModel;
 import interface_adapter.Finish.FinishController;
+import interface_adapter.ReturnToPreviousView.ReturnToPreviousViewController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,11 +20,13 @@ public class CookThisView extends JPanel implements PropertyChangeListener {
     private JTextArea instructionsTextArea;
     private CookThisViewModel cookThisViewModel;
     private FinishController finishController;
+    private ReturnToPreviousViewController returnToPreviousViewController;
 
-    public CookThisView(CookThisViewModel cookThisViewModel, FinishController finishController) {
+    public CookThisView(CookThisViewModel cookThisViewModel, FinishController finishController, ReturnToPreviousViewController returnToPreviousViewController) {
         this.cookThisViewModel = cookThisViewModel;
         this.cookThisViewModel.addPropertyChangeListener(this);
         this.finishController = finishController;
+        this.returnToPreviousViewController = returnToPreviousViewController;
 
         setLayout(new BorderLayout());
 
@@ -60,8 +63,21 @@ public class CookThisView extends JPanel implements PropertyChangeListener {
                 finishController.execute();
             }
         });
-        add(finishButton, BorderLayout.SOUTH);
 
+        JButton previousViewButton = new JButton("Go Back To Previous View");
+        previousViewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CookThisState state = cookThisViewModel.getState();
+                System.out.println(state.getPreviousView());
+                returnToPreviousViewController.execute(state.getPreviousView());
+            }
+        });
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.add(previousViewButton);
+        buttonsPanel.add(finishButton);
+        // Adding the buttons panel to the SOUTH
+        add(buttonsPanel, BorderLayout.SOUTH);
         updateView(this.cookThisViewModel.getState());
     }
 

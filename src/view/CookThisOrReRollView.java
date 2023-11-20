@@ -122,7 +122,7 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
             public void actionPerformed(ActionEvent e) {
                 // Handle Cook This button click
                 CookThisOrReRollState currentState = cookThisOrReRollViewModel.getState();
-                cookThisController.execute(currentState.getIngredients(), currentState.getInstruction());
+                cookThisController.execute(currentState.getIngredients(), currentState.getInstruction(), viewName);
             }
         });
 
