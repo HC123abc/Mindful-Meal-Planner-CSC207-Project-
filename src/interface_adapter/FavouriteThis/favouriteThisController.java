@@ -17,31 +17,8 @@ public class favouriteThisController {
         favouriteThisInputData fTInputData = new favouriteThisInputData(title, summary, image,
                                                                 servings, readyInMinutes,
                                                                 ingredients, instruction,
-                                                                id, isFavourite
+                                                                id, isFavourite);
 
-        );
         favouriteThisInteractor.execute(fTInputData);
     }
 }
-
-
-/*
-import use_case.generateRecipe.GenerateRecipeInputBoundary;
-import use_case.reRoll.ReRollInputBoundary;
-
-public class GenerateRecipeController {
-
-    final GenerateRecipeInputBoundary generateRecipeInteractor;
-
-    public GenerateRecipeController(GenerateRecipeInputBoundary generateRecipeInteractor) {
-        this.generateRecipeInteractor = generateRecipeInteractor;
-    }
-
-    public void execute() {
-        generateRecipeInteractor.execute();
-    }
-}
-
-
-
- */

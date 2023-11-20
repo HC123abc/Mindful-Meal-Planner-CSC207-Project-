@@ -126,7 +126,9 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
                 String ingredients = state.getIngredients();
                 String instruction = state.getInstruction();
                 String id = state.getId();
-                boolean isFavourite = state.getIsFavourite();
+
+                boolean isFavourite = !state.getIsFavourite(); // on click, we'll switch the recipe's isFavourite status
+
                 favouriteThisController.execute(
                         title,
                         summary,

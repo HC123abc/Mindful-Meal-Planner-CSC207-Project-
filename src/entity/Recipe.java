@@ -10,7 +10,10 @@ public class Recipe {
     private String extendedInstructions;
     private String recipeImageURL;
 
-    public Recipe(String title, String readyInMinutes, String servings, String summary, String extendedIngredients, String extendedInstructions, String recipeImageURL, String id) {
+    public Recipe(String title, String readyInMinutes, String servings,
+                  String summary, String extendedIngredients,
+                  String extendedInstructions, String recipeImageURL, String id)
+    {
         this.title = title;
         this.readyInMinutes = readyInMinutes;
         this.servings = servings;

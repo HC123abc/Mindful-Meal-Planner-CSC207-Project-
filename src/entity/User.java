@@ -37,7 +37,4 @@ public class User {
         return favouriteRecipes;
     }
 
-    public void setFavouriteRecipes(FavouriteRecipes favouriteRecipes) {
-        this.favouriteRecipes = favouriteRecipes;
-    }
 }

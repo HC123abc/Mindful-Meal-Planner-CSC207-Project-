@@ -8,24 +8,40 @@ public class favouriteThisInteractor implements favouriteThisInputBoundary{
     private User user;
     private FavouriteRecipes favouriteRecipes;  // a FavouriteRecipes object
     private RecipeFactory recipeFactory;
-    private favouriteThisOutputBoundary favouriteThisPresenter;
+    private favouriteThisOutputBoundary fTPresenter;
 
     public favouriteThisInteractor(InMemoryDataAccessUserInterface inMemoryDataAccessUser,
-                                   favouriteThisOutputBoundary favouriteThisOB,
-                                   RecipeFactory recipeFactory) {
+                                   favouriteThisOutputBoundary fTOutputBoundary) {
         this.user = inMemoryDataAccessUser.getActiveUser();
         this.favouriteRecipes = user.getFavouriteRecipes();
-        this.recipeFactory = recipeFactory;
-        this.favouriteThisPresenter = favouriteThisOB;
+        this.fTPresenter = fTOutputBoundary;
     }
 
-    private void execute(Recipe recipe) {
-
-        favouriteRecipes.setFavouriteRecipes();
-    }
+//    private void execute(Recipe recipe) {
+//
+//        favouriteRecipes.setFavouriteRecipes();
+//    }
+//
+//    @Override
+//    public void execute() {
+//
+//    }
 
     @Override
-    public void execute() {
+    public void execute(favouriteThisInputData fTInputData) {
+        boolean isFavourite = fTInputData.getIsFavourite();
+        Recipe recipe = new Recipe(fTInputData.getTitle(), fTInputData.getReadyInMinutes(),
+                fTInputData.getServings(),fTInputData.getSummary(), fTInputData.getIngredients(),
+                fTInputData.getInstructions(), fTInputData.getImage(), fTInputData.getId());
 
+        if (isFavourite) {
+            favouriteRecipes.setOneFavouriteRecipe(recipe);
+            favouriteThisOutputData fTOutputData = new favouriteThisOutputData(true);
+        } else {
+            favouriteRecipes.removeOneRecipe(recipe);
+            favouriteThisOutputData fTOutputData = new favouriteThisOutputData(false);
+        }
     }
+
+
 }
