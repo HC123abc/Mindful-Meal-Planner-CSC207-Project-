@@ -109,7 +109,7 @@ public class Main {
         FinishInteractor finishInteractor1 = new FinishInteractor(finishPresenter1);
         FinishController finishController1 = new FinishController(finishInteractor1);
       
-        CookThisOrReRollView cookThisOrReRollView = new CookThisOrReRollView(cookThisOrReRollViewModel,reRollController,  cookThisController, finishController1, viewManagerModel);
+        CookThisOrReRollView cookThisOrReRollView = new CookThisOrReRollView(cookThisOrReRollViewModel,reRollController,  cookThisController, favouriteThisController, finishController1, viewManagerModel);
         views.add(cookThisOrReRollView, cookThisOrReRollView.viewName);
 
         FinishViewModel finishViewModel = new FinishViewModel();

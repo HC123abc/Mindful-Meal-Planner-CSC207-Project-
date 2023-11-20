@@ -41,16 +41,14 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
     //    private ImageIcon favouriteIconOn = new ImageIcon("assets/favouritesAssets/favourite_star_on_temp.png");
     //    private ImageIcon favouriteIconOff = new ImageIcon("assets/favouritesAssets/favourite_star_off_temp.png");
 
-//Ryan's cTORView method, needs to be fixed.
-//     public CookThisOrReRollView(CookThisOrReRollViewModel cookThisOrReRollViewModel,
-//                                 ReRollController reRollController,
-//                                 CookThisController cookThisController,
-//                                 favouriteThisController favouriteThisController,
-//                                 ViewManagerModel viewManagerModel) {
-
     private JButton finishButton;
 
-    public CookThisOrReRollView(CookThisOrReRollViewModel cookThisOrReRollViewModel, ReRollController reRollController, CookThisController cookThisController, FinishController finishController, ViewManagerModel viewManagerModel) {
+    public CookThisOrReRollView(CookThisOrReRollViewModel cookThisOrReRollViewModel,
+                                ReRollController reRollController,
+                                CookThisController cookThisController,
+                                favouriteThisController favouriteThisController,
+                                FinishController finishController,
+                                ViewManagerModel viewManagerModel) {
 
         this.cookThisOrReRollViewModel = cookThisOrReRollViewModel;
         this.cookThisOrReRollViewModel.addPropertyChangeListener(this);
