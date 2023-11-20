@@ -12,12 +12,17 @@ public class CookThisOrReRollViewModel extends ViewModel {
     public CookThisOrReRollViewModel() {
         super("CookThisOrReRoll");
     }
+
+
     public CookThisOrReRollState getState(){
         return this.state;
     }
+
+
     public void setState(CookThisOrReRollState state) {
         this.state = state;
     }
+
 
     @Override
     public void firePropertyChanged() {

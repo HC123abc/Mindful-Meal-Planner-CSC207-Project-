@@ -1,7 +1,7 @@
 package app;
 import entity.User;
 import entity.Preference;
-import entity.FavoriteRecipes;
+import entity.FavouriteRecipes;
 
 public class userFactory {
     public userFactory(){

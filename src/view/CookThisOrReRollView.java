@@ -6,6 +6,7 @@ import interface_adapter.CookThisOrReRoll.CookThisOrReRollViewModel;
 import interface_adapter.Finish.FinishController;
 import interface_adapter.ReRoll.ReRollController;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.FavouriteThis.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,6 +25,7 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
     private CookThisController cookThisController;
     private FinishController finishController;
     private ViewManagerModel viewManagerModel;
+    private favouriteThisController favouriteThisController;
 
     private JLabel titleLabel;
     private JLabel imageLabel;
@@ -32,17 +34,32 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
     private JTextArea summaryTextArea;
     private JButton cookButton;
     private JButton reRollButton;
-    private JButton finishButton;
     private JButton favouriteButton;
 
-    public CookThisOrReRollView(CookThisOrReRollViewModel cookThisOrReRollViewModel, ReRollController reRollController, CookThisController cookThisController, FinishController finishController, ViewManagerModel viewManagerModel) {
+
+    //may need to add .getScaledInstance(60, 60, java.awt.Image.SCALE_SMOOTH);
+    //    private ImageIcon favouriteIconOn = new ImageIcon("assets/favouritesAssets/favourite_star_on_temp.png");
+    //    private ImageIcon favouriteIconOff = new ImageIcon("assets/favouritesAssets/favourite_star_off_temp.png");
+
+    private JButton finishButton;
+
+    public CookThisOrReRollView(CookThisOrReRollViewModel cookThisOrReRollViewModel,
+                                ReRollController reRollController,
+                                CookThisController cookThisController,
+                                favouriteThisController favouriteThisController,
+                                FinishController finishController,
+                                ViewManagerModel viewManagerModel) {
+
         this.cookThisOrReRollViewModel = cookThisOrReRollViewModel;
         this.cookThisOrReRollViewModel.addPropertyChangeListener(this);
         this.reRollController = reRollController;
         this.cookThisController = cookThisController;
+        this.favouriteThisController = favouriteThisController;
         this.finishController = finishController;
+
         this.viewManagerModel = viewManagerModel;
         this.viewManagerModel.addPropertyChangeListener(this);
+
 
         // Initialize components
         titleLabel = new JLabel("Title: ");
@@ -57,6 +74,9 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
         reRollButton = new JButton("Reroll");
         finishButton = new JButton("Go Back to Main Page");
         favouriteButton = new JButton("Add to Favourite");
+
+        favouriteButton = new JButton("Favourite this recipe");
+//        favouriteButton.setIcon(favouriteIconOff);
 
         // Set up the layout
         setLayout(new BorderLayout());
@@ -90,6 +110,8 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
         add(buttonsPanel, BorderLayout.SOUTH);
 
 
+        otherComponentsPanel.add(favouriteButton);
+
         // Add the panels to the main frame
         add(titleImagePanel, BorderLayout.NORTH);
         add(otherComponentsPanel, BorderLayout.CENTER);
@@ -111,18 +133,41 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
             }
         });
 
+
+        favouriteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+//                System.out.println("favBtn clicked");
+                CookThisOrReRollState state = cookThisOrReRollViewModel.getState();
+//                System.out.println(state.getIsFavourite());
+                String title = state.getTitle();
+                String summary = state.getSummary();
+                String image = state.getImage();
+                String servings = state.getServings();
+                String readyInMinutes = state.getReadyInMinutes();
+                String ingredients = state.getIngredients();
+                String instruction = state.getInstruction();
+                String id = state.getId();
+                boolean isFavourite = state.getIsFavourite();
+                favouriteThisController.execute(title, summary, image, servings,
+                        readyInMinutes, ingredients, instruction, id, isFavourite);
+//                System.out.println(state.getIsFavourite());
+            }
+        });
+
+//        // Set up the frame for testing
+//        setTitle("Recipe Viewer");
+//        setSize(1000, 700);
+//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        setLocationRelativeTo(null);
+//        setVisible(true);
+
         finishButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 finishController.execute();
             }
         });
-        favouriteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
-
 
         // Update the view with initial state
         updateView(this.cookThisOrReRollViewModel.getState());
@@ -150,6 +195,25 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
         servingsLabel.setText("Servings: " + cookThisOrReRollState.getServings());
         readyInMinutesLabel.setText("Ready In Minutes: " + cookThisOrReRollState.getReadyInMinutes());
         summaryTextArea.setText("Summary: " + cookThisOrReRollState.getSummary());
+
+        // Update favourite button icon
+        CookThisOrReRollState state = cookThisOrReRollViewModel.getState();
+        if (state.getIsFavourite()) {
+//            favouriteButton.setIcon(favouriteIconOn);
+            System.out.println("On");
+//            JOptionPane.showMessageDialog(null,
+//                    "This recipe was favourited",
+//                    "Recipe favourited",
+//                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+//            favouriteButton.setIcon(favouriteIconOff);
+            System.out.println("Off");
+//            JOptionPane.showMessageDialog(null,
+//                    "This recipe was unfavourited",
+//                    "Recipe unfavourited",
+//                    JOptionPane.INFORMATION_MESSAGE);
+        }
+        //titleImagePanel, otherComponentsPanel
     }
 
     @Override

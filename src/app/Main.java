@@ -14,6 +14,7 @@ import interface_adapter.CookThis.CookThisViewModel;
 import interface_adapter.CookThisOrReRoll.CookThisOrReRollPresenter;
 import interface_adapter.CookThisOrReRoll.CookThisOrReRollViewModel;
 import interface_adapter.CookThisOrReRoll.GenerateRecipeController;
+import interface_adapter.FavouriteThis.favouriteThisController;
 import interface_adapter.Finish.FinishController;
 import interface_adapter.Finish.FinishPresenter;
 import interface_adapter.Finish.FinishViewModel;
@@ -29,6 +30,7 @@ import interface_adapter.RedirectToPreference.RedirectToPreferenceController;
 import interface_adapter.RedirectToPreference.RedirectToPreferencePresenter;
 import interface_adapter.RedirectToPreference.RedirectToPreferenceViewModel;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.FavouriteThis.*; // may need to change from wildcard to explicit, double check later
 
 import interface_adapter.signUp.signUpController;
 import interface_adapter.signUp.signUpPresenter;
@@ -37,6 +39,7 @@ import use_case.Finish.FinishInteractor;
 import use_case.Preference.PreferenceInteractor;
 import use_case.RedirectToPreference.RedirectToPreferenceInteractor;
 import use_case.cookThis.CookThisInteractor;
+import use_case.favouriteThis.favouriteThisInteractor;
 import use_case.generateRecipe.GenerateRecipeDataAccessInterface;
 import use_case.generateRecipe.GenerateRecipeInteractor;
 import use_case.generateRecipe.GenerateRecipeOutputBoundary;
@@ -84,24 +87,33 @@ public class Main {
         GenerateRecipeOutputBoundary generateRecipeOutputBoundary = new CookThisOrReRollPresenter(cookThisOrReRollViewModel,viewManagerModel);
         // Create an instance of GenerateRecipe
         RecipeFactory recipeFactory = new RecipeFactory();
+
         GenerateRecipeInteractor generateRecipeInteractor = new GenerateRecipeInteractor(generateRecipeAPI,generateRecipeOutputBoundary, inMemoryDataAccessUser, recipeFactory);
+
         ReRollPresenter reRollPresenter = new ReRollPresenter(cookThisOrReRollViewModel,viewManagerModel);
         ReRollInputBoundary reRollInputBoundary = new ReRollInteractor(inMemoryDataAccessUser,reRollPresenter,recipeFactory);
         ReRollController reRollController = new ReRollController(reRollInputBoundary);
+
         CookThisViewModel cookThisViewModel = new CookThisViewModel();
         CookThisPresenter cookThisPresenter = new CookThisPresenter(cookThisViewModel,viewManagerModel);
         CookThisInteractor cookThisInteractor = new CookThisInteractor(cookThisPresenter);
         CookThisController cookThisController = new CookThisController(cookThisInteractor);
 
+        favouriteThisPresenter favouriteThisPresenter = new favouriteThisPresenter(cookThisOrReRollViewModel,viewManagerModel);
+        favouriteThisInteractor favouriteThisInteractor = new favouriteThisInteractor(inMemoryDataAccessUser,favouriteThisPresenter);
+        favouriteThisController favouriteThisController = new favouriteThisController(favouriteThisInteractor);
+        // Ryan's changed signature, to be fixed. CookThisOrReRollView cookThisOrReRollView = new CookThisOrReRollView(cookThisOrReRollViewModel,reRollController, cookThisController, favouriteThisController, viewManagerModel);
+
         FinishViewModel finishViewModel1 = new FinishViewModel();
         FinishPresenter finishPresenter1 = new FinishPresenter(viewManagerModel,finishViewModel1);
         FinishInteractor finishInteractor1 = new FinishInteractor(finishPresenter1);
         FinishController finishController1 = new FinishController(finishInteractor1);
-        CookThisOrReRollView cookThisOrReRollView = new CookThisOrReRollView(cookThisOrReRollViewModel,reRollController,  cookThisController, finishController1, viewManagerModel);
+      
+        CookThisOrReRollView cookThisOrReRollView = new CookThisOrReRollView(cookThisOrReRollViewModel,reRollController,  cookThisController, favouriteThisController, finishController1, viewManagerModel);
         views.add(cookThisOrReRollView, cookThisOrReRollView.viewName);
 
         FinishViewModel finishViewModel = new FinishViewModel();
-        FinishPresenter finishPresenter = new FinishPresenter(viewManagerModel,finishViewModel );
+        FinishPresenter finishPresenter = new FinishPresenter(viewManagerModel,finishViewModel);
         FinishInteractor finishInteractor = new FinishInteractor(finishPresenter);
         FinishController finishController = new FinishController(finishInteractor);
         CookThisView cookThisView = new CookThisView(cookThisViewModel, finishController);
@@ -116,6 +128,7 @@ public class Main {
         FinishPresenter finishPresenter2 = new FinishPresenter(viewManagerModel,finishViewModel2);
         FinishInteractor finishInteractor2 = new FinishInteractor(finishPresenter2);
         FinishController finishController2 = new FinishController(finishInteractor2);
+        
         PreferenceViewModel preferenceViewModel = new PreferenceViewModel();
         PreferencePresenter preferencePresenter = new PreferencePresenter(preferenceViewModel,viewManagerModel);
         PreferenceInteractor preferenceInteractor = new PreferenceInteractor(inMemoryDataAccessUser,preferencePresenter);

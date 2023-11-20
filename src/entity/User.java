@@ -3,7 +3,7 @@ package entity;
 public class User {
     private final String username;
     private final String password;
-    private FavoriteRecipes favoriteRecipes = new FavoriteRecipes();
+    private FavouriteRecipes favouriteRecipes = new FavouriteRecipes();
     private Preference preference = new Preference();
     private RandomRecipe randomRecipe = new RandomRecipe();
     public User(String name, String password) {
@@ -31,11 +31,8 @@ public class User {
         return randomRecipe;
     }
 
-    public FavoriteRecipes getFavoriteRecipes() {
-        return favoriteRecipes;
+    public FavouriteRecipes getFavouriteRecipes() {
+        return favouriteRecipes;
     }
 
-    public void setFavoriteRecipes(FavoriteRecipes favoriteRecipes) {
-        this.favoriteRecipes = favoriteRecipes;
-    }
 }

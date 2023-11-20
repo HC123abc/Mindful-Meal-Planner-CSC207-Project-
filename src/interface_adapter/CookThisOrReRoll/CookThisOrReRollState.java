@@ -11,6 +11,8 @@ public class CookThisOrReRollState {
     private String instruction = "";
     private String id = "";
 
+    private boolean isFavourite = false;
+
     // Constructors
     public CookThisOrReRollState(CookThisOrReRollState copy) {
         this.title = copy.title;
@@ -21,7 +23,7 @@ public class CookThisOrReRollState {
         this.ingredients = copy.ingredients;
         this.instruction = copy.instruction;
         this.id = copy.id;
-
+        this.isFavourite = copy.isFavourite;
     }
 
     public CookThisOrReRollState() {
@@ -98,5 +100,9 @@ public class CookThisOrReRollState {
     public String getId() {
         return id;
     }
+
+    public boolean getIsFavourite() { return isFavourite; }
+
+    public void setIsFavourite(boolean b) { isFavourite = b;}
 }
 
