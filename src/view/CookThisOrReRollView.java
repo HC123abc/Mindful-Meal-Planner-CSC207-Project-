@@ -174,17 +174,17 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
         if (state.getIsFavourite()) {
 //            favouriteButton.setIcon(favouriteIconOn);
             System.out.println("On");
-//            JOptionPane.showMessageDialog(null,
-//                    "This recipe was favourited",
-//                    "Recipe favourited",
-//                    JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                    "This recipe was favourited",
+                    "Recipe favourited",
+                    JOptionPane.INFORMATION_MESSAGE);
         } else {
 //            favouriteButton.setIcon(favouriteIconOff);
             System.out.println("Off");
-//            JOptionPane.showMessageDialog(null,
-//                    "This recipe was unfavourited",
-//                    "Recipe unfavourited",
-//                    JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                    "This recipe was unfavourited",
+                    "Recipe unfavourited",
+                    JOptionPane.INFORMATION_MESSAGE);
         }
         //titleImagePanel, otherComponentsPanel
     }
