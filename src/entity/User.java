@@ -34,5 +34,8 @@ public class User {
     public FavouriteRecipes getFavouriteRecipes() {
         return favouriteRecipes;
     }
+    public void setFavouriteRecipes(FavouriteRecipes favouriteRecipes) {
+        this.favouriteRecipes = favouriteRecipes;
+    }
 
 }
