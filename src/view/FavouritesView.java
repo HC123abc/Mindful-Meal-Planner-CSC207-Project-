@@ -1,2 +1,5 @@
-package view;public class FavouritesView {
+package view;
+
+public class FavouritesView {
+
 }
