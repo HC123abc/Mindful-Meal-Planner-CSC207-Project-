@@ -9,8 +9,8 @@ public class signUpInputData {
         this.password = password;
         this.passwordChecker = passwordChecker;
     }
-    String getUsername(){ return this.username; }
-    String getPassword(){ return this.password; }
-    String getPasswordChecker(){ return this.passwordChecker; }
+    public String getUsername(){ return this.username; }
+    public String getPassword(){ return this.password; }
+    public String getPasswordChecker(){ return this.passwordChecker; }
 
 }
