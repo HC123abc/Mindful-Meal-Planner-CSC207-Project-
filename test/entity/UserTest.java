@@ -12,12 +12,12 @@ public class UserTest {
         assertEquals(true, user.verifyPassword("TestPass"));
         Preference pref = new Preference();
         user.setPreference(pref);
-        FavoriteRecipes fave = new FavoriteRecipes();
-        user.setFavoriteRecipes(fave);
+        FavouriteRecipes fave = new FavouriteRecipes();
+        user.setFavouriteRecipes(fave);
         RandomRecipe rand = new RandomRecipe();
         user.setRandomRecipe(rand);
         assertEquals(pref, user.getPreference());
-        assertEquals(fave, user.getFavoriteRecipes());
+        assertEquals(fave, user.getFavouriteRecipes());
         assertEquals(rand, user.getRandomRecipe());
 
 

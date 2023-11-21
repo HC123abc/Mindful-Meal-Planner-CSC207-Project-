@@ -44,18 +44,6 @@ public class GenerateRecipeApi implements GenerateRecipeDataAccessInterface {
 
 //  test
     public static void main(String[] args) {
-        String apiKey = "d6d8b743e3fd4afeac18d54cef0e21ff";
-        String tags = "";
-        int number = 1;
-        GenerateRecipeApi api = new GenerateRecipeApi();
 
-        JSONObject response = api.getRecipes(apiKey, tags, "", number);
-
-        if (response != null) {
-            System.out.println(response.toString());
-        } else {
-            System.out.println("Error fetching recipes");
-        }
-        System.out.println();
     }
 }
