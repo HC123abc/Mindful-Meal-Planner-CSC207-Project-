@@ -8,8 +8,10 @@ public class ReRollOutputData {
     private String extendedIngredients;
     private String extendedInstructions;
     private String recipeImageURL;
+    private String id;
+    private boolean isFavourite;
 
-    public ReRollOutputData(String title, String readyInMinutes, String servings, String summary, String extendedIngredients, String extendedInstructions, String recipeImageURL) {
+    public ReRollOutputData(String title, String readyInMinutes, String servings, String summary, String extendedIngredients, String extendedInstructions, String recipeImageURL, String id, boolean isFavourite) {
         this.title = title;
         this.readyInMinutes = readyInMinutes;
         this.servings = servings;
@@ -17,6 +19,8 @@ public class ReRollOutputData {
         this.extendedIngredients = extendedIngredients;
         this.extendedInstructions = extendedInstructions;
         this.recipeImageURL = recipeImageURL;
+        this.id = id;
+        this.isFavourite = isFavourite;
     }
 
     public String getTitle() {
@@ -45,5 +49,13 @@ public class ReRollOutputData {
 
     public String getRecipeImageURL() {
         return recipeImageURL;
+    }
+    public String getId() {
+        return id;
+    }
+
+
+    public boolean getIsFavourite() {
+        return isFavourite;
     }
 }
