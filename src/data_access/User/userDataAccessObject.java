@@ -3,7 +3,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
-import entity.FavoriteRecipes;
+import entity.FavouriteRecipes;
 import entity.Preference;
 import org.json.JSONObject;
 import use_case.signUp.signUpDataAccessInterface;
@@ -97,14 +97,14 @@ public class userDataAccessObject implements signUpDataAccessInterface, loginDat
             JsonObject outerObject = new Gson().fromJson(reader, JsonObject.class);
             JsonObject prefs = outerObject.getAsJsonObject("preference");
             JsonObject faves = outerObject.getAsJsonObject("favoriteRecipes");
-            FavoriteRecipes fave = gson.fromJson(faves, FavoriteRecipes.class);
+            FavouriteRecipes fave = gson.fromJson(faves, FavouriteRecipes.class);
             Preference pref = gson.fromJson(prefs, Preference.class);
             User userCheck = new User(gson.fromJson(outerObject.get("username"), String.class),
                     gson.fromJson(outerObject.get("password"), String.class));
-            userCheck.setFavoriteRecipes(fave);
+            userCheck.setFavouriteRecipes(fave);
             userCheck.setPreference(pref);
             System.out.println(userCheck.getPreference());
-            System.out.println(userCheck.getFavoriteRecipes());
+            System.out.println(userCheck.getFavouriteRecipes());
             if (userCheck.verifyPassword(password)) {
                 this.currentUser = userCheck;
                 System.out.println(this.currentUser.getPreference().getSelectedCuisines());

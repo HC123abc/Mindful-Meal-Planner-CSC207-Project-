@@ -30,7 +30,7 @@ class CookThisInteractorTest {
         };
 
         // Create input data
-        CookThisInputData inputData = new CookThisInputData("Step 1. Do something","Ingredient A imageA.jpg: 100 g");
+        CookThisInputData inputData = new CookThisInputData("Step 1. Do something","Ingredient A imageA.jpg: 100 g", "");
 
         // Create the interactor with the mock presenter
         CookThisInteractor interactor = new CookThisInteractor(mockPresenter);
