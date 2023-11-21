@@ -43,28 +43,42 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     }
 
     private void placeComponents(JPanel panel){
+        Color green = new Color(177, 214, 171);
+        this.setBackground(green);
         LVM.addPropertyChangeListener(this);
         JPanel buttons = new JPanel();
         JButton login = new JButton(LVM.LOGIN_BUTTON_LABEL);
         JButton signUp = new JButton("Sign Up");
-        login.setFont(new Font("", Font.BOLD, 14));
-        signUp.setFont(new Font("", Font.BOLD, 14));
+        login.setFont(new Font("", Font.PLAIN, 12));
+        signUp.setFont(new Font("", Font.PLAIN, 12));
         //login.setBorder(BorderFactory.createEtchedBorder(2,Color.black, Color.GRAY));
         //signUp.setBorder(BorderFactory.createEtchedBorder(2,Color.black, Color.GRAY));
         buttons.add(login);
         buttons.add(signUp);
+        buttons.setBackground(green);
 
         JLabel usernameLabel = new JLabel(LVM.USERNAME_LABEL);
-        usernameLabel.setFont(new Font("", Font.PLAIN , 20));
+        usernameLabel.setFont(new Font("", Font.PLAIN , 16));
+        usernameLabel.setBackground(green);
 
         JLabel passwordLabel = new JLabel(LVM.PASSWORD_LABEL);
-        passwordLabel.setFont(new Font("", Font.PLAIN, 20));
+        passwordLabel.setFont(new Font("", Font.PLAIN, 16));
+        passwordLabel.setBackground(green);
+
+        JLabel titleLabel = new JLabel("Mindful Meal Preparer");
+        titleLabel.setFont(new Font("", Font.PLAIN, 24));
+        JPanel title = new JPanel();
+        title.setBackground(green);
+        title.add(titleLabel); // temp title
+        panel.add(title);
+        panel.add(Box.createHorizontalStrut(100)); // need a seperator, idk how
+
+
 
         LabelTextPanel usernameInfo = new LabelTextPanel(
-                usernameLabel, usernameInputField);
+                usernameLabel, usernameInputField, green);
         LabelTextPanel passwordInfo = new LabelTextPanel(
-                passwordLabel, passwordInputField);
-        //this.setBackground(Color.getHSBColor(73, 33, 93));
+                passwordLabel, passwordInputField, green);
 
         login.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
