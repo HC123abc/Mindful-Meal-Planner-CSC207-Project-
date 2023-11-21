@@ -26,8 +26,6 @@ public class signUpControllerPresenterTest {
         assertNotNull(state.getEmpty());
         //I dont really need to test states stuff or view stuff -- view is all graphical and states are jsut
         // setters and getters...
-
-
     }
     @Test
     public void controllerTest(){
