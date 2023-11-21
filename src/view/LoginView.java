@@ -10,6 +10,7 @@ import interface_adapter.signUp.signUpController;
 import use_case.login.LoginInteractor;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -45,14 +46,25 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         LVM.addPropertyChangeListener(this);
         JPanel buttons = new JPanel();
         JButton login = new JButton(LVM.LOGIN_BUTTON_LABEL);
-        JButton SignUp = new JButton("Sign Up");
+        JButton signUp = new JButton("Sign Up");
+        login.setFont(new Font("", Font.BOLD, 14));
+        signUp.setFont(new Font("", Font.BOLD, 14));
+        //login.setBorder(BorderFactory.createEtchedBorder(2,Color.black, Color.GRAY));
+        //signUp.setBorder(BorderFactory.createEtchedBorder(2,Color.black, Color.GRAY));
         buttons.add(login);
-        buttons.add(SignUp);
+        buttons.add(signUp);
+
+        JLabel usernameLabel = new JLabel(LVM.USERNAME_LABEL);
+        usernameLabel.setFont(new Font("", Font.PLAIN , 20));
+
+        JLabel passwordLabel = new JLabel(LVM.PASSWORD_LABEL);
+        passwordLabel.setFont(new Font("", Font.PLAIN, 20));
 
         LabelTextPanel usernameInfo = new LabelTextPanel(
-                new JLabel(LVM.USERNAME_LABEL), usernameInputField);
+                usernameLabel, usernameInputField);
         LabelTextPanel passwordInfo = new LabelTextPanel(
-                new JLabel(LVM.PASSWORD_LABEL), passwordInputField);
+                passwordLabel, passwordInputField);
+        //this.setBackground(Color.getHSBColor(73, 33, 93));
 
         login.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -70,11 +82,11 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                     }
                 }
         );
-        SignUp.addActionListener(
+        signUp.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(SignUp)) {
+                        if (evt.getSource().equals(signUp)) {
                             SignUpController.execute("","","");
                         }
                     }
