@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GenerateRecipeApiTest {
 
     @Test
-    void testGetRecipesAndFactorySuccess() {
+    public void testGetRecipesAndFactorySuccess() {
         String apiKey = "d6d8b743e3fd4afeac18d54cef0e21ff";
         String tags = "chinese";
         int number = 1;
@@ -34,7 +34,7 @@ public class GenerateRecipeApiTest {
     }
 
     @Test
-    void testGetRecipesAndFactoryFailure() {
+    public void testGetRecipesAndFactoryFailure() {
         String apiKey = null; // Set API key as null to simulate failure
         String tags = "chinese";
         int number = 10;

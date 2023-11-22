@@ -22,7 +22,14 @@ public class ReRollInteractor implements ReRollInputBoundary {
         this.user = inMemoryDataAccessUser.getActiveUser();
         this.randomRecipe = user.getRandomRecipe();
         Recipe recipe = getRecipe();
-        ReRollOutputData reRollOutputData = new ReRollOutputData(recipe.getTitle(), recipe.getReadyInMinutes(), recipe.getServings(), recipe.getSummary(), recipe.getExtendedIngredients(), recipe.getExtendedInstructions(), recipe.getRecipeImageURL());
+        boolean isFavourite = false;
+        for(Recipe recipe1: user.getFavouriteRecipes().getFavouriteRecipes()){
+            if(recipe1.getId().equals(recipe.getId())){
+                isFavourite = true;
+                break;
+            }
+        }
+        ReRollOutputData reRollOutputData = new ReRollOutputData(recipe.getTitle(), recipe.getReadyInMinutes(), recipe.getServings(), recipe.getSummary(), recipe.getExtendedIngredients(), recipe.getExtendedInstructions(), recipe.getRecipeImageURL(), recipe.getId(), isFavourite);
         reRollPresenter.prepareSuccessView(reRollOutputData);
 
     }
