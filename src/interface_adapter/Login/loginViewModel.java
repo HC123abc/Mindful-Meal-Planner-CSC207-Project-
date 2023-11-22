@@ -10,8 +10,8 @@ import java.beans.PropertyChangeSupport;
 public class loginViewModel extends ViewModel {
 
     public static final String TITLE_LABEL = "Sign Up View";
-    public static final String USERNAME_LABEL = "Choose username";
-    public static final String PASSWORD_LABEL = "Choose password";
+    public static final String USERNAME_LABEL = "Enter Username";
+    public static final String PASSWORD_LABEL = "Enter Password";
     public static final String LOGIN_BUTTON_LABEL = "Log in";
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     public String viewName = "Login";
