@@ -12,6 +12,7 @@ public class CookThisOrReRollState {
     private String id = "";
 
     private boolean isFavourite = false;
+    private boolean favButtonClicked = false;
 
     // Constructors
     public CookThisOrReRollState(CookThisOrReRollState copy) {
@@ -104,5 +105,11 @@ public class CookThisOrReRollState {
     public boolean getIsFavourite() { return isFavourite; }
 
     public void setIsFavourite(boolean b) { isFavourite = b;}
+    public boolean getFavButtonClicked() { return favButtonClicked; }
+
+    public void setFavButtonClicked(boolean favButtonClicked) {
+        this.favButtonClicked = favButtonClicked;
+    }
 }
+
 
