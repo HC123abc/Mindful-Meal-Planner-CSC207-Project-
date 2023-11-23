@@ -7,44 +7,33 @@ import use_case.reRoll.ReRollOutputBoundary;
 public class favouriteThisInteractor implements favouriteThisInputBoundary{
     private User user;
     private FavouriteRecipes favouriteRecipes;  // a FavouriteRecipes object
-    private RecipeFactory recipeFactory;
     private favouriteThisOutputBoundary fTPresenter;
+    private InMemoryDataAccessUserInterface inMemoryDataAccessUser;
 
     public favouriteThisInteractor(InMemoryDataAccessUserInterface inMemoryDataAccessUser,
                                    favouriteThisOutputBoundary fTPresenter) {
-        this.user = inMemoryDataAccessUser.getActiveUser();
-        this.favouriteRecipes = user.getFavouriteRecipes();
+        this.inMemoryDataAccessUser = inMemoryDataAccessUser;
         this.fTPresenter = fTPresenter;
     }
 
-//    private void execute(Recipe recipe) {
-//
-//        favouriteRecipes.setFavouriteRecipes();
-//    }
-//
-//    @Override
-//    public void execute() {
-//
-//    }
 
     @Override
     public void execute(favouriteThisInputData fTInputData) {
-        favouriteThisOutputData fTOutputData;
+        this.user = inMemoryDataAccessUser.getActiveUser();
+        this.favouriteRecipes = user.getFavouriteRecipes();
         boolean isFavourite = fTInputData.getIsFavourite();
-        Recipe recipe = new Recipe(fTInputData.getTitle(), fTInputData.getReadyInMinutes(),
-                fTInputData.getServings(),fTInputData.getSummary(), fTInputData.getIngredients(),
-                fTInputData.getInstructions(), fTInputData.getImage(), fTInputData.getId());
+        Recipe recipe = new Recipe(fTInputData.getTitle(),fTInputData.getReadyInMinutes(),fTInputData.getServings(),fTInputData.getSummary(),fTInputData.getExtendedIngredients(),fTInputData.getExtendedInstructions(),fTInputData.getRecipeImageURL(),fTInputData.getId());
 
         if (isFavourite) {
             favouriteRecipes.removeOneRecipe(recipe);
-            fTOutputData = new favouriteThisOutputData(false);
+            fTPresenter.prepareSuccessView(new favouriteThisOutputData(false));
 
         } else {
             favouriteRecipes.setOneFavouriteRecipe(recipe);
-            fTOutputData = new favouriteThisOutputData(true);
+            fTPresenter.prepareSuccessView(new favouriteThisOutputData(true));
         }
 
-        fTPresenter.prepareSuccessView(fTOutputData);
+
     }
 
 

@@ -1,22 +1,26 @@
 package use_case.favouriteThis;
 
 public class favouriteThisInputData {
-    private String recipeError;  // TODO add implementation for error handling
     private String title;
     private String summary;
-    private String image;
+    private String recipeImageURL;
     private String servings;
     private String readyInMinutes;
-    private String ingredients;
-    private String instruction;
+    private String extendedIngredients;
+    private String extendedInstructions;
     private String id;
     private boolean isFavourite;
 
-    public favouriteThisInputData(String title, String summary, String image,
-                                  String servings, String readyInMinutes,
-                                  String ingredients, String instruction,
-                                  String id, boolean isFavourite) {
-
+    public favouriteThisInputData(String title, String readyInMinutes, String servings, String summary, String extendedIngredients, String extendedInstructions, String recipeImageURL, String id, boolean isFavourite) {
+        this.title = title;
+        this.readyInMinutes = readyInMinutes;
+        this.servings = servings;
+        this.summary = summary;
+        this.extendedIngredients = extendedIngredients;
+        this.extendedInstructions = extendedInstructions;
+        this.recipeImageURL = recipeImageURL;
+        this.id = id;
+        this.isFavourite = isFavourite;
     }
 
     public String getTitle() {
@@ -25,7 +29,7 @@ public class favouriteThisInputData {
 
     public String getSummary() { return summary; }
 
-    public String getImage() { return image; }
+    public String getRecipeImageURL() { return recipeImageURL; }
 
     public String getServings() {
         return servings;
@@ -35,12 +39,12 @@ public class favouriteThisInputData {
         return readyInMinutes;
     }
 
-    public String getIngredients() {
-        return ingredients;
+    public String getExtendedIngredients() {
+        return extendedIngredients;
     }
 
-    public String getInstructions() {
-        return instruction;
+    public String getExtendedInstructions() {
+        return extendedInstructions;
     }
 
     public String getId() {

@@ -9,8 +9,9 @@ public class GenerateRecipeOutputData {
     private String extendedInstructions;
     private String recipeImageURL;
     private String id;
+    private boolean isFavourite;
 
-    public GenerateRecipeOutputData(String title, String readyInMinutes, String servings, String summary, String extendedIngredients, String extendedInstructions, String recipeImageURL, String id) {
+    public GenerateRecipeOutputData(String title, String readyInMinutes, String servings, String summary, String extendedIngredients, String extendedInstructions, String recipeImageURL, String id, boolean isFavourite) {
         this.title = title;
         this.readyInMinutes = readyInMinutes;
         this.servings = servings;
@@ -19,6 +20,7 @@ public class GenerateRecipeOutputData {
         this.extendedInstructions = extendedInstructions;
         this.recipeImageURL = recipeImageURL;
         this.id = id;
+        this.isFavourite = isFavourite;
     }
 
     public String getTitle() {
@@ -53,7 +55,9 @@ public class GenerateRecipeOutputData {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+
+    public boolean getIsFavourite() {
+        return isFavourite;
     }
+
 }

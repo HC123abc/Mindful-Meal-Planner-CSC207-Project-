@@ -19,6 +19,7 @@ public class CookThisPresenter implements CookThisOutputBoundary {
         CookThisState cookThisState = cookThisViewModel.getState();
         cookThisState.setInstruction(cookThisOutputData.getInstruction());
         cookThisState.setIngredientsWithImage(cookThisOutputData.getIngredientsWithImage());
+        cookThisState.setPreviousView(cookThisOutputData.getPreviousView());
         this.cookThisViewModel.setState(cookThisState);
         cookThisViewModel.firePropertyChanged();
         viewManagerModel.setActiveView(cookThisViewModel.getViewName());
