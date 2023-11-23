@@ -3,7 +3,12 @@ package view;
 import interface_adapter.CookThisOrReRoll.CookThisOrReRollState;
 import interface_adapter.CookThisOrReRoll.CookThisOrReRollViewModel;
 import interface_adapter.CookThisOrReRoll.GenerateRecipeController;
+
 import interface_adapter.RedirectToPreference.RedirectToPreferenceController;
+
+import interface_adapter.favourites.FavouritesController;
+import interface_adapter.favourites.FavouritesViewModel;
+import interface_adapter.favourites.FavouritesState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,17 +22,24 @@ public class MainPageView extends JPanel  implements PropertyChangeListener {
     public String viewName = "MainPage";
     private CookThisOrReRollViewModel cookThisOrReRollViewModel;
     private RedirectToPreferenceController redirectToPreferenceController;
+    private FavouritesController favouritesController;  // This is for switching to the favouritesView
 
-    public MainPageView(GenerateRecipeController generateRecipeController, CookThisOrReRollViewModel cookThisOrReRollViewModel, RedirectToPreferenceController redirectToPreferenceController) {
+    public MainPageView(GenerateRecipeController generateRecipeController,
+                        CookThisOrReRollViewModel cookThisOrReRollViewModel,
+                        RedirectToPreferenceController redirectToPreferenceController,
+                        FavouritesController favouritesController) {
         this.generateRecipeController = generateRecipeController;
         this.redirectToPreferenceController = redirectToPreferenceController;
+        this.favouritesController = favouritesController;
+        //TODO CHECK IF I NEED TO ADD THE FAV VIEW MODEL AND ADD PROPCHANGELISTENER
+
         this.cookThisOrReRollViewModel = cookThisOrReRollViewModel;
         this.cookThisOrReRollViewModel.addPropertyChangeListener(this);
         JPanel panel = new JPanel(new GridLayout(4, 1, 10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         JButton generateRecipeBtn = new JButton("Generate Recipe");
-        JButton favoritesBtn = new JButton("Favorites");
+        JButton favouritesBtn = new JButton("Favourites");
         JButton preferencesBtn = new JButton("Preferences");
         JButton signOutBtn = new JButton("Sign Out");
 
@@ -38,11 +50,12 @@ public class MainPageView extends JPanel  implements PropertyChangeListener {
             }
         });
 
-        favoritesBtn.addActionListener(new ActionListener() {
+        favouritesBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Handle Favorites button click
-                // Open the Favorites page or perform related actions
+                // Open the Favorites page and perform related actions
+                favouritesController.execute();
             }
         });
 
