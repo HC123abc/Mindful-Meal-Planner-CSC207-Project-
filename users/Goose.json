@@ -1,1 +1,2 @@
-{"username":"Goose","password":"Goose","favouriteRecipes":{"favouriteRecipes":[{"title":"","id":"","readyInMinutes":"","servings":"","summary":"","extendedIngredients":"","extendedInstructions":"","recipeImageURL":""},{"title":"1","id":"1","readyInMinutes":"1","servings":"1","summary":"1","extendedIngredients":"1","extendedInstructions":"1","recipeImageURL":"1"}]},"preference":{"selectedCuisines":[],"selectedDiets":[],"selectedIntolerances":[]},"randomRecipe":{"currentRecipeIndex":0}}
+{"username":"Goose","password":"Goose","favoriteRecipes":{},"preference":{"selectedCuisines":["Chinese"],"selectedDiets":["Vegan"],"selectedIntolerances":["Egg"]},"randomRecipe":{"currentRecipeIndex":0}}
+

@@ -1,5 +1,6 @@
 package app;
 
+import data_access.FavRecipeCardApi.FavRecipeCardApi;
 import data_access.GenerateRecipe.GenerateRecipeApi;
 import data_access.InMemoryDataAccess.InMemoryDataAccessUser;
 import data_access.InMemoryDataAccess.InMemoryDataAccessUserInterface;
@@ -14,6 +15,9 @@ import interface_adapter.CookThis.CookThisViewModel;
 import interface_adapter.CookThisOrReRoll.CookThisOrReRollPresenter;
 import interface_adapter.CookThisOrReRoll.CookThisOrReRollViewModel;
 import interface_adapter.CookThisOrReRoll.GenerateRecipeController;
+import interface_adapter.FavView.FavViewController;
+import interface_adapter.FavView.FavViewPresenter;
+import interface_adapter.FavView.FavViewViewModel;
 import interface_adapter.FavouriteThis.favouriteThisController;
 import interface_adapter.Finish.FinishController;
 import interface_adapter.Finish.FinishPresenter;
@@ -38,6 +42,9 @@ import interface_adapter.FavouriteThis.*; // may need to change from wildcard to
 import interface_adapter.signUp.signUpController;
 import interface_adapter.signUp.signUpPresenter;
 import interface_adapter.signUp.signUpViewModel;
+import use_case.FavView.FavViewDataAccessInterface;
+import use_case.FavView.FavViewInputBoundary;
+import use_case.FavView.FavViewInteractor;
 import use_case.Finish.FinishInteractor;
 import use_case.Preference.PreferenceInteractor;
 import use_case.RedirectToPreference.RedirectToPreferenceInteractor;
@@ -143,9 +150,19 @@ public class Main {
         PreferenceController preferenceController = new PreferenceController(preferenceInteractor);
         PreferenceView preferenceView = new PreferenceView(preferenceViewModel,redirectToPreferenceViewModel,preferenceController ,finishController2 );
         views.add(preferenceView, preferenceView.viewName);
-
+        FinishViewModel finishViewModel3 = new FinishViewModel();
+        FinishPresenter finishPresenter3 = new FinishPresenter(viewManagerModel,finishViewModel3);
+        FinishInteractor finishInteractor3 = new FinishInteractor(finishPresenter3);
+        FinishController finishController3 = new FinishController(finishInteractor3);
+        FavViewViewModel favViewViewModel = new FavViewViewModel();
+        FavViewPresenter favViewPresenter = new FavViewPresenter(favViewViewModel,viewManagerModel);
+        FavViewDataAccessInterface favViewDataAccessInterface = new FavRecipeCardApi();
+        FavViewInputBoundary favViewInteractor = new FavViewInteractor(favViewDataAccessInterface, favViewPresenter, inMemoryDataAccessUser );
+        FavViewController favViewController = new FavViewController(favViewInteractor);
+        FavView favView = new FavView(favViewViewModel, finishController3);
+        views.add(favView, favView.viewName);
         GenerateRecipeController generateRecipeController = new GenerateRecipeController(generateRecipeInteractor);
-        MainPageView mainPageView = new MainPageView(generateRecipeController,cookThisOrReRollViewModel,redirectToPreferenceController);
+        MainPageView mainPageView = new MainPageView(generateRecipeController,cookThisOrReRollViewModel,redirectToPreferenceController,favViewController,favViewViewModel);
         views.add(mainPageView, mainPageView.viewName);
 
         loginViewModel LVM = new loginViewModel();
