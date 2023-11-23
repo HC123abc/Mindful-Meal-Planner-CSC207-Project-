@@ -1,9 +1,14 @@
 package interface_adapter.favourites;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.favourites.FavouritesState;
+
+import use_case.favourites.FavouritesOutputBoundary;
 import use_case.favourites.FavouritesOutputData;
 
-public class FavouritesPresenter {
+import java.util.Map;
+
+public class FavouritesPresenter implements FavouritesOutputBoundary {
     private final FavouritesViewModel favouritesViewModel;
     private ViewManagerModel viewManagerModel;
 
@@ -13,11 +18,12 @@ public class FavouritesPresenter {
         this.viewManagerModel = viewManagerModel;
     }
 
-    // switch to favouritesView
+    // Will switch to favouritesView
     public void prepareSuccessView(FavouritesOutputData favouritesOutputData) {
         FavouritesState favouritesState = favouritesViewModel.getState();
 
-        //TODO UPDATE THE STATE USING SET___ AND THE OUTPUTDATA PROPERTIES
+        Map<Map<String, String>, String> favouriteRecipes = favouritesOutputData.getAllRecipes();
+        favouritesState.setFavouriteRecipes(favouriteRecipes);
 
         this.favouritesViewModel.setState(favouritesState);
 
