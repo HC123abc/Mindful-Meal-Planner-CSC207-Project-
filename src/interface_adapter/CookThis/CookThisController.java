@@ -11,8 +11,8 @@ public class CookThisController {
         this.cookThisInteractor = cookThisInteractor;
     }
 
-    public void execute(String ingredients, String instruction) {
-        CookThisInputData inputData = new CookThisInputData(instruction,ingredients);
+    public void execute(String ingredients, String instruction, String previousView) {
+        CookThisInputData inputData = new CookThisInputData(instruction,ingredients,previousView);
         cookThisInteractor.execute(inputData);
     }
 }

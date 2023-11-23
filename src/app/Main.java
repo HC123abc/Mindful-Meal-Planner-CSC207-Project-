@@ -29,6 +29,9 @@ import interface_adapter.ReRoll.ReRollPresenter;
 import interface_adapter.RedirectToPreference.RedirectToPreferenceController;
 import interface_adapter.RedirectToPreference.RedirectToPreferencePresenter;
 import interface_adapter.RedirectToPreference.RedirectToPreferenceViewModel;
+import interface_adapter.ReturnToPreviousView.ReturnToPreviousViewController;
+import interface_adapter.ReturnToPreviousView.ReturnToPreviousViewPresenter;
+import interface_adapter.ReturnToPreviousView.ReturnToPreviousViewViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.FavouriteThis.*;
 import interface_adapter.favourites.*;
@@ -39,6 +42,7 @@ import interface_adapter.signUp.signUpViewModel;
 import use_case.Finish.FinishInteractor;
 import use_case.Preference.PreferenceInteractor;
 import use_case.RedirectToPreference.RedirectToPreferenceInteractor;
+import use_case.ReturnToPreviousView.ReturnToPreviousViewInteractor;
 import use_case.cookThis.CookThisInteractor;
 import use_case.favouriteThis.favouriteThisInteractor;
 import use_case.favourites.FavouritesInteractor;
@@ -104,21 +108,24 @@ public class Main {
         favouriteThisPresenter favouriteThisPresenter = new favouriteThisPresenter(cookThisOrReRollViewModel,viewManagerModel);
         favouriteThisInteractor favouriteThisInteractor = new favouriteThisInteractor(inMemoryDataAccessUser,favouriteThisPresenter);
         favouriteThisController favouriteThisController = new favouriteThisController(favouriteThisInteractor);
-        // Ryan's changed signature, to be fixed. CookThisOrReRollView cookThisOrReRollView = new CookThisOrReRollView(cookThisOrReRollViewModel,reRollController, cookThisController, favouriteThisController, viewManagerModel);
 
         FinishViewModel finishViewModel1 = new FinishViewModel();
         FinishPresenter finishPresenter1 = new FinishPresenter(viewManagerModel,finishViewModel1);
         FinishInteractor finishInteractor1 = new FinishInteractor(finishPresenter1);
         FinishController finishController1 = new FinishController(finishInteractor1);
       
-        CookThisOrReRollView cookThisOrReRollView = new CookThisOrReRollView(cookThisOrReRollViewModel,reRollController,  cookThisController, finishController1, favouriteThisController, viewManagerModel);
+        CookThisOrReRollView cookThisOrReRollView = new CookThisOrReRollView(cookThisOrReRollViewModel,reRollController,cookThisController,favouriteThisController,finishController1,viewManagerModel);
         views.add(cookThisOrReRollView, cookThisOrReRollView.viewName);
 
         FinishViewModel finishViewModel = new FinishViewModel();
         FinishPresenter finishPresenter = new FinishPresenter(viewManagerModel,finishViewModel);
         FinishInteractor finishInteractor = new FinishInteractor(finishPresenter);
         FinishController finishController = new FinishController(finishInteractor);
-        CookThisView cookThisView = new CookThisView(cookThisViewModel, finishController);
+        ReturnToPreviousViewViewModel returnToPreviousViewViewModel = new ReturnToPreviousViewViewModel();
+        ReturnToPreviousViewPresenter returnToPreviousViewPresenter = new ReturnToPreviousViewPresenter(viewManagerModel,returnToPreviousViewViewModel);
+        ReturnToPreviousViewInteractor returnToPreviousViewInteractor = new ReturnToPreviousViewInteractor(returnToPreviousViewPresenter);
+        ReturnToPreviousViewController returnToPreviousViewController = new ReturnToPreviousViewController(returnToPreviousViewInteractor);
+        CookThisView cookThisView = new CookThisView(cookThisViewModel, finishController, returnToPreviousViewController);
         views.add(cookThisView, cookThisView.viewName);
 
         RedirectToPreferenceViewModel redirectToPreferenceViewModel = new RedirectToPreferenceViewModel();

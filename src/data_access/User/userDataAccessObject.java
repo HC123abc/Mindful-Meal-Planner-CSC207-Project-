@@ -1,10 +1,9 @@
 package data_access.User;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 import entity.FavouriteRecipes;
 import entity.Preference;
+import entity.Recipe;
 import org.json.JSONObject;
 import use_case.signUp.signUpDataAccessInterface;
 import app.userFactory;
@@ -21,6 +20,10 @@ import java.util.List;
 public class userDataAccessObject implements signUpDataAccessInterface, loginDataAccessInterface {
 
     private User currentUser = null; // current user
+    private String txt = "userFile.txt";
+    public void txtChange(String fileName){
+        this.txt = fileName;
+    }
     @Override
     public User createUser(String username, String password){
         userFactory factory = new userFactory();
@@ -40,7 +43,7 @@ public class userDataAccessObject implements signUpDataAccessInterface, loginDat
             return "Your password is too small. 🦑";
         }
         // Check if the username is already taken in userFile.txt
-        try (BufferedReader myReader = new BufferedReader(new FileReader("userFile.txt"))) {
+        try (BufferedReader myReader = new BufferedReader(new FileReader(txt))) {
             String row;
             while ((row = myReader.readLine()) != null) {
                 if (user.getUsername().equals(row)) {
@@ -54,11 +57,14 @@ public class userDataAccessObject implements signUpDataAccessInterface, loginDat
             throw new RuntimeException(e);
         }
 
-        try (BufferedWriter textFileWriter = new BufferedWriter(new FileWriter("userFile.txt", true))){
+        try (BufferedWriter textFileWriter = new BufferedWriter(new FileWriter(txt, true))){
             FileWriter jsonFileWriter = new FileWriter("./users/" + user.getUsername() + ".json", true);
             textFileWriter.write(user.getUsername());
             textFileWriter.newLine();
-
+//            FavouriteRecipes fave = new FavouriteRecipes();
+//            fave.setOneFavouriteRecipe(new Recipe("", "", "", "", "", "", "", ""));
+//            fave.setOneFavouriteRecipe(new Recipe("1", "1", "1", "1", "1", "1", "1", "1"));
+//            user.setFavouriteRecipes(fave);
             // Write the user object to the JSON file
             Gson gson = new GsonBuilder().create();
             gson.toJson(user, jsonFileWriter);
@@ -73,7 +79,7 @@ public class userDataAccessObject implements signUpDataAccessInterface, loginDat
 
     @Override
     public String getUser(String user, String password) {
-        try (BufferedReader myReader = new BufferedReader(new FileReader("userFile.txt"))) {
+        try (BufferedReader myReader = new BufferedReader(new FileReader(txt))) {
             String row;
             while ((row = myReader.readLine()) != null) {
                 if (user.equals(row)) {
@@ -96,8 +102,21 @@ public class userDataAccessObject implements signUpDataAccessInterface, loginDat
                     new String(Files.readAllBytes(path));
             JsonObject outerObject = new Gson().fromJson(reader, JsonObject.class);
             JsonObject prefs = outerObject.getAsJsonObject("preference");
-            JsonObject faves = outerObject.getAsJsonObject("favoriteRecipes");
+
+            JsonObject faves = outerObject.getAsJsonObject("favouriteRecipes");
+            ArrayList<Recipe> favourites = new ArrayList<>();
             FavouriteRecipes fave = gson.fromJson(faves, FavouriteRecipes.class);
+            if (faves != null) {
+                JsonArray favouritesJson = faves.getAsJsonArray("favouriteRecipes");
+                for (JsonElement i : favouritesJson) {
+                    favourites.add(gson.fromJson(i, Recipe.class));
+                }
+                for (Recipe i : favourites) {
+                    fave.setOneFavouriteRecipe(i);
+                    System.out.println(i);
+                }
+            }
+
             Preference pref = gson.fromJson(prefs, Preference.class);
             User userCheck = new User(gson.fromJson(outerObject.get("username"), String.class),
                     gson.fromJson(outerObject.get("password"), String.class));

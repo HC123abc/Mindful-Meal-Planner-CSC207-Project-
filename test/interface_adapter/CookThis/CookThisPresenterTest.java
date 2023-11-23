@@ -26,7 +26,7 @@ public class CookThisPresenterTest {
         Map<String,String> ingredient = new HashMap<>();
         ingredient.put("Ingredient A", "ImageURL_A");
         ingredient.put("Ingredient B", "ImageURL_B");
-        CookThisOutputData outputData = new CookThisOutputData(ingredient,"1. add this");
+        CookThisOutputData outputData = new CookThisOutputData(ingredient,"1. add this","");
 
         // Invoking the method to be tested
         presenter.prepareSuccessView(outputData);

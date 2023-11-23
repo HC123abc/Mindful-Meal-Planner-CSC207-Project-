@@ -5,10 +5,12 @@ import java.util.Map;
 public class CookThisInputData {
     private String instructions;
     private String ingredients;
+    private String previousView;
 
-    public CookThisInputData(String instructions, String ingredients) {
+    public CookThisInputData(String instructions, String ingredients, String previousView) {
         this.instructions = instructions;
         this.ingredients = ingredients;
+        this.previousView = previousView;
     }
 
     public String getInstructions() {
@@ -25,5 +27,11 @@ public class CookThisInputData {
 
     public void setIngredients(String ingredients) {
         this.ingredients = ingredients;
+    }
+    public String getPreviousView() {
+        return previousView;
+    }
+    public void setPreviousView(String previousView) {
+        this.previousView = previousView;
     }
 }
