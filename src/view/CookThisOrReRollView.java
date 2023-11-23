@@ -73,10 +73,12 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
         cookButton = new JButton("Cook This");
         reRollButton = new JButton("Reroll");
         finishButton = new JButton("Go Back to Main Page");
-        favouriteButton = new JButton("Add to Favourite");
+        favouriteButton = new JButton("Add to Favourites");
 
+        /* Commented out to decide later if we want to implement this minor visual or not.
         favouriteButton = new JButton("Favourite this recipe");
-//        favouriteButton.setIcon(favouriteIconOff);
+        favouriteButton.setIcon(favouriteIconOff);
+        */
 
         // Set up the layout
         setLayout(new BorderLayout());
@@ -189,11 +191,12 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
         readyInMinutesLabel.setText("Ready In Minutes: " + cookThisOrReRollState.getReadyInMinutes());
         summaryTextArea.setText("Summary: " + cookThisOrReRollState.getSummary());
 
+
         // Update favourite button icon
         if (cookThisOrReRollState.getIsFavourite()) {
-            favouriteButton.setText("Unfavorite");
+            favouriteButton.setText("Unfavourite");
         } else {
-            favouriteButton.setText("Favorite");
+            favouriteButton.setText("Favourite");
         }
     }
 
@@ -204,9 +207,9 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
             // Listen for changes in the CookThisOrReRollState and update the view
             if (state1.getFavButtonClicked()) {
                 if (state1.getIsFavourite()) {
-                    JOptionPane.showMessageDialog(null, "Successfully favorited the recipe", "Favorited Recipe", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Successfully favourited the recipe", "Favorited Recipe", JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Successfully unfavorited the recipe", "Unfavorited Recipe", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Successfully unfavourited the recipe", "Unfavorited Recipe", JOptionPane.INFORMATION_MESSAGE);
                 }
                 System.out.println(state1.getIsFavourite());
                 state1.setFavButtonClicked(false);
