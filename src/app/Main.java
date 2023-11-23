@@ -146,7 +146,7 @@ public class Main {
         views.add(favouritesView, favouritesView.viewName);
 
         GenerateRecipeController generateRecipeController = new GenerateRecipeController(generateRecipeInteractor);
-        MainPageView mainPageView = new MainPageView(generateRecipeController,cookThisOrReRollViewModel,redirectToPreferenceController, favouritesController);
+        MainPageView mainPageView = new MainPageView(generateRecipeController,cookThisOrReRollViewModel,redirectToPreferenceController, favouritesController,favouritesViewModel);
         views.add(mainPageView, mainPageView.viewName);
 
         loginViewModel LVM = new loginViewModel();

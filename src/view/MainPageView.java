@@ -21,18 +21,22 @@ public class MainPageView extends JPanel implements PropertyChangeListener {
     private GenerateRecipeController generateRecipeController;
     public String viewName = "MainPage";
     private CookThisOrReRollViewModel cookThisOrReRollViewModel;
+    private FavouritesViewModel favouritesViewModel;
     private RedirectToPreferenceController redirectToPreferenceController;
     private FavouritesController favouritesController;  // for switching to the favouritesView
 
     public MainPageView(GenerateRecipeController generateRecipeController,
                         CookThisOrReRollViewModel cookThisOrReRollViewModel,
                         RedirectToPreferenceController redirectToPreferenceController,
-                        FavouritesController favouritesController) {
+                        FavouritesController favouritesController,
+                        FavouritesViewModel favouritesViewModel) {
         this.generateRecipeController = generateRecipeController;
         this.redirectToPreferenceController = redirectToPreferenceController;
         this.favouritesController = favouritesController;
         //TODO CHECK IF I NEED TO ADD THE FAV VIEW MODEL AND ADD PROPCHANGELISTENER
 
+        this.favouritesViewModel = favouritesViewModel;
+        this.favouritesViewModel.addPropertyChangeListener(this);
         this.cookThisOrReRollViewModel = cookThisOrReRollViewModel;
         this.cookThisOrReRollViewModel.addPropertyChangeListener(this);
         JPanel panel = new JPanel(new GridLayout(4, 1, 10, 10));
@@ -55,6 +59,7 @@ public class MainPageView extends JPanel implements PropertyChangeListener {
             public void actionPerformed(ActionEvent e) {
                 // Handle Favorites button click
                 // Open the Favorites page and perform related actions
+                System.out.println("favouritesBtn.actionPerformed");
                 favouritesController.execute();
             }
         });
@@ -87,11 +92,16 @@ public class MainPageView extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        CookThisOrReRollState state = (CookThisOrReRollState) evt.getNewValue();
-        if (state.getRecipeError() != null) {
-            JOptionPane.showMessageDialog(this, state.getRecipeError());
+        // An inelegant solution to keeping the previous implementation of propertyChange
+        // and avoiding an error when trying to switch to FavouritesView
+        if (!(evt.getNewValue() instanceof FavouritesState)) {
+            CookThisOrReRollState state = (CookThisOrReRollState) evt.getNewValue();
+            if (state.getRecipeError() != null) {
+                JOptionPane.showMessageDialog(this, state.getRecipeError());
 //          reset
-            state.setRecipeError(null);
+                state.setRecipeError(null);
+            }
         }
+
     }
 }

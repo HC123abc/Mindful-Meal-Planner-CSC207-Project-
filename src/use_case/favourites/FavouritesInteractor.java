@@ -26,6 +26,7 @@ public class FavouritesInteractor implements FavouritesInputBoundary {
     public FavouritesInteractor(InMemoryDataAccessUserInterface inMemoryDataAccessUser,
                                 FavouritesOutputBoundary favouritesPresenter) {
         this.inMemoryDataAccessUser = inMemoryDataAccessUser;
+        this.user = inMemoryDataAccessUser.getActiveUser();
         this.favouritesPresenter = favouritesPresenter;
     }
 
