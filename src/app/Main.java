@@ -30,7 +30,8 @@ import interface_adapter.RedirectToPreference.RedirectToPreferenceController;
 import interface_adapter.RedirectToPreference.RedirectToPreferencePresenter;
 import interface_adapter.RedirectToPreference.RedirectToPreferenceViewModel;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.FavouriteThis.*; // may need to change from wildcard to explicit, double check later
+import interface_adapter.FavouriteThis.*;
+import interface_adapter.favourites.*;
 
 import interface_adapter.signUp.signUpController;
 import interface_adapter.signUp.signUpPresenter;
@@ -40,6 +41,7 @@ import use_case.Preference.PreferenceInteractor;
 import use_case.RedirectToPreference.RedirectToPreferenceInteractor;
 import use_case.cookThis.CookThisInteractor;
 import use_case.favouriteThis.favouriteThisInteractor;
+import use_case.favourites.FavouritesInteractor;
 import use_case.generateRecipe.GenerateRecipeDataAccessInterface;
 import use_case.generateRecipe.GenerateRecipeInteractor;
 import use_case.generateRecipe.GenerateRecipeOutputBoundary;
@@ -136,8 +138,15 @@ public class Main {
         PreferenceView preferenceView = new PreferenceView(preferenceViewModel,redirectToPreferenceViewModel,preferenceController ,finishController2 );
         views.add(preferenceView, preferenceView.viewName);
 
+        FavouritesState favouritesState = new FavouritesState(); //TODO ADD THE ARGUEMENTS
+        FavouritesViewModel favouritesViewModel = new FavouritesViewModel();
+        FavouritesInteractor favouritesInteractor = new FavouritesInteractor();
+        FavouritesController favouritesController = new FavouritesController(favouritesInteractor);
+        FavouritesPresenter favouritesPresenter = new FavouritesPresenter();
+        FavouritesView favouritesView = new FavouritesView();
+
         GenerateRecipeController generateRecipeController = new GenerateRecipeController(generateRecipeInteractor);
-        MainPageView mainPageView = new MainPageView(generateRecipeController,cookThisOrReRollViewModel,redirectToPreferenceController);
+        MainPageView mainPageView = new MainPageView(generateRecipeController,cookThisOrReRollViewModel,redirectToPreferenceController, favouritesController);
         views.add(mainPageView, mainPageView.viewName);
 
         loginViewModel LVM = new loginViewModel();
