@@ -17,12 +17,12 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class MainPageView extends JPanel  implements PropertyChangeListener {
+public class MainPageView extends JPanel implements PropertyChangeListener {
     private GenerateRecipeController generateRecipeController;
     public String viewName = "MainPage";
     private CookThisOrReRollViewModel cookThisOrReRollViewModel;
     private RedirectToPreferenceController redirectToPreferenceController;
-    private FavouritesController favouritesController;  // This is for switching to the favouritesView
+    private FavouritesController favouritesController;  // for switching to the favouritesView
 
     public MainPageView(GenerateRecipeController generateRecipeController,
                         CookThisOrReRollViewModel cookThisOrReRollViewModel,
@@ -77,7 +77,7 @@ public class MainPageView extends JPanel  implements PropertyChangeListener {
         });
 
         panel.add(generateRecipeBtn);
-        panel.add(favoritesBtn);
+        panel.add(favouritesBtn);
         panel.add(preferencesBtn);
         panel.add(signOutBtn);
 

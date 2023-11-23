@@ -111,7 +111,7 @@ public class Main {
         FinishInteractor finishInteractor1 = new FinishInteractor(finishPresenter1);
         FinishController finishController1 = new FinishController(finishInteractor1);
       
-        CookThisOrReRollView cookThisOrReRollView = new CookThisOrReRollView(cookThisOrReRollViewModel,reRollController,  cookThisController, finishController1, viewManagerModel);
+        CookThisOrReRollView cookThisOrReRollView = new CookThisOrReRollView(cookThisOrReRollViewModel,reRollController,  cookThisController, finishController1, favouriteThisController, viewManagerModel);
         views.add(cookThisOrReRollView, cookThisOrReRollView.viewName);
 
         FinishViewModel finishViewModel = new FinishViewModel();
@@ -138,12 +138,12 @@ public class Main {
         PreferenceView preferenceView = new PreferenceView(preferenceViewModel,redirectToPreferenceViewModel,preferenceController ,finishController2 );
         views.add(preferenceView, preferenceView.viewName);
 
-        FavouritesState favouritesState = new FavouritesState(); //TODO ADD THE ARGUEMENTS
         FavouritesViewModel favouritesViewModel = new FavouritesViewModel();
-        FavouritesInteractor favouritesInteractor = new FavouritesInteractor();
+        FavouritesPresenter favouritesPresenter = new FavouritesPresenter(favouritesViewModel,viewManagerModel);
+        FavouritesInteractor favouritesInteractor = new FavouritesInteractor(inMemoryDataAccessUser,favouritesPresenter);
         FavouritesController favouritesController = new FavouritesController(favouritesInteractor);
-        FavouritesPresenter favouritesPresenter = new FavouritesPresenter();
-        FavouritesView favouritesView = new FavouritesView();
+        FavouritesView favouritesView = new FavouritesView(favouritesViewModel,favouritesController,finishController);
+        views.add(favouritesView, favouritesView.viewName);
 
         GenerateRecipeController generateRecipeController = new GenerateRecipeController(generateRecipeInteractor);
         MainPageView mainPageView = new MainPageView(generateRecipeController,cookThisOrReRollViewModel,redirectToPreferenceController, favouritesController);
