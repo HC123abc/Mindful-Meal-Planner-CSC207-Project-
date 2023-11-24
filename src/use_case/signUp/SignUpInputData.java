@@ -1,10 +1,10 @@
 package use_case.signUp;
 
-public class signUpInputData {
+public class SignUpInputData {
     private String username;
     private String password;
     private String passwordChecker;
-    public signUpInputData(String username, String password, String passwordChecker){
+    public SignUpInputData(String username, String password, String passwordChecker){
         this.username = username;
         this.password = password;
         this.passwordChecker = passwordChecker;

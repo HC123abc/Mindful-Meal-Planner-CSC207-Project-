@@ -1,13 +1,8 @@
 package view;
 
-import data_access.User.userDataAccessObject;
-import interface_adapter.Login.loginController;
-import interface_adapter.Login.loginPresenter;
-import interface_adapter.Login.loginState;
-import interface_adapter.Login.loginViewModel;
-import interface_adapter.ViewManagerModel;
-import interface_adapter.signUp.signUpController;
-import use_case.login.LoginInteractor;
+import interface_adapter.Login.LoginController;
+import interface_adapter.Login.LoginState;
+import interface_adapter.Login.LoginViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,15 +15,15 @@ import java.beans.PropertyChangeListener;
 
 public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
 
-    private final loginViewModel LVM;
+    private final LoginViewModel LVM;
     private final JTextField usernameInputField = new JTextField(15);
     private final JPasswordField passwordInputField = new JPasswordField(15);
-    private final loginController LController;
-    private signUpController SignUpController;
+    private final LoginController LController;
+    private interface_adapter.signUp.SignUpController SignUpController;
 
     public String viewName = "Login";
 
-    public LoginView(loginViewModel LVM, loginController LController, signUpController SignUpController) {
+    public LoginView(LoginViewModel LVM, LoginController LController, interface_adapter.signUp.SignUpController SignUpController) {
         this.LVM = LVM;
         this.LController = LController;
         this.SignUpController = SignUpController;
@@ -85,7 +80,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(login)) {
-                            loginState currentState = LVM.getState();
+                            LoginState currentState = LVM.getState();
 
                             LController.execute(
                                     currentState.getUsername(),
@@ -111,7 +106,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
             new KeyListener() {
                 @Override
                 public void keyTyped(KeyEvent e) {
-                    loginState currentState = LVM.getState();
+                    LoginState currentState = LVM.getState();
                     String text = usernameInputField.getText() + e.getKeyChar();
                     currentState.setUsername(text);
                     LVM.setState(currentState);
@@ -130,7 +125,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
             new KeyListener() {
                 @Override
                 public void keyTyped(KeyEvent e) {
-                    loginState currentState = LVM.getState();
+                    LoginState currentState = LVM.getState();
                     currentState.setPassword(passwordInputField.getText() + e.getKeyChar());
                     LVM.setState(currentState);
                 }
@@ -160,7 +155,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        loginState state = (loginState) evt.getNewValue();
+        LoginState state = (LoginState) evt.getNewValue();
         System.out.println(state.getError() == null);
         if (state.getError() != null) {
             System.out.println(state.getError());

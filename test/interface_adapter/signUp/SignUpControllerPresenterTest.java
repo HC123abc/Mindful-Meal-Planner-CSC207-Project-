@@ -2,24 +2,24 @@ package interface_adapter.signUp;
 import entity.User;
 import interface_adapter.ViewManagerModel;
 import org.junit.jupiter.api.Test;
-import use_case.signUp.signUpInputBoundary;
-import use_case.signUp.signUpInputData;
-import use_case.signUp.signUpOutputData;
+import use_case.signUp.SignUpInputBoundary;
+import use_case.signUp.SignUpInputData;
+import use_case.signUp.SignUpOutputData;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class signUpControllerPresenterTest {
+public class SignUpControllerPresenterTest {
     @Test
     public void presenterTests(){
-        signUpViewModel SVM = new signUpViewModel();
+        SignUpViewModel SVM = new SignUpViewModel();
         ViewManagerModel VMM = new ViewManagerModel();
-        signUpPresenter presenter = new signUpPresenter(SVM,"main", VMM);
+        SignUpPresenter presenter = new SignUpPresenter(SVM,"main", VMM);
         User user = new User("","");
-        signUpOutputData data = new signUpOutputData(user);
+        SignUpOutputData data = new SignUpOutputData(user);
         presenter.prepareSuccessView(data);
         assertEquals("main", VMM.getActiveView());
         presenter.prepareFailView("Error!");
-        signUpState state = SVM.getState();
+        SignUpState state = SVM.getState();
         assertNotNull(state.getError());
         presenter.prepareEmptyView("Empty");
         state = SVM.getState();
@@ -29,9 +29,9 @@ public class signUpControllerPresenterTest {
     }
     @Test
     public void controllerTest(){
-        signUpInputBoundary boundary = new signUpInputBoundary() {
+        SignUpInputBoundary boundary = new SignUpInputBoundary() {
             @Override
-            public void execute(signUpInputData s) {
+            public void execute(SignUpInputData s) {
                 assertNotNull(s);
                 assertNotNull(s.getUsername());
                 assertNotNull(s.getPasswordChecker());
@@ -40,7 +40,7 @@ public class signUpControllerPresenterTest {
 
             }
         };
-        signUpController controller = new signUpController(boundary);
+        SignUpController controller = new SignUpController(boundary);
         controller.execute("User", "Pass", "Pass");
     }
 }

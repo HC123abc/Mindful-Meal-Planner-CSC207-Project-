@@ -4,20 +4,18 @@ import com.google.gson.stream.JsonReader;
 import entity.FavouriteRecipes;
 import entity.Preference;
 import entity.Recipe;
-import org.json.JSONObject;
-import use_case.signUp.signUpDataAccessInterface;
+import use_case.signUp.SignUpDataAccessInterface;
 import app.userFactory;
 import entity.User;
-import use_case.login.loginDataAccessInterface;
+import use_case.login.LoginDataAccessInterface;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
 
-public class userDataAccessObject implements signUpDataAccessInterface, loginDataAccessInterface {
+public class UserDataAccessObject implements SignUpDataAccessInterface, LoginDataAccessInterface {
 
     private User currentUser = null; // current user
     private String txt = "userFile.txt";
@@ -118,6 +116,10 @@ public class userDataAccessObject implements signUpDataAccessInterface, loginDat
             Preference pref = gson.fromJson(prefs, Preference.class);
             User userCheck = new User(gson.fromJson(outerObject.get("username"), String.class),
                     gson.fromJson(outerObject.get("password"), String.class));
+            if (fave.getFavouriteRecipes() == null){
+                fave.replaceRecipes(new ArrayList<>());
+            }
+
             userCheck.setFavouriteRecipes(fave);
             userCheck.setPreference(pref);
             System.out.println(userCheck.getPreference());

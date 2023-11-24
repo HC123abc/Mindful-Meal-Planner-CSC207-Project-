@@ -5,19 +5,15 @@ import entity.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 import java.io.FileWriter;   // Import the FileWriter class
 
 
-public class userDataAccessObjectTest {
+public class UserDataAccessObjectTest {
     ArrayList<String> Lines = new ArrayList<>();
 
     @Before
@@ -36,7 +32,7 @@ public class userDataAccessObjectTest {
         assertEquals("UsernameVERYCOOLUSER", user.getUsername());
         assertEquals(true, user.verifyPassword("Password"));
 
-        userDataAccessObject UDAO = new userDataAccessObject(); // sign up to database
+        UserDataAccessObject UDAO = new UserDataAccessObject(); // sign up to database
         UDAO.txtChange("./users/userFileTest.txt");
         String success = UDAO.storeUser(user, "Password", "Password");
         assertEquals("Success!", success);
@@ -62,7 +58,7 @@ public class userDataAccessObjectTest {
     @Test
     public void testUserLoginFunc(){
         //Success
-        userDataAccessObject UDAO = new userDataAccessObject(); // sign up to database
+        UserDataAccessObject UDAO = new UserDataAccessObject(); // sign up to database
         UDAO.txtChange("./users/userFileTest.txt");
         String userStatus = UDAO.getUser("Goose", "Goose");
         User gooseUser = UDAO.setUser();

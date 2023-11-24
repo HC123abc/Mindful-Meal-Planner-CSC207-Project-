@@ -1,8 +1,7 @@
 package use_case.signUp;
 import entity.User;
-import kotlin.text.UStringsKt;
 
-public interface signUpDataAccessInterface {
+public interface SignUpDataAccessInterface {
     User createUser(String Username, String Password);
 
     String storeUser(User user, String Password, String PasswordCheck);

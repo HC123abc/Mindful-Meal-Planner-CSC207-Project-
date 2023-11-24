@@ -1,29 +1,27 @@
 package interface_adapter.signUp;
-import interface_adapter.Login.loginState;
-import interface_adapter.Login.loginViewModel;
 import interface_adapter.ViewManagerModel;
-import use_case.signUp.signUpOutputBoundary;
-import use_case.signUp.signUpOutputData;
+import use_case.signUp.SignUpOutputBoundary;
+import use_case.signUp.SignUpOutputData;
 
-public class signUpPresenter implements signUpOutputBoundary{
-    private signUpViewModel signUpVM;
+public class SignUpPresenter implements SignUpOutputBoundary {
+    private SignUpViewModel signUpVM;
     private ViewManagerModel VMM;
     private String mainView;
 
-    public signUpPresenter(signUpViewModel signUpVM, String main, ViewManagerModel VMM){
+    public SignUpPresenter(SignUpViewModel signUpVM, String main, ViewManagerModel VMM){
         this.signUpVM = signUpVM;
         this.mainView = main;
         this.VMM = VMM;
     }
     @Override
-    public void prepareSuccessView(signUpOutputData data) {
+    public void prepareSuccessView(SignUpOutputData data) {
         VMM.setActiveView(mainView);
         VMM.firePropertyChanged();
     }
 
     @Override
     public void prepareFailView(String error) {
-        signUpState SignupState = signUpVM.getState();
+        SignUpState SignupState = signUpVM.getState();
         SignupState.setError(error);
         System.out.println(SignupState.getError());
         signUpVM.firePropertyChanged();
@@ -31,7 +29,7 @@ public class signUpPresenter implements signUpOutputBoundary{
 
     @Override
     public void prepareEmptyView(String msg) {
-        signUpState SignupState = signUpVM.getState();
+        SignUpState SignupState = signUpVM.getState();
         SignupState.setEmpty(msg);
         signUpVM.firePropertyChanged();
         VMM.setActiveView(signUpVM.getViewName());

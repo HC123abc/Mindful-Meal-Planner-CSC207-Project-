@@ -2,13 +2,11 @@ package use_case.signUp;
 import data_access.InMemoryDataAccess.InMemoryDataAccessUser;
 import data_access.InMemoryDataAccess.InMemoryDataAccessUserInterface;
 import entity.User;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class signUpInteractorTest {
+public class SignUpInteractorTest {
 
     @Test
     public void interactorExecutes (){
@@ -16,9 +14,9 @@ public class signUpInteractorTest {
         User mockUser = new User("test", "test");
         InMemoryDataAccessUserInterface mockInMemoryDataAccessUser = new InMemoryDataAccessUser();
         mockInMemoryDataAccessUser.setActiveUser(mockUser);
-        signUpOutputBoundary mockPres = new signUpOutputBoundary() {
+        SignUpOutputBoundary mockPres = new SignUpOutputBoundary() {
             @Override
-            public void prepareSuccessView(signUpOutputData data) {
+            public void prepareSuccessView(SignUpOutputData data) {
                 assertNotNull(data);
                 assertNotNull(data.getUsername());
             }
@@ -33,7 +31,7 @@ public class signUpInteractorTest {
                 assertNotNull(msg);
             }
         };
-        signUpDataAccessInterface mockDAO = new signUpDataAccessInterface() {
+        SignUpDataAccessInterface mockDAO = new SignUpDataAccessInterface() {
             @Override
             public User createUser(String Username, String Password) {
                 return new User(Username, Password);
@@ -49,12 +47,12 @@ public class signUpInteractorTest {
                 return "Error";
             }
         };
-        signUpInteractor interactor = new signUpInteractor(mockDAO, mockPres, mockInMemoryDataAccessUser);
-        signUpInputData data = new signUpInputData("test", "Success", "test");
+        SignUpInteractor interactor = new SignUpInteractor(mockDAO, mockPres, mockInMemoryDataAccessUser);
+        SignUpInputData data = new SignUpInputData("test", "Success", "test");
         interactor.execute(data);
-        signUpInputData data2 = new signUpInputData("test", "Empty", "test");
+        SignUpInputData data2 = new SignUpInputData("test", "Empty", "test");
         interactor.execute(data2);
-        signUpInputData data3 = new signUpInputData("test", "test", "test");
+        SignUpInputData data3 = new SignUpInputData("test", "test", "test");
         interactor.execute(data3);
     }
 }

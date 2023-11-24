@@ -1,6 +1,6 @@
 package use_case.login;
 
-public interface loginOutputBoundary {
+public interface LoginOutputBoundary {
     void prepareFailView(String uidState);
 
     void prepareSuccessView(String username);

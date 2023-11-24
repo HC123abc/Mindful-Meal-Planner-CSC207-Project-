@@ -8,13 +8,13 @@ import use_case.login.LoginInputData;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class loginControllerPresenterTest {
+public class LoginControllerPresenterTest {
 
     @Test
     public void presenterTests(){
-        loginViewModel LVM = new loginViewModel();
+        LoginViewModel LVM = new LoginViewModel();
         ViewManagerModel VMM = new ViewManagerModel();
-        loginPresenter presenter = new loginPresenter(LVM, VMM,"main");
+        LoginPresenter presenter = new LoginPresenter(LVM, VMM,"main");
         presenter.prepapreEmptyView();
         assertEquals(LVM.getViewName(), VMM.getActiveView());
         presenter.prepareFailView("Error");
@@ -34,7 +34,7 @@ public class loginControllerPresenterTest {
             }
         };
 
-        loginController controller = new loginController(LIB);
+        LoginController controller = new LoginController(LIB);
         controller.execute("Username", "Password");
     }
 }

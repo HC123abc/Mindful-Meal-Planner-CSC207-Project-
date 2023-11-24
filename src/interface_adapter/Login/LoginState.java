@@ -1,6 +1,6 @@
 package interface_adapter.Login;
 
-public class loginState {
+public class LoginState {
 
     private String username = "";
     private String password = "";

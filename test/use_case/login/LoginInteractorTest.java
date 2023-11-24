@@ -2,20 +2,18 @@ package use_case.login;
 import data_access.InMemoryDataAccess.InMemoryDataAccessUser;
 import data_access.InMemoryDataAccess.InMemoryDataAccessUserInterface;
 import entity.User;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class loginInteractorTest {
+public class LoginInteractorTest {
 
     @Test
     public void loginTests(){
         User mockUser = new User("test", "test");
         InMemoryDataAccessUserInterface mockInMemoryDataAccessUser = new InMemoryDataAccessUser();
         mockInMemoryDataAccessUser.setActiveUser(mockUser);
-        loginDataAccessInterface mockDAO = new loginDataAccessInterface() {
+        LoginDataAccessInterface mockDAO = new LoginDataAccessInterface() {
             @Override
             public String getUser(String user, String password) {
                 if (password.equals("Success!")){
@@ -32,7 +30,7 @@ public class loginInteractorTest {
                 return new User("","");
             }
         };
-        loginOutputBoundary mockPres = new loginOutputBoundary() {
+        LoginOutputBoundary mockPres = new LoginOutputBoundary() {
             @Override
             public void prepareFailView(String uidState) {
                 assertNotNull(uidState);
