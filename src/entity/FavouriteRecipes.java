@@ -17,6 +17,8 @@ public class FavouriteRecipes {
         favouriteRecipes.add(recipe);
     }
 
+    public void replaceRecipes(ArrayList<Recipe> recipes){ this.favouriteRecipes = recipes; }
+
     public void removeOneRecipe(Recipe recipe) {
         for (int i = 0; i < favouriteRecipes.size(); i++) {
             Recipe recipe1 = favouriteRecipes.get(i);

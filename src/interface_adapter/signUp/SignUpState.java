@@ -1,6 +1,6 @@
 package interface_adapter.signUp;
 
-public class signUpState {
+public class SignUpState {
 
     private String username = "";
     private String error = null;
