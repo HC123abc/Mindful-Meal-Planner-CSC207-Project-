@@ -37,7 +37,11 @@ import interface_adapter.ReturnToPreviousView.ReturnToPreviousViewController;
 import interface_adapter.ReturnToPreviousView.ReturnToPreviousViewPresenter;
 import interface_adapter.ReturnToPreviousView.ReturnToPreviousViewViewModel;
 import interface_adapter.ViewManagerModel;
+<<<<<<< HEAD
 import interface_adapter.FavouriteThis.*;
+=======
+import interface_adapter.FavouriteThis.*; // may need to change from wildcard to explicit, double check later
+>>>>>>> parent of db81dde (began implementation of all classes for switching to favouritesView use case, including modifying Main)
 
 import interface_adapter.signUp.SignUpController;
 import interface_adapter.signUp.SignUpPresenter;
