@@ -3,15 +3,14 @@ package use_case.generateRecipe;
 
 import data_access.InMemoryDataAccess.InMemoryDataAccessUser;
 import data_access.InMemoryDataAccess.InMemoryDataAccessUserInterface;
-import entity.Preference;
-import entity.RandomRecipe;
-import entity.RecipeFactory;
+import entity.*;
 import data_access.GenerateRecipe.GenerateRecipeApi;
 
-import entity.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -27,6 +26,9 @@ class GenerateRecipeInteractorTest {
         RecipeFactory recipeFactory = new RecipeFactory();
         InMemoryDataAccessUserInterface mockInMemoryDataAccessUser = new InMemoryDataAccessUser();
         User mockUser = new User("test", "test");
+        FavouriteRecipes mockFavouriteRecipes = new FavouriteRecipes();
+        mockFavouriteRecipes.setOneFavouriteRecipe(new Recipe("a","b","c","d","e","f","g","-123"));
+        mockUser.setFavouriteRecipes(mockFavouriteRecipes);
         mockInMemoryDataAccessUser.setActiveUser(mockUser);
         GenerateRecipeOutputBoundary generateRecipePresenter = new GenerateRecipeOutputBoundary() {
 
@@ -40,6 +42,8 @@ class GenerateRecipeInteractorTest {
                 String extendedIngredients = recipeOutputData.getExtendedIngredients();
                 String extendedInstructions = recipeOutputData.getExtendedInstructions();
                 String recipeImageURL = recipeOutputData.getRecipeImageURL();
+                String id = recipeOutputData.getId();
+                boolean favourite = recipeOutputData.getIsFavourite();
 
                 // Assert each attribute of the first recipe
                 assertEquals("Harley Good Recipe 1", title);
@@ -50,6 +54,8 @@ class GenerateRecipeInteractorTest {
                 assertTrue(extendedIngredients.contains("Ingredient B"));
                 assertTrue(extendedInstructions.contains("Step 1: Do something for recipe 1"));
                 assertTrue(recipeImageURL.contains("https://example.com/recipe_1.jpg"));
+                assertEquals("1", id);
+                assertEquals(false, favourite);
             }
 
             @Override

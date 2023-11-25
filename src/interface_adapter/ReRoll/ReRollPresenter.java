@@ -26,6 +26,8 @@ public class ReRollPresenter implements ReRollOutputBoundary {
         cookThisOrReRollState.setReadyInMinutes(recipeOutputData.getReadyInMinutes());
         cookThisOrReRollState.setIngredients(recipeOutputData.getExtendedIngredients());
         cookThisOrReRollState.setInstruction(recipeOutputData.getExtendedInstructions());
+        cookThisOrReRollState.setId(recipeOutputData.getId());
+        cookThisOrReRollState.setIsFavourite(recipeOutputData.getIsFavourite());
         this.cookThisOrReRollViewModel.setState(cookThisOrReRollState);
         cookThisOrReRollViewModel.firePropertyChanged();
     }

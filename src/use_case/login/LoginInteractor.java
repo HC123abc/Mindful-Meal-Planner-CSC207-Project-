@@ -3,14 +3,12 @@ package use_case.login;
 import data_access.InMemoryDataAccess.InMemoryDataAccessUserInterface;
 import entity.User;
 
-import java.rmi.server.UID;
-
 public class LoginInteractor implements LoginInputBoundary {
-    private loginDataAccessInterface DAO;
-    private loginOutputBoundary loginPresenter;
+    private LoginDataAccessInterface DAO;
+    private LoginOutputBoundary loginPresenter;
     private InMemoryDataAccessUserInterface IMDAU;
 
-    public LoginInteractor(loginDataAccessInterface DAO, loginOutputBoundary pres, InMemoryDataAccessUserInterface IMDAU){
+    public LoginInteractor(LoginDataAccessInterface DAO, LoginOutputBoundary pres, InMemoryDataAccessUserInterface IMDAU){
         this.DAO = DAO;
         this.IMDAU = IMDAU;
         this.loginPresenter = pres;

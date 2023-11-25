@@ -21,8 +21,8 @@ public class favouriteThisPresenter implements favouriteThisOutputBoundary{
         // gets the state, changes the isFavourited attribute, and updates the state
         CookThisOrReRollState cTORState = cTORViewModel.getState();
         cTORState.setIsFavourite(fTOutputData.getIsFavourite());
+        cTORState.setFavButtonClicked(true);
         this.cTORViewModel.setState(cTORState);
-
         cTORViewModel.firePropertyChanged();
         System.out.println(fTOutputData.getIsFavourite());
     }

@@ -51,8 +51,15 @@ public class GenerateRecipeInteractor implements GenerateRecipeInputBoundary {
             this.randomRecipe.setCurrentRecipeIndex(0);
             user.setRandomRecipe(this.randomRecipe);
             Recipe recipe = getRecipe();
+            boolean isFavourite = false;
+            for(Recipe recipe1: user.getFavouriteRecipes().getFavouriteRecipes()){
+                if(recipe1.getId().equals(recipe.getId())){
+                    isFavourite = true;
+                    break;
+                }
+            }
 //          prepare success view
-            GenerateRecipeOutputData generateRecipeOutputData = new GenerateRecipeOutputData(recipe.getTitle(),recipe.getReadyInMinutes(), recipe.getServings(), recipe.getSummary(), recipe.getExtendedIngredients(), recipe.getExtendedInstructions(), recipe.getRecipeImageURL(), recipe.getId());;
+            GenerateRecipeOutputData generateRecipeOutputData = new GenerateRecipeOutputData(recipe.getTitle(),recipe.getReadyInMinutes(), recipe.getServings(), recipe.getSummary(), recipe.getExtendedIngredients(), recipe.getExtendedInstructions(), recipe.getRecipeImageURL(), recipe.getId(), isFavourite);;
             cookThisOrReRollPresenter.prepareSuccessView(generateRecipeOutputData);
 
         }

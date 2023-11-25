@@ -1,1 +1,2 @@
-{"username":"Goose","password":"Goose","favoriteRecipes":{},"preference":{"selectedCuisines":["Chinese"],"selectedDiets":[],"selectedIntolerances":[]},"randomRecipe":{"currentRecipeIndex":0}}
+{"username":"Goose","password":"Goose","favoriteRecipes":{"favouriteRecipes":[]},"preference":{"selectedCuisines":["Chinese"],"selectedDiets":["Vegan"],"selectedIntolerances":["Egg"]},"randomRecipe":{"currentRecipeIndex":0}}
+

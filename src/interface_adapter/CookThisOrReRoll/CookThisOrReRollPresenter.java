@@ -24,6 +24,7 @@ public class CookThisOrReRollPresenter implements GenerateRecipeOutputBoundary {
         cookThisOrReRollState.setIngredients(recipeOutputData.getExtendedIngredients());
         cookThisOrReRollState.setInstruction(recipeOutputData.getExtendedInstructions());
         cookThisOrReRollState.setId(recipeOutputData.getId());
+        cookThisOrReRollState.setIsFavourite(recipeOutputData.getIsFavourite());
         this.cookThisOrReRollViewModel.setState(cookThisOrReRollState);
         cookThisOrReRollViewModel.firePropertyChanged();
         viewManagerModel.setActiveView(cookThisOrReRollViewModel.getViewName());
