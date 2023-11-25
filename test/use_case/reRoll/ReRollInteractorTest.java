@@ -29,13 +29,15 @@ class ReRollInteractorTest {
             public void prepareSuccessView(ReRollOutputData reRollOutputData) {
                 assertNotNull(reRollOutputData);
                 // Add assertions to validate the returned recipe data
-                assertNotNull(reRollOutputData.getTitle());
-                assertNotNull(reRollOutputData.getReadyInMinutes());
-                assertNotNull(reRollOutputData.getServings());
-                assertNotNull(reRollOutputData.getSummary());
+                assertEquals("Recipe 1",reRollOutputData.getTitle());
+                assertEquals("20",reRollOutputData.getReadyInMinutes());
+                assertEquals("2",reRollOutputData.getServings());
+                assertEquals("Recipe summary 1",reRollOutputData.getSummary());
                 assertNotNull(reRollOutputData.getExtendedIngredients());
                 assertNotNull(reRollOutputData.getExtendedInstructions());
-                assertNotNull(reRollOutputData.getRecipeImageURL());
+                assertEquals("https://example.com/recipe1.jpg",reRollOutputData.getRecipeImageURL());
+                assertEquals("0",reRollOutputData.getId());
+                assertEquals(false,reRollOutputData.getIsFavourite());
             }
         };
 
