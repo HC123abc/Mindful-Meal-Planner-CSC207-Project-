@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.CookThis.CookThisController;
 import interface_adapter.FavView.FavViewState;
 import interface_adapter.FavView.FavViewViewModel;
 import interface_adapter.Finish.FinishController;
@@ -16,10 +17,12 @@ public class FavView extends JPanel implements PropertyChangeListener {
     public String viewName = "FavView";
     private FavViewViewModel favViewViewModel;
     private FinishController finishController;
+    private CookThisController cookThisController;
 
-    public FavView(FavViewViewModel favViewViewModel, FinishController finishController) {
+    public FavView(FavViewViewModel favViewViewModel, FinishController finishController, CookThisController cookThisController) {
         this.favViewViewModel = favViewViewModel;
         this.finishController = finishController;
+        this.cookThisController = cookThisController;
         this.favViewViewModel.addPropertyChangeListener(this);
 
         setLayout(new BorderLayout());
@@ -55,7 +58,7 @@ public class FavView extends JPanel implements PropertyChangeListener {
             String cardImageURL = entry.getKey();
             Map<String, String> recipeDetails = entry.getValue();
 
-            RecipeCard recipeCard = new RecipeCard(recipeDetails, cardImageURL);
+            RecipeCard recipeCard = new RecipeCard(recipeDetails, cardImageURL, this.cookThisController);
             recipePanel.add(recipeCard);
         }
         recipePanel.revalidate();
@@ -74,9 +77,11 @@ public class FavView extends JPanel implements PropertyChangeListener {
     private static class RecipeCard extends JPanel {
         private Map<String, String> recipeDetails;
         private ImageIcon image;
+        private CookThisController cookThisController;
 
-        public RecipeCard(Map<String, String> recipeDetails, String cardImageURL) {
+        public RecipeCard(Map<String, String> recipeDetails, String cardImageURL, CookThisController cookThisController) {
             this.recipeDetails = recipeDetails;
+            this.cookThisController = cookThisController;
 
             setLayout(new BorderLayout());
             String title = recipeDetails.get("title");
@@ -119,6 +124,10 @@ public class FavView extends JPanel implements PropertyChangeListener {
             });
 
             cookThisBtn.addActionListener(e -> {
+                String ingredients = recipeDetails.get("extendedIngredients");
+                String instruction = recipeDetails.get("extendedInstructions");
+
+                cookThisController.execute(ingredients,instruction,"FavView");
                 System.out.println("Cooking this: " + recipeDetails.get("title"));
             });
 
