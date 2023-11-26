@@ -7,11 +7,11 @@ import entity.*;
 public class ReRollInteractor implements ReRollInputBoundary {
     private RandomRecipe randomRecipe;
     private User user;
-    private RecipeFactory recipeFactory;
+    private SimpleRecipeFactoryInterface recipeFactory;
     private ReRollOutputBoundary reRollPresenter;
     private InMemoryDataAccessUserInterface inMemoryDataAccessUser;
 
-    public ReRollInteractor(InMemoryDataAccessUserInterface inMemoryDataAccessUser, ReRollOutputBoundary reRollPresenter, RecipeFactory recipeFactory) {
+    public ReRollInteractor(InMemoryDataAccessUserInterface inMemoryDataAccessUser, ReRollOutputBoundary reRollPresenter, SimpleRecipeFactoryInterface recipeFactory) {
         this.inMemoryDataAccessUser = inMemoryDataAccessUser;
         this.recipeFactory = recipeFactory;
         this.reRollPresenter = reRollPresenter;

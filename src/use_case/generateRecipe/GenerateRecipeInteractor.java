@@ -16,7 +16,7 @@ public class GenerateRecipeInteractor implements GenerateRecipeInputBoundary {
     private SimpleRecipeFactoryInterface recipeFactory;
 
 
-    public GenerateRecipeInteractor(GenerateRecipeDataAccessInterface generateRecipeAPI, GenerateRecipeOutputBoundary generateRecipeOutputBoundary, InMemoryDataAccessUserInterface inMemoryDataAccessUser, RecipeFactory recipeFactory) {
+    public GenerateRecipeInteractor(GenerateRecipeDataAccessInterface generateRecipeAPI, GenerateRecipeOutputBoundary generateRecipeOutputBoundary, InMemoryDataAccessUserInterface inMemoryDataAccessUser, SimpleRecipeFactoryInterface recipeFactory) {
         this.generateRecipeAPI = generateRecipeAPI;
         this.inMemoryDataAccessUser = inMemoryDataAccessUser;
         this.recipeFactory = recipeFactory;
