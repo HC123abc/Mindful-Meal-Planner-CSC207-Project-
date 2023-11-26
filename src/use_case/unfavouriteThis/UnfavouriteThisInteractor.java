@@ -47,35 +47,9 @@ public class UnfavouriteThisInteractor implements UnfavouriteThisInputBoundary {
 
         favouriteRecipes.removeOneRecipe(recipeToRemove);
 
-//        // Output data object creation
-//        String id = recipe.getId();
-//        String cardImage = generateRecipeCardAPI.getRecipeCardUrl(apiKey, id);
-//        if (cardImage == null) {
-//            cardImage = recipe.getRecipeImageURL();
-//        }
-//
-//        Map<String, String> recipeDetails = new HashMap<>();
-//
-//        recipeDetails.put("title", recipe.getTitle());
-//        recipeDetails.put("readyInMinutes", recipe.getReadyInMinutes());
-//        recipeDetails.put("servings", recipe.getServings());
-//        recipeDetails.put("summary", recipe.getSummary());
-//        recipeDetails.put("extendedIngredients", recipe.getExtendedIngredients());
-//        recipeDetails.put("extendedInstructions", recipe.getExtendedInstructions());
-//        recipeDetails.put("recipeImageURL", recipe.getRecipeImageURL());
-//        recipeDetails.put("id", recipe.getId());
-//
-//        Map<String, Map<String, String>> recipeOutput = new HashMap<>();
-//        recipeOutput.put(cardImage, recipeDetails);
-//
-//        UnfavouriteThisOutputData unfavouriteThisOutputData = new UnfavouriteThisOutputData(recipeOutput);
-//        unfavouriteThisPresenter.prepareSuccessView(unfavouriteThisOutputData);
-
-
 
         Map<String, Map<String, String>> output = new HashMap<>(); // Create a single outputMap outside the loop
         if (favouriteRecipes.getFavouriteRecipes().isEmpty()) {
-//            unfavouriteThisPresenter.prepareFailView("You have no favourite recipes now.");
             unfavouriteThisPresenter.prepareSuccessView(new UnfavouriteThisOutputData(output));
         }
         else {
