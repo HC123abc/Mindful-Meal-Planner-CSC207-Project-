@@ -13,7 +13,7 @@ public class GenerateRecipeInteractor implements GenerateRecipeInputBoundary {
     private User user;
     private Preference preference;
     private RandomRecipe randomRecipe;
-    private RecipeFactory recipeFactory;
+    private SimpleRecipeFactoryInterface recipeFactory;
 
 
     public GenerateRecipeInteractor(GenerateRecipeDataAccessInterface generateRecipeAPI, GenerateRecipeOutputBoundary generateRecipeOutputBoundary, InMemoryDataAccessUserInterface inMemoryDataAccessUser, RecipeFactory recipeFactory) {
