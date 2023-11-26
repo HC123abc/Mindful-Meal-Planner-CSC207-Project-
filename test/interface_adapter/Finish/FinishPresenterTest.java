@@ -12,12 +12,15 @@ public class FinishPresenterTest {
         // Mock ViewModel and ViewManagerModel
         FinishViewModel mockViewModel = new FinishViewModel();
         ViewManagerModel mockViewManagerModel = new ViewManagerModel();
+        mockViewModel.getState().setClicked(false);
+
 
         // Creating FinishPresenter instance
         FinishPresenter presenter = new FinishPresenter(mockViewManagerModel,mockViewModel);
         presenter.prepareSuccessView();
         // Verifying if viewManagerModel.setActiveView is equal to "Finish"
         assertEquals("MainPage", mockViewManagerModel.getActiveView());
+        assertEquals(false, mockViewModel.getState().getClicked());
 
     }
 

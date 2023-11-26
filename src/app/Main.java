@@ -159,7 +159,7 @@ public class Main {
         FavViewDataAccessInterface favViewDataAccessInterface = new FavRecipeCardApi();
         FavViewInputBoundary favViewInteractor = new FavViewInteractor(favViewDataAccessInterface, favViewPresenter, inMemoryDataAccessUser );
         FavViewController favViewController = new FavViewController(favViewInteractor);
-        FavView favView = new FavView(favViewViewModel, finishController3);
+        FavView favView = new FavView(favViewViewModel, finishController3,cookThisController);
         views.add(favView, favView.viewName);
         GenerateRecipeController generateRecipeController = new GenerateRecipeController(generateRecipeInteractor);
         MainPageView mainPageView = new MainPageView(generateRecipeController,cookThisOrReRollViewModel,redirectToPreferenceController,favViewController,favViewViewModel);

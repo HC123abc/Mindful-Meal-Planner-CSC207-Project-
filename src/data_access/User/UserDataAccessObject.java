@@ -105,6 +105,7 @@ public class UserDataAccessObject implements SignUpDataAccessInterface, LoginDat
             JsonObject faves = outerObject.getAsJsonObject("favouriteRecipes");
             ArrayList<Recipe> favourites = new ArrayList<>();
             FavouriteRecipes fave = gson.fromJson(faves, FavouriteRecipes.class);
+            System.out.println(fave);
             if (faves != null) {
                 JsonArray favouritesJson = faves.getAsJsonArray("favouriteRecipes");
                 for (JsonElement i : favouritesJson) {
@@ -121,7 +122,6 @@ public class UserDataAccessObject implements SignUpDataAccessInterface, LoginDat
             if (fave.getFavouriteRecipes() == null){
                 fave.replaceRecipes(new ArrayList<>());
             }
-
             userCheck.setFavouriteRecipes(fave);
             userCheck.setPreference(pref);
             System.out.println(userCheck.getPreference());

@@ -1,6 +1,6 @@
 package interface_adapter.Preference;
 
-import interface_adapter.ViewManagerModel;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
