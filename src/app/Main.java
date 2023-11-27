@@ -94,9 +94,10 @@ public class Main {
         // This information will be changed by a presenter object that is reporting the
         // results from the use case. The ViewModels are observable, and will
         // be observed by the Views.
-        Preference preference = new Preference();
+//        Preference preference = new Preference();
+//        RandomRecipe randomRecipe = new RandomRecipe();
         GenerateRecipeDataAccessInterface generateRecipeAPI = new GenerateRecipeApi();
-        RandomRecipe randomRecipe = new RandomRecipe();
+
         // Create your GenerateRecipeOutputBoundary implementation
         CookThisOrReRollViewModel cookThisOrReRollViewModel= new CookThisOrReRollViewModel();
         GenerateRecipeOutputBoundary generateRecipeOutputBoundary = new CookThisOrReRollPresenter(cookThisOrReRollViewModel,viewManagerModel);
