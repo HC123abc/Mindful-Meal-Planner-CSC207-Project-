@@ -179,9 +179,9 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
             URL url = new URL(imageUrlString);
             ImageIcon imageIcon = new ImageIcon(url);
             Image scaledImage = imageIcon.getImage().getScaledInstance( imageIcon.getImage().getWidth(null),  imageIcon.getImage().getHeight(null), Image.SCALE_SMOOTH);
-
+            ImageIcon image = new ImageIcon(scaledImage);
             // Resize the JLabel to fit the image dimension
-            imageLabel.setIcon(imageIcon);
+            imageLabel.setIcon(image);
         } catch (IOException e) {
             e.printStackTrace();
             // Handle other IO exceptions if needed
