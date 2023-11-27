@@ -178,7 +178,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         System.out.println(state.getError() == null);
         if (state.getError() != null) {
             System.out.println(state.getError());
-            JOptionPane.showMessageDialog(this, state.getError());
+            new errors().showError(this, state.getError(), "Error");
         }
     }
 }
