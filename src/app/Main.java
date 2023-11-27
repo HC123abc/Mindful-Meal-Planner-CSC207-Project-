@@ -5,10 +5,7 @@ import data_access.GenerateRecipe.GenerateRecipeApi;
 import data_access.InMemoryDataAccess.InMemoryDataAccessUser;
 import data_access.InMemoryDataAccess.InMemoryDataAccessUserInterface;
 import data_access.User.UserDataAccessObject;
-import entity.Preference;
-import entity.RandomRecipe;
-import entity.RecipeFactory;
-import entity.User;
+import entity.*;
 import interface_adapter.CookThis.CookThisController;
 import interface_adapter.CookThis.CookThisPresenter;
 import interface_adapter.CookThis.CookThisViewModel;
@@ -97,7 +94,7 @@ public class Main {
         CookThisOrReRollViewModel cookThisOrReRollViewModel= new CookThisOrReRollViewModel();
         GenerateRecipeOutputBoundary generateRecipeOutputBoundary = new CookThisOrReRollPresenter(cookThisOrReRollViewModel,viewManagerModel);
         // Create an instance of GenerateRecipe
-        RecipeFactory recipeFactory = new RecipeFactory();
+        SimpleRecipeFactoryInterface recipeFactory = new RecipeFactory();
 
         GenerateRecipeInteractor generateRecipeInteractor = new GenerateRecipeInteractor(generateRecipeAPI,generateRecipeOutputBoundary, inMemoryDataAccessUser, recipeFactory);
 

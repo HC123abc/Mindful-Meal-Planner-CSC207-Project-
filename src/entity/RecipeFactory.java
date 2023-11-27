@@ -3,7 +3,7 @@ package entity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class RecipeFactory {
+public class RecipeFactory implements SimpleRecipeFactoryInterface {
     public Recipe create(JSONObject recipeObject) {
 
         String title = recipeObject.getString("title");
