@@ -33,8 +33,10 @@ import interface_adapter.RedirectToPreference.RedirectToPreferenceViewModel;
 import interface_adapter.ReturnToPreviousView.ReturnToPreviousViewController;
 import interface_adapter.ReturnToPreviousView.ReturnToPreviousViewPresenter;
 import interface_adapter.ReturnToPreviousView.ReturnToPreviousViewViewModel;
+import interface_adapter.unfavouriteThis.UnfavouriteThisController;
+import interface_adapter.unfavouriteThis.UnfavouriteThisPresenter;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.FavouriteThis.*; // may need to change from wildcard to explicit, double check later
+import interface_adapter.FavouriteThis.*;
 
 import interface_adapter.signUp.SignUpController;
 import interface_adapter.signUp.SignUpPresenter;
@@ -46,6 +48,11 @@ import use_case.Finish.FinishInteractor;
 import use_case.Preference.PreferenceInteractor;
 import use_case.RedirectToPreference.RedirectToPreferenceInteractor;
 import use_case.ReturnToPreviousView.ReturnToPreviousViewInteractor;
+import use_case.unfavouriteThis.UnfavouriteThisOutputData;
+import use_case.unfavouriteThis.UnfavouriteThisInteractor;
+import use_case.unfavouriteThis.UnfavouriteThisOutputBoundary;
+import use_case.unfavouriteThis.UnfavouriteThisInputData;
+import use_case.unfavouriteThis.UnfavouriteThisInputBoundary;
 import use_case.cookThis.CookThisInteractor;
 import use_case.favouriteThis.favouriteThisInteractor;
 import use_case.generateRecipe.GenerateRecipeDataAccessInterface;
@@ -156,7 +163,10 @@ public class Main {
         FavViewDataAccessInterface favViewDataAccessInterface = new FavRecipeCardApi();
         FavViewInputBoundary favViewInteractor = new FavViewInteractor(favViewDataAccessInterface, favViewPresenter, inMemoryDataAccessUser );
         FavViewController favViewController = new FavViewController(favViewInteractor);
-        FavView favView = new FavView(favViewViewModel, finishController3,cookThisController);
+        UnfavouriteThisPresenter unfavouriteThisPresenter = new UnfavouriteThisPresenter(favViewViewModel,viewManagerModel);
+        UnfavouriteThisInputBoundary unfavouriteThisInteractor = new UnfavouriteThisInteractor(favViewDataAccessInterface, inMemoryDataAccessUser, unfavouriteThisPresenter);
+        UnfavouriteThisController unfavouriteThisController = new UnfavouriteThisController(unfavouriteThisInteractor);
+        FavView favView = new FavView(favViewViewModel, finishController3,cookThisController, unfavouriteThisController);
         views.add(favView, favView.viewName);
         GenerateRecipeController generateRecipeController = new GenerateRecipeController(generateRecipeInteractor);
         MainPageView mainPageView = new MainPageView(generateRecipeController,cookThisOrReRollViewModel,redirectToPreferenceController,favViewController,favViewViewModel);

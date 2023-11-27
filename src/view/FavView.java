@@ -4,6 +4,7 @@ import interface_adapter.CookThis.CookThisController;
 import interface_adapter.FavView.FavViewState;
 import interface_adapter.FavView.FavViewViewModel;
 import interface_adapter.Finish.FinishController;
+import interface_adapter.unfavouriteThis.UnfavouriteThisController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,12 +18,14 @@ public class FavView extends JPanel implements PropertyChangeListener {
     public String viewName = "FavView";
     private FavViewViewModel favViewViewModel;
     private FinishController finishController;
+    private UnfavouriteThisController unfavouriteThisController;
     private CookThisController cookThisController;
 
-    public FavView(FavViewViewModel favViewViewModel, FinishController finishController, CookThisController cookThisController) {
+    public FavView(FavViewViewModel favViewViewModel, FinishController finishController, CookThisController cookThisController, UnfavouriteThisController unfavouriteThisController) {
         this.favViewViewModel = favViewViewModel;
         this.finishController = finishController;
         this.cookThisController = cookThisController;
+        this.unfavouriteThisController = unfavouriteThisController;
         this.favViewViewModel.addPropertyChangeListener(this);
 
         setLayout(new BorderLayout());
@@ -58,7 +61,8 @@ public class FavView extends JPanel implements PropertyChangeListener {
             String cardImageURL = entry.getKey();
             Map<String, String> recipeDetails = entry.getValue();
 
-            RecipeCard recipeCard = new RecipeCard(recipeDetails, cardImageURL, this.cookThisController);
+            RecipeCard recipeCard = new RecipeCard(recipeDetails, cardImageURL, this.cookThisController, this.unfavouriteThisController, this.favViewViewModel);
+
             recipePanel.add(recipeCard);
         }
         recipePanel.revalidate();
@@ -76,12 +80,21 @@ public class FavView extends JPanel implements PropertyChangeListener {
 
     private static class RecipeCard extends JPanel {
         private Map<String, String> recipeDetails;
+        private String cardImageURL;
+        private Map<String, Map<String, String>> entry;
         private ImageIcon image;
         private CookThisController cookThisController;
+        private UnfavouriteThisController unfavouriteThisContoller;
+        private FavViewViewModel favViewViewModel;
 
-        public RecipeCard(Map<String, String> recipeDetails, String cardImageURL, CookThisController cookThisController) {
+        public RecipeCard(Map<String, String> recipeDetails, String cardImageURL, CookThisController cookThisController, UnfavouriteThisController unfavouriteThisController, FavViewViewModel favViewViewModel) {
             this.recipeDetails = recipeDetails;
+            this.cardImageURL = cardImageURL;
+            this.entry = Map.of(cardImageURL, recipeDetails);
+            this.unfavouriteThisContoller = unfavouriteThisController;
             this.cookThisController = cookThisController;
+            this.favViewViewModel = favViewViewModel;
+
 
             setLayout(new BorderLayout());
             String title = recipeDetails.get("title");
@@ -120,6 +133,10 @@ public class FavView extends JPanel implements PropertyChangeListener {
             JButton cookThisBtn = new JButton("Cook This");
 
             removeFromFavoritesBtn.addActionListener(e -> {
+                FavViewState state = favViewViewModel.getState();
+                Map<String, Map<String, String>> recipes = state.getRecipeWithCardImage();
+                unfavouriteThisController.execute(recipes, entry);
+
                 System.out.println("Removing from favorites: " + recipeDetails.get("title"));
             });
 

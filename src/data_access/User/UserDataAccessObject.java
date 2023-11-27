@@ -19,9 +19,11 @@ public class UserDataAccessObject implements SignUpDataAccessInterface, LoginDat
 
     private User currentUser = null; // current user
     private String txt = "userFile.txt";
+
     public void txtChange(String fileName){
         this.txt = fileName;
     }
+
     @Override
     public User createUser(String username, String password){
         userFactory factory = new userFactory();
