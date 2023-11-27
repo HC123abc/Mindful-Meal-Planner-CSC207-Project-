@@ -18,7 +18,14 @@ public class RecipeFactory implements SimpleRecipeFactoryInterface {
         if (recipeObject.isNull("image")) {
             recipeImageURL = "";
         } else {
-            recipeImageURL = recipeObject.getString("image");
+            String originalURL = recipeObject.getString("image");
+            if (originalURL.startsWith("http://")) {
+                recipeImageURL = originalURL.replace("http://", "https://");
+            } else if (!originalURL.startsWith("https://")) {
+                recipeImageURL = "https://" + originalURL;
+            } else {
+                recipeImageURL = originalURL;
+            }
         }
 
         // Extracting extendedIngredients
