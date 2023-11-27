@@ -61,7 +61,8 @@ public class FavView extends JPanel implements PropertyChangeListener {
             String cardImageURL = entry.getKey();
             Map<String, String> recipeDetails = entry.getValue();
 
-            RecipeCard recipeCard = new RecipeCard(recipeDetails, cardImageURL, this.cookThisController, this.unfavouriteThisController);
+            RecipeCard recipeCard = new RecipeCard(recipeDetails, cardImageURL, this.cookThisController, this.unfavouriteThisController, this.favViewViewModel);
+
             recipePanel.add(recipeCard);
         }
         recipePanel.revalidate();
@@ -80,16 +81,19 @@ public class FavView extends JPanel implements PropertyChangeListener {
     private static class RecipeCard extends JPanel {
         private Map<String, String> recipeDetails;
         private String cardImageURL;
+        private Map<String, Map<String, String>> entry;
         private ImageIcon image;
         private CookThisController cookThisController;
         private UnfavouriteThisController unfavouriteThisContoller;
+        private FavViewViewModel favViewViewModel;
 
-        public RecipeCard(Map<String, String> recipeDetails, String cardImageURL, CookThisController cookThisController, UnfavouriteThisController unfavouriteThisController) {
+        public RecipeCard(Map<String, String> recipeDetails, String cardImageURL, CookThisController cookThisController, UnfavouriteThisController unfavouriteThisController, FavViewViewModel favViewViewModel) {
             this.recipeDetails = recipeDetails;
+            this.cardImageURL = cardImageURL;
+            this.entry = Map.of(cardImageURL, recipeDetails);
             this.unfavouriteThisContoller = unfavouriteThisController;
             this.cookThisController = cookThisController;
-
-            this.cardImageURL = cardImageURL;
+            this.favViewViewModel = favViewViewModel;
 
 
             setLayout(new BorderLayout());
@@ -129,17 +133,9 @@ public class FavView extends JPanel implements PropertyChangeListener {
             JButton cookThisBtn = new JButton("Cook This");
 
             removeFromFavoritesBtn.addActionListener(e -> {
-                String recipeTitle = recipeDetails.get("title");
-                String summary = recipeDetails.get("summary");
-                String recipeImageURL = recipeDetails.get("recipeImageURL");
-                String servings = recipeDetails.get("servings");
-                String readyInMinutes = recipeDetails.get("readyInMinutes");
-                String extendedIngredients = recipeDetails.get("extendedIngredients");
-                String extendedInstructions = recipeDetails.get("extendedInstructions");
-                String id = recipeDetails.get("id");
-
-                unfavouriteThisController.execute(recipeTitle, summary, recipeImageURL, servings,
-                        readyInMinutes, extendedIngredients, extendedInstructions, id);
+                FavViewState state = favViewViewModel.getState();
+                Map<String, Map<String, String>> recipes = state.getRecipeWithCardImage();
+                unfavouriteThisController.execute(recipes, entry);
 
                 System.out.println("Removing from favorites: " + recipeDetails.get("title"));
             });
