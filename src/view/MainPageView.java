@@ -40,7 +40,7 @@ public class MainPageView extends JPanel implements PropertyChangeListener {
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         JButton generateRecipeBtn = new JButton("Generate Recipe");
-        JButton favouritesBtn = new JButton("Favorites");
+        JButton favouritesBtn = new JButton("Favourites");
         JButton preferencesBtn = new JButton("Preferences");
         JButton signOutBtn = new JButton("Sign Out");
 
@@ -54,8 +54,8 @@ public class MainPageView extends JPanel implements PropertyChangeListener {
         favouritesBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Handle Favorites button click
-                // Open the Favorites page or perform related actions
+                // Handle Favourites button click
+                // Open the Favourites page or perform related actions
                 favViewController.execute();
             }
         });
