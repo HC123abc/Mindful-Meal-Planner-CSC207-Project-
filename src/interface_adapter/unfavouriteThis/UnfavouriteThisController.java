@@ -3,6 +3,8 @@ package interface_adapter.unfavouriteThis;
 import use_case.unfavouriteThis.UnfavouriteThisInputBoundary;
 import use_case.unfavouriteThis.UnfavouriteThisInputData;
 
+import java.util.Map;
+
 public class UnfavouriteThisController {
     final UnfavouriteThisInputBoundary unfavouriteThisInteractor;
 
@@ -10,19 +12,11 @@ public class UnfavouriteThisController {
         this.unfavouriteThisInteractor = unfavouriteThisInteractor;
     }
 
-    public void execute(String title, String summary, String recipeImageURL,
-                               String servings, String readyInMinutes, String extendedIngredients,
-                               String extendedInstructions, String id) {
 
-            UnfavouriteThisInputData unfavouriteThisInputData = new UnfavouriteThisInputData(title,
-                                                                            summary,
-                                                                            recipeImageURL,
-                                                                            servings,
-                                                                            readyInMinutes,
-                                                                            extendedIngredients,
-                                                                            extendedInstructions,
-                                                                            id);
+    public void execute(Map<String, Map<String, String>> recipes, Map<String, Map<String, String>> entry) {
 
-            unfavouriteThisInteractor.execute(unfavouriteThisInputData);
+        UnfavouriteThisInputData unfavouriteThisInputData = new UnfavouriteThisInputData(recipes, entry);
+
+        unfavouriteThisInteractor.execute(unfavouriteThisInputData);
     }
 }
