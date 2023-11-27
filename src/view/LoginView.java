@@ -4,14 +4,18 @@ import interface_adapter.Login.LoginController;
 import interface_adapter.Login.LoginState;
 import interface_adapter.Login.LoginViewModel;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
 
 public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -41,17 +45,17 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         Color green = new Color(177, 214, 171);
         this.setBackground(green);
         LVM.addPropertyChangeListener(this);
+
+        //buttons
         JPanel buttons = new JPanel();
-        JButton login = new JButton(LVM.LOGIN_BUTTON_LABEL);
-        JButton signUp = new JButton("Sign Up");
-        login.setFont(new Font("", Font.PLAIN, 12));
-        signUp.setFont(new Font("", Font.PLAIN, 12));
-        //login.setBorder(BorderFactory.createEtchedBorder(2,Color.black, Color.GRAY));
-        //signUp.setBorder(BorderFactory.createEtchedBorder(2,Color.black, Color.GRAY));
+        buttonFactory but = new buttonFactory();
+        JButton login = but.makeButton(LVM.LOGIN_BUTTON_LABEL, 12);
+        JButton signUp = but.makeButton("Sign Up", 12);
         buttons.add(login);
         buttons.add(signUp);
         buttons.setBackground(green);
 
+        //text fields
         JLabel usernameLabel = new JLabel(LVM.USERNAME_LABEL);
         usernameLabel.setFont(new Font("", Font.PLAIN , 16));
         usernameLabel.setBackground(green);
@@ -60,15 +64,30 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         passwordLabel.setFont(new Font("", Font.PLAIN, 16));
         passwordLabel.setBackground(green);
 
-        JLabel titleLabel = new JLabel("Mindful Meal Preparer");
-        titleLabel.setFont(new Font("", Font.PLAIN, 24));
+        //title labesl
+        JLabel titleLabel = new JLabel("Log In");
+        titleLabel.setFont(new Font("", Font.PLAIN, 28));
         JPanel title = new JPanel();
         title.setBackground(green);
-        title.add(titleLabel); // temp title
+        title.add(titleLabel);
         panel.add(title);
         panel.add(Box.createHorizontalStrut(100)); // need a seperator, idk how
 
-
+        //Logo
+        BufferedImage myPicture = null;
+        try {
+            myPicture = ImageIO.read(new File("./assets/logoWName.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Image scaledImage = myPicture.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+        JLabel picLabel = new JLabel(new ImageIcon(scaledImage));
+        JPanel picture = new JPanel();
+        picture.add(new JLabel(" "));
+        picture.add(picLabel, BorderLayout.CENTER);
+        picture.add(new JLabel(" "));
+        picture.setBackground(green);
+        panel.add(picture);
 
         LabelTextPanel usernameInfo = new LabelTextPanel(
                 usernameLabel, usernameInputField, green);
@@ -159,7 +178,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         System.out.println(state.getError() == null);
         if (state.getError() != null) {
             System.out.println(state.getError());
-            JOptionPane.showMessageDialog(this, state.getError());
+            new errors().showError(this, state.getError(), "Error");
         }
     }
 }
