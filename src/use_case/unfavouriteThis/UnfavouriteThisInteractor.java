@@ -5,6 +5,7 @@ import data_access.InMemoryDataAccess.InMemoryDataAccessUserInterface;
 import entity.User;
 import entity.FavouriteRecipes;
 import entity.Recipe;
+import org.jetbrains.annotations.NotNull;
 import use_case.FavView.FavViewDataAccessInterface;
 
 import java.util.HashMap;
@@ -33,40 +34,35 @@ public class UnfavouriteThisInteractor implements UnfavouriteThisInputBoundary {
         this.user = inMemoryDataAccessUser.getActiveUser();
         this.favouriteRecipes = user.getFavouriteRecipes();
 
-        String apiKey = "05e3b7688e8b4836a747fec4e0a6cdf7";
 
         // Entity manipulation to remove the specified recipe
-        Recipe recipeToRemove = new Recipe(unfavouriteThisInputData.getTitle(),
-                                    unfavouriteThisInputData.getReadyInMinutes(),
-                                    unfavouriteThisInputData.getServings(),
-                                    unfavouriteThisInputData.getSummary(),
-                                    unfavouriteThisInputData.getExtendedIngredients(),
-                                    unfavouriteThisInputData.getExtendedInstructions(),
-                                    unfavouriteThisInputData.getRecipeImageURL(),
-                                    unfavouriteThisInputData.getId());
+        Recipe recipeToRemove = getRecipeToRemove(unfavouriteThisInputData);
 
+        // Removing the recipe from the user's favouriteRecipes entity
         favouriteRecipes.removeOneRecipe(recipeToRemove);
 
+        // Removing the recipe from the outputData data structure
+        Map<String, Map<String, String>> output = unfavouriteThisInputData.getRecipes();
+        String entryToRemoveKey = unfavouriteThisInputData.getEntryKey();
+        Map<String, String> removedValue = output.remove(entryToRemoveKey);
 
-        Map<String, Map<String, String>> output = new HashMap<>(); // Create a single outputMap outside the loop
-        if (favouriteRecipes.getFavouriteRecipes().isEmpty()) {
-            unfavouriteThisPresenter.prepareSuccessView(new UnfavouriteThisOutputData(output));
-        }
-        else {
-            for (Recipe recipe : favouriteRecipes.getFavouriteRecipes()) {
-                String id = recipe.getId();
-                String cardImage = generateRecipeCardAPI.getRecipeCardUrl(apiKey, id);
-                if (cardImage == null) {
-                    cardImage = recipe.getRecipeImageURL();
-                }
-                Map<String, String> recipeDetails = toMap(recipe.getTitle(), recipe.getReadyInMinutes(), recipe.getServings(), recipe.getSummary(), recipe.getExtendedIngredients(), recipe.getExtendedInstructions(), recipe.getRecipeImageURL(), recipe.getId(), true);
-                output.put(cardImage, recipeDetails);
-            }
 
-            UnfavouriteThisOutputData unfavouriteThisOutputData = new UnfavouriteThisOutputData(output);
-            unfavouriteThisPresenter.prepareSuccessView(unfavouriteThisOutputData);
-        }
+        UnfavouriteThisOutputData unfavouriteThisOutputData = new UnfavouriteThisOutputData(output);
+        unfavouriteThisPresenter.prepareSuccessView(unfavouriteThisOutputData);
 
+    }
+
+    @NotNull
+    private static Recipe getRecipeToRemove(UnfavouriteThisInputData unfavouriteThisInputData) {
+        Map<String, String> entry = unfavouriteThisInputData.getEntryValue();
+        Recipe recipeToRemove = new Recipe(entry.get("title"),entry.get("readyInMinutes"),
+                                            entry.get("servings"),
+                                            entry.get("summary"),
+                                            entry.get("extendedIngredients"),
+                                            entry.get("extendedInstructions"),
+                                            entry.get("recipeImageURL"),
+                                            entry.get("id"));
+        return recipeToRemove;
     }
 
 
