@@ -4,14 +4,19 @@ import interface_adapter.signUp.SignUpController;
 import interface_adapter.signUp.SignUpState;
 import interface_adapter.signUp.SignUpViewModel;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
+
 public class signUpView extends JPanel implements ActionListener, PropertyChangeListener {
     private final SignUpViewModel signupViewModel;
     private final JTextField usernameInputField = new JTextField(15);
@@ -48,13 +53,39 @@ public class signUpView extends JPanel implements ActionListener, PropertyChange
         //GridLayout layout = new GridLayout(2, 1);
         //this.setLayout(layout);
 
+        //title
+        JLabel titleLabel = new JLabel("Sign Up");
+        titleLabel.setFont(new Font("", Font.PLAIN, 24));
+        JPanel title = new JPanel();
+        title.setBackground(green);
+        title.add(titleLabel); // temp title
+        panel.add(title);
+        panel.add(Box.createHorizontalStrut(100)); // need a seperator, idk how
+
+        //Logo
+        BufferedImage myPicture = null;
+        try {
+            myPicture = ImageIO.read(new File("./assets/logoWName.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Image scaledImage = myPicture.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+        JLabel picLabel = new JLabel(new ImageIcon(scaledImage));
+        JPanel picture = new JPanel();
+        picture.add(new JLabel(" "));
+        picture.add(picLabel, BorderLayout.CENTER);
+        picture.add(new JLabel(" "));
+        picture.setBackground(green);
+        panel.add(picture);
+
+        buttonFactory but = new buttonFactory();
         JPanel buttons = new JPanel();
-        JButton signUp = new JButton(SignUpViewModel.SIGNUP_BUTTON_LABEL);
+        JButton signUp = but.makeButton("Sign Up", 12);
         buttons.add(signUp);
-        JButton login = new JButton("To Login");
+        JButton login = but.makeButton("To Login", 12);
         buttons.add(login);
         JPanel important = new JPanel();
-        JButton honk = new JButton("🪿");
+        JButton honk = but.makeButton("🪿", 12);
         important.add(honk);
         buttons.setBackground(green);
         important.setBackground(green); // honk

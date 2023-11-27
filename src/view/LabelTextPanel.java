@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 /**
@@ -17,7 +18,7 @@ class LabelTextPanel extends JPanel {
         lbl.add(label);
         this.add(lbl);
         JPanel txtField = new JPanel();
-        txtField.add(textField);
+        txtField.add(textField, SwingConstants.CENTER);
         textField.setBorder(BorderFactory.createEtchedBorder(2,new Color(45, 71, 4), Color.GRAY));
         textField.setBackground(new Color(227, 237, 211));
         this.add(txtField);
