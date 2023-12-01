@@ -1,1 +1,1 @@
-{"username":"Duck","password":"Quack","favouriteRecipes":{"favouriteRecipes":[]},"preference":{"selectedCuisines":[],"selectedDiets":[],"selectedIntolerances":[]},"randomRecipe":{"currentRecipeIndex":0}}
+{"password":"Quack","randomRecipe":{"currentRecipeIndex":0},"favouriteRecipes":{"favouriteRecipes":[]},"preference":{"selectedIntolerances":[],"selectedCuisines":[],"selectedDiets":[]},"username":"Duck"}

@@ -7,6 +7,7 @@ import interface_adapter.Finish.FinishController;
 import interface_adapter.unfavouriteThis.UnfavouriteThisController;
 
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -14,14 +15,17 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 
+
 public class FavView extends JPanel implements PropertyChangeListener {
     public String viewName = "FavView";
     private FavViewViewModel favViewViewModel;
     private FinishController finishController;
     private UnfavouriteThisController unfavouriteThisController;
     private CookThisController cookThisController;
+    Color green = new Color(184, 212, 184);
 
     public FavView(FavViewViewModel favViewViewModel, FinishController finishController, CookThisController cookThisController, UnfavouriteThisController unfavouriteThisController) {
+
         this.favViewViewModel = favViewViewModel;
         this.finishController = finishController;
         this.cookThisController = cookThisController;
@@ -29,15 +33,18 @@ public class FavView extends JPanel implements PropertyChangeListener {
         this.favViewViewModel.addPropertyChangeListener(this);
 
         setLayout(new BorderLayout());
+        this.setBackground(green);
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JButton backButton = new JButton("Go Back to Main Menu");
+        JButton backButton = new buttonFactory().makeButton("Go Back to Main Menu", 15);
+                //new JButton("Go Back to Main Menu");
         backButton.addActionListener(e -> {
             // Perform action to go back to the main menu
             finishController.execute();
             System.out.println("Going back to the main menu...");
         });
         buttonPanel.add(backButton);
+        buttonPanel.setBackground(new Color(92, 110, 92));
         add(buttonPanel, BorderLayout.SOUTH);
 
         JScrollPane scrollPane = createRecipeScrollPane();
@@ -46,6 +53,8 @@ public class FavView extends JPanel implements PropertyChangeListener {
 
     private JScrollPane createRecipeScrollPane() {
         JPanel recipePanel = new JPanel(new GridLayout(0, 2)); // Two recipes per row
+        recipePanel.setBackground(green);
+        this.setBackground(green);
 
         JScrollPane scrollPane = new JScrollPane(recipePanel);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -94,7 +103,9 @@ public class FavView extends JPanel implements PropertyChangeListener {
             this.unfavouriteThisContoller = unfavouriteThisController;
             this.cookThisController = cookThisController;
             this.favViewViewModel = favViewViewModel;
+            Color green = new Color(184, 212, 184);
 
+            this.setBackground(green);
 
             setLayout(new BorderLayout());
             String title = recipeDetails.get("title");
@@ -114,6 +125,7 @@ public class FavView extends JPanel implements PropertyChangeListener {
                 Image scaledImage = image.getImage().getScaledInstance(450, 560, Image.SCALE_SMOOTH);
                 image = new ImageIcon(scaledImage);
                 JLabel imageLabel = new JLabel(image);
+                imageLabel.setBorder(new EtchedBorder(Color.black, Color.black));
                 add(imageLabel, BorderLayout.CENTER);
 
                 // Adding title above the image
@@ -129,8 +141,11 @@ public class FavView extends JPanel implements PropertyChangeListener {
 
 
             JPanel buttonPanel = new JPanel(new GridLayout(0, 2)); // Two buttons in a row
-            JButton removeFromFavoritesBtn = new JButton("Remove from Favorites");
-            JButton cookThisBtn = new JButton("Cook This");
+            buttonPanel.setBackground(green);
+            JButton removeFromFavoritesBtn = new buttonFactory().makeButton("Remove from Favourites", 12);
+                    //new JButton("Remove from Favorites");
+            JButton cookThisBtn = new buttonFactory().makeButton("Cook This", 12);
+                    //new JButton("Cook This");
 
             removeFromFavoritesBtn.addActionListener(e -> {
                 FavViewState state = favViewViewModel.getState();

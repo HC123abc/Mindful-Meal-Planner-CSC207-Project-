@@ -67,8 +67,10 @@ import use_case.reRoll.ReRollInteractor;
 import use_case.signUp.SignUpInteractor;
 import view.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 public class Main {
     public static void main(String[] args) {
@@ -77,6 +79,9 @@ public class Main {
 
         // The main application window.
         JFrame application = new JFrame("Main");
+        Image icon = Toolkit.getDefaultToolkit().getImage("./assets/logoNoName.png");
+        application.setIconImage(icon);
+
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         CardLayout cardLayout = new CardLayout();
@@ -163,5 +168,14 @@ public class Main {
 
         application.pack();
         application.setVisible(true);
+
+        if (viewManagerModel.getActiveView().equals("Login") || viewManagerModel.getActiveView().equals("Sign Up")){
+            application.setSize(500, 700);
+        }else{
+            //THIS MAKES IT THE FULL WINDOW SIZE
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            application.setSize(screenSize.width, screenSize.height);
+            //THIS MAKES IT THE FULL WINDOW SIZE
+        }
     }
 }
