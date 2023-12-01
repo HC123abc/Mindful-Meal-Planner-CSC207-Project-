@@ -19,6 +19,8 @@ import interface_adapter.FavouriteThis.favouriteThisPresenter;
 import interface_adapter.Finish.FinishController;
 import interface_adapter.Finish.FinishPresenter;
 import interface_adapter.Finish.FinishViewModel;
+import interface_adapter.Logout.LogoutController;
+import interface_adapter.Logout.LogoutPresenter;
 import interface_adapter.Preference.PreferenceController;
 import interface_adapter.Preference.PreferencePresenter;
 import interface_adapter.Preference.PreferenceViewModel;
@@ -46,6 +48,7 @@ import use_case.favouriteThis.favouriteThisInteractor;
 import use_case.generateRecipe.GenerateRecipeDataAccessInterface;
 import use_case.generateRecipe.GenerateRecipeInteractor;
 import use_case.generateRecipe.GenerateRecipeOutputBoundary;
+import use_case.logout.LogoutInteractor;
 import use_case.reRoll.ReRollInputBoundary;
 import use_case.reRoll.ReRollInteractor;
 import use_case.unfavouriteThis.UnfavouriteThisInputBoundary;
@@ -157,8 +160,11 @@ public class MainPageViewTest {
         FavView favView = new FavView(favViewViewModel, finishController3,cookThisController, unfavouriteThisController);
         views.add(favView, favView.viewName);
         GenerateRecipeController generateRecipeController = new GenerateRecipeController(generateRecipeInteractor);
-        MainPageView mainPageView = new MainPageView(generateRecipeController,cookThisOrReRollViewModel,redirectToPreferenceController,favViewController,favViewViewModel);
-        views.add(mainPageView, mainPageView.viewName);
+        LogoutPresenter logoutPresenter = new LogoutPresenter(viewManagerModel);
+        LogoutInteractor logoutInteractor = new LogoutInteractor(inMemoryDataAccessUser,logoutPresenter);
+        LogoutController logoutController = new LogoutController(logoutInteractor);
+
+        MainPageView mainPageView = new MainPageView(generateRecipeController,cookThisOrReRollViewModel,redirectToPreferenceController,favViewController,favViewViewModel,logoutController);
 
         // Simulate clicks on buttons and check if the controller methods are called
         JButton generateRecipeBtn = getButtonFromPanel(mainPageView, "Generate Recipe");

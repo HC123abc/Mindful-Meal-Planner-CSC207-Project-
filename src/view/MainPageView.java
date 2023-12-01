@@ -7,6 +7,7 @@ import interface_adapter.CookThisOrReRoll.GenerateRecipeController;
 import interface_adapter.FavView.FavViewController;
 import interface_adapter.FavView.FavViewState;
 import interface_adapter.FavView.FavViewViewModel;
+import interface_adapter.Logout.LogoutController;
 import interface_adapter.RedirectToPreference.RedirectToPreferenceController;
 
 import javax.swing.*;
@@ -23,11 +24,12 @@ public class MainPageView extends JPanel implements PropertyChangeListener {
     private RedirectToPreferenceController redirectToPreferenceController;
     private FavViewController favViewController;
     private FavViewViewModel favViewViewModel;
+    private LogoutController logoutController;
 
     public MainPageView(GenerateRecipeController generateRecipeController,
                         CookThisOrReRollViewModel cookThisOrReRollViewModel,
                         RedirectToPreferenceController redirectToPreferenceController,
-                        FavViewController favViewController, FavViewViewModel favViewViewModel) {
+                        FavViewController favViewController, FavViewViewModel favViewViewModel, LogoutController logoutController) {
         this.generateRecipeController = generateRecipeController;
         this.redirectToPreferenceController = redirectToPreferenceController;
         this.favViewController = favViewController;
@@ -35,6 +37,7 @@ public class MainPageView extends JPanel implements PropertyChangeListener {
         this.cookThisOrReRollViewModel.addPropertyChangeListener(this);
         this.favViewViewModel = favViewViewModel;
         this.favViewViewModel.addPropertyChangeListener(this);
+        this.logoutController = logoutController;
 
         JPanel panel = new JPanel(new GridLayout(4, 1, 10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -73,7 +76,8 @@ public class MainPageView extends JPanel implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Handle Sign Out button click
-                // Perform sign-out actions and navigate to the login page or exit the application
+                // Perform sign-out actions and navigate to the login page
+                logoutController.execute();
             }
         });
 
@@ -88,7 +92,7 @@ public class MainPageView extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getNewValue() instanceof CookThisState) {
+        if (evt.getNewValue() instanceof CookThisOrReRollState) {
             CookThisOrReRollState state = (CookThisOrReRollState) evt.getNewValue();
             if (state.getRecipeError() != null) {
                 JOptionPane.showMessageDialog(this, state.getRecipeError());

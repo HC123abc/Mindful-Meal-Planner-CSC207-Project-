@@ -10,6 +10,8 @@ but I cut some corners. Moreover, there are no test for this use case.
  */
 package use_case.logout;
 
-public interface LogoutInputBoundary {
-    void execute();
+
+public interface LogoutOutputBoundary {
+    void prepareSuccessView();
+
 }
