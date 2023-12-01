@@ -59,7 +59,7 @@ class RecipeFactoryTest {
         String expectedInstructions = "1. Step 1: Do something";
         assertEquals(expectedInstructions, recipe.getExtendedInstructions());
 
-        assertEquals("test_image.jpg", recipe.getRecipeImageURL());
+        assertEquals("https://test_image.jpg", recipe.getRecipeImageURL());
         assertEquals("0", recipe.getId());
     }
 
