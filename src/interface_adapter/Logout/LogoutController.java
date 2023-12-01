@@ -8,8 +8,19 @@ application so I (Harley) implemented logout.
 Since this is just for testing proposes, it was rushed. It follows clean architecture
 but I cut some corners. Moreover, there are no test for this use case.
  */
-package use_case.logout;
+package interface_adapter.Logout;
 
-public interface LogoutInputBoundary {
-    void execute();
+import use_case.logout.LogoutInputBoundary;
+
+public class LogoutController {
+    final LogoutInputBoundary logoutInteractor;
+
+    public LogoutController(LogoutInputBoundary logoutInteractor) {
+        this.logoutInteractor = logoutInteractor;
+    }
+
+    public void execute() {
+        logoutInteractor.execute();
+    }
 }
+

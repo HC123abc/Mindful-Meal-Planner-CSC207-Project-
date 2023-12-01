@@ -11,6 +11,8 @@ public class User {
         this.password = password;
     }
     public String getUsername() { return this.username; }
+//  need to add this password getter because of SignOut use case
+    public String getPassword() { return this.password; }
 
     public boolean verifyPassword(String checkPassword) {
         return checkPassword.equals(this.password);

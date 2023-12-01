@@ -22,6 +22,8 @@ import interface_adapter.Finish.FinishViewModel;
 import interface_adapter.Login.LoginController;
 import interface_adapter.Login.LoginPresenter;
 import interface_adapter.Login.LoginViewModel;
+import interface_adapter.Logout.LogoutController;
+import interface_adapter.Logout.LogoutPresenter;
 import interface_adapter.Preference.PreferenceController;
 import interface_adapter.Preference.PreferencePresenter;
 import interface_adapter.Preference.PreferenceViewModel;
@@ -48,6 +50,7 @@ import use_case.Finish.FinishInteractor;
 import use_case.Preference.PreferenceInteractor;
 import use_case.RedirectToPreference.RedirectToPreferenceInteractor;
 import use_case.ReturnToPreviousView.ReturnToPreviousViewInteractor;
+import use_case.logout.LogoutInteractor;
 import use_case.unfavouriteThis.UnfavouriteThisOutputData;
 import use_case.unfavouriteThis.UnfavouriteThisInteractor;
 import use_case.unfavouriteThis.UnfavouriteThisOutputBoundary;
@@ -130,9 +133,12 @@ public class Main {
         FavViewController favViewController = new FavViewController(favViewInteractor);
         FavView favView = FavViewFactory.createView(viewManagerModel,favViewViewModel,cookThisController, inMemoryDataAccessUser);
         views.add(favView, favView.viewName);
+        LogoutPresenter logoutPresenter = new LogoutPresenter(viewManagerModel);
+        LogoutInteractor logoutInteractor = new LogoutInteractor(inMemoryDataAccessUser,logoutPresenter);
+        LogoutController logoutController = new LogoutController(logoutInteractor);
 
         GenerateRecipeController generateRecipeController = new GenerateRecipeController(generateRecipeInteractor);
-        MainPageView mainPageView = new MainPageView(generateRecipeController,cookThisOrReRollViewModel,redirectToPreferenceController,favViewController,favViewViewModel);
+        MainPageView mainPageView = new MainPageView(generateRecipeController,cookThisOrReRollViewModel,redirectToPreferenceController,favViewController,favViewViewModel,logoutController);
         views.add(mainPageView, mainPageView.viewName);
 
         LoginViewModel LVM = new LoginViewModel();
