@@ -25,6 +25,7 @@ public class FavView extends JPanel implements PropertyChangeListener {
     Color green = new Color(184, 212, 184);
 
     public FavView(FavViewViewModel favViewViewModel, FinishController finishController, CookThisController cookThisController, UnfavouriteThisController unfavouriteThisController) {
+
         this.favViewViewModel = favViewViewModel;
         this.finishController = finishController;
         this.cookThisController = cookThisController;

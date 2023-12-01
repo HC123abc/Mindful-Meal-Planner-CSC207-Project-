@@ -13,6 +13,8 @@ public class buttonFactory {
         b.setBackground(new Color(195, 201, 212));
         b.setOpaque(true);
         b.setBorder(new RoundedBorder(2));
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        b.setMaximumSize(new Dimension(screenSize.width/2, screenSize.height/10));
         return b;
     }
 

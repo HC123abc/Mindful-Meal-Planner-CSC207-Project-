@@ -16,7 +16,7 @@ public class logoLoading {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Image scaledImage = myPicture.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+        Image scaledImage = myPicture.getScaledInstance(250, 250, Image.SCALE_SMOOTH);
         JLabel picLabel = new JLabel(new ImageIcon(scaledImage));
         JPanel picture = new JPanel();
         picture.add(new JLabel(" "));
