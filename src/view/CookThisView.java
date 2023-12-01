@@ -28,12 +28,18 @@ public class CookThisView extends JPanel implements PropertyChangeListener {
         this.finishController = finishController;
         this.returnToPreviousViewController = returnToPreviousViewController;
 
+        Color green = new Color(184, 212, 184);
+        this.setBackground(green);
+
         setLayout(new BorderLayout());
 
         JLabel ingredientsTitleLabel = new JLabel("Ingredients");
+        ingredientsTitleLabel.setBackground(green);
         JLabel instructionsTitleLabel = new JLabel("Instructions");
+        instructionsTitleLabel.setBackground(green);
 
         ingredientsPanel = new JPanel(new GridBagLayout());
+        ingredientsPanel.setBackground(green);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -44,6 +50,7 @@ public class CookThisView extends JPanel implements PropertyChangeListener {
         gbc.insets = new Insets(10, 100, 10, 10);
 
         JScrollPane ingredientsScrollPane = new JScrollPane(ingredientsPanel);
+        ingredientsScrollPane.setBackground(green);
         ingredientsScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         ingredientsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
@@ -56,7 +63,8 @@ public class CookThisView extends JPanel implements PropertyChangeListener {
         add(instructionsTitleLabel, BorderLayout.CENTER);
         add(instructionsScrollPane, BorderLayout.CENTER);
 
-        JButton finishButton = new JButton("Finish");
+        JButton finishButton = new buttonFactory().makeButton("Finish", 12);
+                //new JButton("Finish");
         finishButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -64,7 +72,8 @@ public class CookThisView extends JPanel implements PropertyChangeListener {
             }
         });
 
-        JButton previousViewButton = new JButton("Go Back To Previous View");
+        JButton previousViewButton = new buttonFactory().makeButton("Go Back To Previous View", 12);
+                //new JButton("Go Back To Previous View");
         previousViewButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -74,6 +83,7 @@ public class CookThisView extends JPanel implements PropertyChangeListener {
             }
         });
         JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setBackground(new Color(92, 110, 92));
         buttonsPanel.add(previousViewButton);
         buttonsPanel.add(finishButton);
         // Adding the buttons panel to the SOUTH
@@ -83,6 +93,7 @@ public class CookThisView extends JPanel implements PropertyChangeListener {
 
     public void updateView(CookThisState state) {
         ingredientsPanel.removeAll();
+        Color green = new Color(184, 212, 184);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -96,8 +107,10 @@ public class CookThisView extends JPanel implements PropertyChangeListener {
             String imageURL = entry.getValue();
 
             JPanel ingredientPanel = new JPanel(new BorderLayout());
+            ingredientPanel.setBackground(green);
 
             JLabel imageLabel = new JLabel();
+            imageLabel.setBackground(green);
             try {
                 ImageIcon imageIcon = new ImageIcon(new URL(imageURL));
                 Image image = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
@@ -108,6 +121,7 @@ public class CookThisView extends JPanel implements PropertyChangeListener {
             }
 
             JTextArea ingredientArea = new JTextArea(ingredient);
+            ingredientArea.setBackground(green);
             ingredientArea.setLineWrap(true);
             ingredientArea.setWrapStyleWord(true);
             ingredientArea.setEditable(false);
@@ -121,6 +135,7 @@ public class CookThisView extends JPanel implements PropertyChangeListener {
         }
 
         instructionsTextArea.setText(state.getInstruction());
+        instructionsTextArea.setBackground(green);
         instructionsTextArea.setLineWrap(true);
         instructionsTextArea.setWrapStyleWord(true);
 

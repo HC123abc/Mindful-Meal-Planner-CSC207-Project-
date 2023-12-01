@@ -33,8 +33,9 @@ public class PreferenceView extends JPanel implements PropertyChangeListener {
         this.redirectToPreferenceViewModel = redirectToPreferenceViewModel;
         this.preferenceViewModel.addPropertyChangeListener(this);
         this.redirectToPreferenceViewModel.addPropertyChangeListener(this);
+        Color green = new Color(184, 212, 184);
 
-
+        this.setBackground(green);
         // Create a panel to hold the components
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); // Using BoxLayout for vertical arrangement
@@ -48,11 +49,15 @@ public class PreferenceView extends JPanel implements PropertyChangeListener {
         this.add(scrollPane, BorderLayout.CENTER);
         // Create a panel to hold fixed components (buttons in this case)
         JPanel fixedPanel = new JPanel();
+        fixedPanel.setBackground(new Color(92, 110, 92));
         fixedPanel.setLayout(new FlowLayout()); // You can use any layout you prefer
 
         // Create buttons
-        JButton submitButton = new JButton("Save Preferences");
-        JButton returnMain = new JButton("Return to Main Menu");
+        buttonFactory fac = new buttonFactory();
+        JButton submitButton = fac.makeButton("Save preferences", 12);
+                //new JButton("Save Preferences");
+        JButton returnMain = fac.makeButton("Return to Main Menu", 12);
+                //new JButton("Return to Main Menu");
 
         submitButton.addActionListener(new ActionListener() {
             @Override
@@ -62,7 +67,7 @@ public class PreferenceView extends JPanel implements PropertyChangeListener {
                 preferenceController.execute(currentState.getSelectedCuisines(), currentState.getSelectedDiets(), currentState.getSelectedIntolerances());
             }
         });
-
+        panel.setBackground(green);
         panel.add(returnMain); // Corrected the panel addition here
 
 // Add action listener to the returnMain button
@@ -203,7 +208,8 @@ public class PreferenceView extends JPanel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("PreferenceStateChanged")) {
             PreferenceState state = (PreferenceState) evt.getNewValue();
-            JOptionPane.showMessageDialog(this, state.getSaved());
+            new popups().showPopup(this, state.getSaved(), "Saved", JOptionPane.NO_OPTION);
+            //JOptionPane.showMessageDialog(this, state.getSaved());
             state.setSaved("");
         }
         if (evt.getPropertyName().equals("RedirectToPreferenceStateChanged")) {

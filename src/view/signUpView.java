@@ -63,20 +63,7 @@ public class signUpView extends JPanel implements ActionListener, PropertyChange
         panel.add(Box.createHorizontalStrut(100)); // need a seperator, idk how
 
         //Logo
-        BufferedImage myPicture = null;
-        try {
-            myPicture = ImageIO.read(new File("./assets/logoWName.png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        Image scaledImage = myPicture.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-        JLabel picLabel = new JLabel(new ImageIcon(scaledImage));
-        JPanel picture = new JPanel();
-        picture.add(new JLabel(" "));
-        picture.add(picLabel, BorderLayout.CENTER);
-        picture.add(new JLabel(" "));
-        picture.setBackground(green);
-        panel.add(picture);
+        new logoLoading().logoLoad(panel, green);
 
         buttonFactory but = new buttonFactory();
         JPanel buttons = new JPanel();

@@ -59,23 +59,36 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
 
         this.viewManagerModel = viewManagerModel;
         this.viewManagerModel.addPropertyChangeListener(this);
+        Color green = new Color(184, 212, 184);
 
-
+        this.setBackground(green);
         // Initialize components
         titleLabel = new JLabel("Title: ");
+        titleLabel.setBackground(green);
         imageLabel = new JLabel();
+        imageLabel.setBackground(green);
         servingsLabel = new JLabel("Servings: ");
+        servingsLabel.setBackground(green);
         readyInMinutesLabel = new JLabel("Ready in Minutes: ");
+        readyInMinutesLabel.setBackground(green);
         summaryTextArea = new JTextArea("Summary: ");
+        summaryTextArea.setBackground(green);
         summaryTextArea.setLineWrap(true);
         summaryTextArea.setWrapStyleWord(true);
 
-        cookButton = new JButton("Cook This");
-        reRollButton = new JButton("Reroll");
-        finishButton = new JButton("Go Back to Main Page");
-        favouriteButton = new JButton("Add to Favourite");
+        buttonFactory fac = new buttonFactory();
+        cookButton = fac.makeButton("Cook This", 15);
+                //new JButton("Cook This");
+        reRollButton = fac.makeButton("Reroll", 15);
+                //new JButton("Reroll");
+        finishButton = fac.makeButton("Go Back to Main Page", 15);
+                //new JButton("Go Back to Main Page");
+        favouriteButton = fac.makeButton("Add to Favourite", 15);
+                //new JButton("Add to Favourite");
 
-        favouriteButton = new JButton("Favourite this recipe");
+        favouriteButton = fac.makeButton("Favourite this recipe", 15);
+                //new JButton("Favourite this recipe");
+
 //        favouriteButton.setIcon(favouriteIconOff);
 
         // Set up the layout
@@ -83,6 +96,7 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
 
         // Create a panel for title and image with GridBagLayout
         JPanel titleImagePanel = new JPanel(new GridBagLayout());
+        titleImagePanel.setBackground(green);
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -94,6 +108,7 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
 
         // Create a panel for the other components with GridLayout
         JPanel otherComponentsPanel = new JPanel(new GridLayout(5, 1));
+        otherComponentsPanel.setBackground(green);
         otherComponentsPanel.add(servingsLabel);
         otherComponentsPanel.add(readyInMinutesLabel);
         otherComponentsPanel.add(summaryTextArea);
@@ -102,6 +117,7 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
         buttonsPanel.add(Box.createHorizontalGlue()); // Aligns buttons to the right
 
         // Add buttons to the buttonsPanel
+        buttonsPanel.setBackground(new Color(92, 110, 92));
         buttonsPanel.add(cookButton);
         buttonsPanel.add(reRollButton);
         buttonsPanel.add(finishButton);
@@ -206,9 +222,11 @@ public class CookThisOrReRollView extends JPanel implements PropertyChangeListen
             // Listen for changes in the CookThisOrReRollState and update the view
             if (state1.getFavButtonClicked()) {
                 if (state1.getIsFavourite()) {
-                    JOptionPane.showMessageDialog(null, "Successfully favorited the recipe", "Favorited Recipe", JOptionPane.INFORMATION_MESSAGE);
+                    new popups().showPopup(null, "Successfully favourited the recipe", "Favorited Recipe", JOptionPane.INFORMATION_MESSAGE);
+                    //JOptionPane.showMessageDialog(null, "Successfully favorited the recipe", "Favorited Recipe", JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Successfully unfavorited the recipe", "Unfavorited Recipe", JOptionPane.INFORMATION_MESSAGE);
+                    new popups().showPopup(null, "Successfully unfavourited the recipe", "Unfavorited Recipe", JOptionPane.INFORMATION_MESSAGE);
+                    //JOptionPane.showMessageDialog(null, "Successfully unfavorited the recipe", "Unfavorited Recipe", JOptionPane.INFORMATION_MESSAGE);
                 }
                 System.out.println(state1.getIsFavourite());
                 state1.setFavButtonClicked(false);

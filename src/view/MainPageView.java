@@ -10,12 +10,16 @@ import interface_adapter.FavView.FavViewViewModel;
 import interface_adapter.Logout.LogoutController;
 import interface_adapter.RedirectToPreference.RedirectToPreferenceController;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
 
 public class MainPageView extends JPanel implements PropertyChangeListener {
     private GenerateRecipeController generateRecipeController;
@@ -39,13 +43,27 @@ public class MainPageView extends JPanel implements PropertyChangeListener {
         this.favViewViewModel.addPropertyChangeListener(this);
         this.logoutController = logoutController;
 
+        //bg
+        Color green = new Color(177, 214, 171);
+        this.setBackground(green);
+
+        //buttons
+        this.setLayout(new GridLayout(3, 1, 10, 10));
         JPanel panel = new JPanel(new GridLayout(4, 1, 10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panel.setBackground(green);
 
-        JButton generateRecipeBtn = new JButton("Generate Recipe");
-        JButton favouritesBtn = new JButton("Favourites");
-        JButton preferencesBtn = new JButton("Preferences");
-        JButton signOutBtn = new JButton("Sign Out");
+        //logo
+        new logoLoading().logoLoadBig(this, green);
+
+        buttonFactory fac = new buttonFactory();
+        JButton generateRecipeBtn = fac.makeButton("Generate Recipe", 20);
+                //ew JButton("Generate Recipe");
+        JButton favouritesBtn = fac.makeButton("Favourites", 20);
+        JButton preferencesBtn = fac.makeButton("Preferences", 20);
+                //new JButton("Preferences");
+        JButton signOutBtn = fac.makeButton("Sign Out", 20);
+                //new JButton("Sign Out");
 
         generateRecipeBtn.addActionListener(new ActionListener() {
             @Override
@@ -95,7 +113,8 @@ public class MainPageView extends JPanel implements PropertyChangeListener {
         if (evt.getNewValue() instanceof CookThisOrReRollState) {
             CookThisOrReRollState state = (CookThisOrReRollState) evt.getNewValue();
             if (state.getRecipeError() != null) {
-                JOptionPane.showMessageDialog(this, state.getRecipeError());
+                new errors().showError(this, state.getRecipeError(), "Error");
+                //JOptionPane.showMessageDialog(this, state.getRecipeError());
 //          reset
                 state.setRecipeError(null);
             }
@@ -103,7 +122,8 @@ public class MainPageView extends JPanel implements PropertyChangeListener {
         else if (evt.getNewValue() instanceof FavViewState) {
             FavViewState state = (FavViewState) evt.getNewValue();
             if (state.getError() != null) {
-                JOptionPane.showMessageDialog(this, state.getError());
+                new errors().showError(this, state.getError(), "Error");
+                //JOptionPane.showMessageDialog(this, state.getError());
 //          reset
                 state.setRecipeError(null);
             }
