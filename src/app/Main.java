@@ -89,86 +89,48 @@ public class Main {
         InMemoryDataAccessUserInterface inMemoryDataAccessUser = new InMemoryDataAccessUser();
         User user= new User("test","test");
         inMemoryDataAccessUser.setActiveUser(user);
-
-        // The data for the views, such as username and password, are in the ViewModels.
-        // This information will be changed by a presenter object that is reporting the
-        // results from the use case. The ViewModels are observable, and will
-        // be observed by the Views.
-//        Preference preference = new Preference();
-//        RandomRecipe randomRecipe = new RandomRecipe();
-        GenerateRecipeDataAccessInterface generateRecipeAPI = new GenerateRecipeApi();
-
-        // Create your GenerateRecipeOutputBoundary implementation
-        CookThisOrReRollViewModel cookThisOrReRollViewModel= new CookThisOrReRollViewModel();
-        GenerateRecipeOutputBoundary generateRecipeOutputBoundary = new CookThisOrReRollPresenter(cookThisOrReRollViewModel,viewManagerModel);
-        // Create an instance of GenerateRecipe
-        SimpleRecipeFactoryInterface recipeFactory = new RecipeFactory();
-
-        GenerateRecipeInteractor generateRecipeInteractor = new GenerateRecipeInteractor(generateRecipeAPI,generateRecipeOutputBoundary, inMemoryDataAccessUser, recipeFactory);
-
-        ReRollPresenter reRollPresenter = new ReRollPresenter(cookThisOrReRollViewModel,viewManagerModel);
-        ReRollInputBoundary reRollInputBoundary = new ReRollInteractor(inMemoryDataAccessUser,reRollPresenter,recipeFactory);
-        ReRollController reRollController = new ReRollController(reRollInputBoundary);
-
+//      These are need in multiple views that is why they are here and not in a factory.
         CookThisViewModel cookThisViewModel = new CookThisViewModel();
         CookThisPresenter cookThisPresenter = new CookThisPresenter(cookThisViewModel,viewManagerModel);
         CookThisInteractor cookThisInteractor = new CookThisInteractor(cookThisPresenter);
         CookThisController cookThisController = new CookThisController(cookThisInteractor);
 
-        favouriteThisPresenter favouriteThisPresenter = new favouriteThisPresenter(cookThisOrReRollViewModel,viewManagerModel);
-        favouriteThisInteractor favouriteThisInteractor = new favouriteThisInteractor(inMemoryDataAccessUser,favouriteThisPresenter);
-        favouriteThisController favouriteThisController = new favouriteThisController(favouriteThisInteractor);
-        // Ryan's changed signature, to be fixed. CookThisOrReRollView cookThisOrReRollView = new CookThisOrReRollView(cookThisOrReRollViewModel,reRollController, cookThisController, favouriteThisController, viewManagerModel);
-
-        FinishViewModel finishViewModel1 = new FinishViewModel();
-        FinishPresenter finishPresenter1 = new FinishPresenter(viewManagerModel,finishViewModel1);
-        FinishInteractor finishInteractor1 = new FinishInteractor(finishPresenter1);
-        FinishController finishController1 = new FinishController(finishInteractor1);
-      
-        CookThisOrReRollView cookThisOrReRollView = new CookThisOrReRollView(cookThisOrReRollViewModel,reRollController,  cookThisController, favouriteThisController, finishController1, viewManagerModel);
+        SimpleRecipeFactoryInterface recipeFactory = new RecipeFactory();
+        GenerateRecipeDataAccessInterface generateRecipeAPI = new GenerateRecipeApi();
+        CookThisOrReRollViewModel cookThisOrReRollViewModel= new CookThisOrReRollViewModel();
+        // Create your GenerateRecipeOutputBoundary implementation
+        GenerateRecipeOutputBoundary generateRecipeOutputBoundary = new CookThisOrReRollPresenter(cookThisOrReRollViewModel,viewManagerModel);
+        GenerateRecipeInteractor generateRecipeInteractor = new GenerateRecipeInteractor(generateRecipeAPI,generateRecipeOutputBoundary, inMemoryDataAccessUser, recipeFactory);
+        // The data for the views, such as username and password, are in the ViewModels.
+        // This information will be changed by a presenter object that is reporting the
+        // results from the use case. The ViewModels are observable, and will
+        // be observed by the Views.
+//      These are need in multiple views that is why they are here and not in a factory.
+        CookThisOrReRollViewFactory cookThisOrReRollViewFactory= new CookThisOrReRollViewFactory();
+        CookThisOrReRollView cookThisOrReRollView = cookThisOrReRollViewFactory.createView( viewManagerModel, inMemoryDataAccessUser, recipeFactory, cookThisController, cookThisOrReRollViewModel, generateRecipeOutputBoundary);
         views.add(cookThisOrReRollView, cookThisOrReRollView.viewName);
 
-        FinishViewModel finishViewModel = new FinishViewModel();
-        FinishPresenter finishPresenter = new FinishPresenter(viewManagerModel,finishViewModel);
-        FinishInteractor finishInteractor = new FinishInteractor(finishPresenter);
-        FinishController finishController = new FinishController(finishInteractor);
-        ReturnToPreviousViewViewModel returnToPreviousViewViewModel = new ReturnToPreviousViewViewModel();
-        ReturnToPreviousViewPresenter returnToPreviousViewPresenter = new ReturnToPreviousViewPresenter(viewManagerModel,returnToPreviousViewViewModel);
-        ReturnToPreviousViewInteractor returnToPreviousViewInteractor = new ReturnToPreviousViewInteractor(returnToPreviousViewPresenter);
-        ReturnToPreviousViewController returnToPreviousViewController = new ReturnToPreviousViewController(returnToPreviousViewInteractor);
-        CookThisView cookThisView = new CookThisView(cookThisViewModel, finishController, returnToPreviousViewController);
+        CookThisView cookThisView = CookThisViewFactory.createView(viewManagerModel,cookThisViewModel);
         views.add(cookThisView, cookThisView.viewName);
-
+//      These are need in multiple views that is why they are here and not in a factory.
         RedirectToPreferenceViewModel redirectToPreferenceViewModel = new RedirectToPreferenceViewModel();
         RedirectToPreferencePresenter redirectToPreferencePresenter = new RedirectToPreferencePresenter(redirectToPreferenceViewModel,viewManagerModel);
         RedirectToPreferenceInteractor redirectToPreferenceInteractor = new RedirectToPreferenceInteractor(inMemoryDataAccessUser,redirectToPreferencePresenter);
         RedirectToPreferenceController redirectToPreferenceController = new RedirectToPreferenceController(redirectToPreferenceInteractor);
 
-        FinishViewModel finishViewModel2 = new FinishViewModel();
-        FinishPresenter finishPresenter2 = new FinishPresenter(viewManagerModel,finishViewModel2);
-        FinishInteractor finishInteractor2 = new FinishInteractor(finishPresenter2);
-        FinishController finishController2 = new FinishController(finishInteractor2);
-        
-        PreferenceViewModel preferenceViewModel = new PreferenceViewModel();
-        PreferencePresenter preferencePresenter = new PreferencePresenter(preferenceViewModel,viewManagerModel);
-        PreferenceInteractor preferenceInteractor = new PreferenceInteractor(inMemoryDataAccessUser,preferencePresenter);
-        PreferenceController preferenceController = new PreferenceController(preferenceInteractor);
-        PreferenceView preferenceView = new PreferenceView(preferenceViewModel,redirectToPreferenceViewModel,preferenceController ,finishController2 );
+
+        PreferenceView preferenceView = PreferenceViewFactory.createView(viewManagerModel,inMemoryDataAccessUser,redirectToPreferenceViewModel);
         views.add(preferenceView, preferenceView.viewName);
-        FinishViewModel finishViewModel3 = new FinishViewModel();
-        FinishPresenter finishPresenter3 = new FinishPresenter(viewManagerModel,finishViewModel3);
-        FinishInteractor finishInteractor3 = new FinishInteractor(finishPresenter3);
-        FinishController finishController3 = new FinishController(finishInteractor3);
+
+//      These are need in multiple views that is why they are here and not in a factory.
         FavViewViewModel favViewViewModel = new FavViewViewModel();
-        FavViewPresenter favViewPresenter = new FavViewPresenter(favViewViewModel,viewManagerModel);
         FavViewDataAccessInterface favViewDataAccessInterface = new FavRecipeCardApi();
+        FavViewPresenter favViewPresenter = new FavViewPresenter(favViewViewModel,viewManagerModel);
         FavViewInputBoundary favViewInteractor = new FavViewInteractor(favViewDataAccessInterface, favViewPresenter, inMemoryDataAccessUser );
         FavViewController favViewController = new FavViewController(favViewInteractor);
-        UnfavouriteThisPresenter unfavouriteThisPresenter = new UnfavouriteThisPresenter(favViewViewModel,viewManagerModel);
-        UnfavouriteThisInputBoundary unfavouriteThisInteractor = new UnfavouriteThisInteractor(favViewDataAccessInterface, inMemoryDataAccessUser, unfavouriteThisPresenter);
-        UnfavouriteThisController unfavouriteThisController = new UnfavouriteThisController(unfavouriteThisInteractor);
-        FavView favView = new FavView(favViewViewModel, finishController3,cookThisController, unfavouriteThisController);
+        FavView favView = FavViewFactory.createView(viewManagerModel,favViewViewModel,cookThisController, inMemoryDataAccessUser);
         views.add(favView, favView.viewName);
+
         GenerateRecipeController generateRecipeController = new GenerateRecipeController(generateRecipeInteractor);
         MainPageView mainPageView = new MainPageView(generateRecipeController,cookThisOrReRollViewModel,redirectToPreferenceController,favViewController,favViewViewModel);
         views.add(mainPageView, mainPageView.viewName);
