@@ -1,4 +1,5 @@
 ﻿**API KEY NOTE**
+ 
  The current code includes preconfigured APIs for simplicity during testing and code execution. 
  You can get your own API Key from Spoonacular by visiting https://spoonacular.com/food-api and signing up a free account to get a free API key. Once you've obtained your unique API key, you can easily replace the predefined APIs in the GenerateRecipeInteractor.java and FavViewInteractor.java files.
  
