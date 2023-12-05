@@ -18,9 +18,8 @@ Login:
 
 Main page:
 
-- The application will have a straightforward graphical user interface (GUI). It will show two prominent buttons: one for generating a random recipe and another for accessing their saved favorites. The favorite recipes will be categorized into breakfast, lunch, and dinner sections for easy navigation.
-- Other buttons includes Shopping which will send the user to a page where we organize and compare prices of ingredients of 4 (maybe more) supermarkets, and a setting button to change preferences, log out ,etc.
-- There will be a daily calorie count: calorie intake (information from the recipe generated)\ total daily calories
+- The application will have a straightforward graphical user interface (GUI). It will show 4 button: Generate Recipe, preference, favourite and signout 
+
 
 Generating recipe page:
 
