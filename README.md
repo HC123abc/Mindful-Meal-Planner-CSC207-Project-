@@ -9,11 +9,11 @@ Have you ever found yourself wondering what to cook, or wanting to try something
 
 **Overview**
 
-Our envisioned application is a user-friendly recipe generator. Users will begin by creating an account, signing in, or linking their Google account (if this is possible).
+Our envisioned application is a user-friendly recipe generator. Users will begin by creating an account, signing in.
 
 Login:
 
-- For new users, the app will prompt them to specify their food preferences, including preferred cuisines (such as Chinese, Italian, etc.), dietary goals (weight loss, weight gain, or don’t care), any allergies or dietary restrictions they may have, and good cooker or bad cooker.
+- For new users, they have to sign up creating a unique username and password has to be atleast 5 characters.
 - Existing users will be directed straight to the main page, where their previously set preferences will be loaded. Users will have the option to modify their preferences at any time through the settings.
 
 Main page:
@@ -23,5 +23,7 @@ Main page:
 
 Generating recipe page:
 
-- Upon clicking the "Generate Recipe" button, the application will retrieve the current time from the user's device using a relevant Java package (have to research this). This information will help in distinguishing for breakfast, lunch, or dinner. The application will then make an API call to either ChatGPT or a website with recipes to fetch a recipe. Then retrieved recipe will be shown to the user by a concise description of the dish, calories, and hopefully, an image for visual reference (if this is easy to do).
+- Upon clicking the "Generate Recipe" button. The application will then make an API call to a website with recipes to fetch a recipe. Then retrieved recipe will be shown to the user by a concise description of the dish, and hopefully, an image for visual reference.
 - Users will have the choice to either proceed with cooking the suggested recipe by clicking the "Cook This" button, or they can opt to re-roll for a different suggestion. If they choose to proceed, they will be directed to the detailed recipe page. Here, they will find a list of required ingredients and step-by-step instructions. A star button will be positioned in the bottom right corner, allowing users to save recipes in their favorites collection for future reference.
+- They can also favourite and unfavourite the recipe here.
+  
