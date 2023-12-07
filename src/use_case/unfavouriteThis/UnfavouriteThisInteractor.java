@@ -65,23 +65,4 @@ public class UnfavouriteThisInteractor implements UnfavouriteThisInputBoundary {
         return recipeToRemove;
     }
 
-
-    public Map<String, String> toMap(String title, String readyInMinutes, String servings, String summary,
-                                     String extendedIngredients, String extendedInstructions, String recipeImageURL,
-                                     String id, boolean isFavourite) {
-
-        Map<String, String> recipeDetailsMap = new HashMap<>();
-
-        recipeDetailsMap.put("title", title);
-        recipeDetailsMap.put("summary", summary);
-        recipeDetailsMap.put("servings", servings);
-        recipeDetailsMap.put("readyInMinutes", readyInMinutes);
-        recipeDetailsMap.put("recipeImageURL", recipeImageURL);
-        recipeDetailsMap.put("extendedIngredients", extendedIngredients);
-        recipeDetailsMap.put("extendedInstructions", extendedInstructions);
-        recipeDetailsMap.put("id", id);
-        recipeDetailsMap.put("isFavourite", Boolean.toString(isFavourite));
-
-        return recipeDetailsMap;
-    }
 }
