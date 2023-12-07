@@ -167,13 +167,13 @@ public class MainPageViewTest {
         MainPageView mainPageView = new MainPageView(generateRecipeController,cookThisOrReRollViewModel,redirectToPreferenceController,favViewController,favViewViewModel,logoutController);
 
         // Simulate clicks on buttons and check if the controller methods are called
-        JButton generateRecipeBtn = getButtonFromPanel(mainPageView, "Generate Recipe");
+        JButton generateRecipeBtn = getButtonFromPanel(mainPageView, "   Generate Recipe   ");
         generateRecipeBtn.doClick();;
 
-        JButton favouritesBtn = getButtonFromPanel(mainPageView, "Favourites");
+        JButton favouritesBtn = getButtonFromPanel(mainPageView, "   Favourites   ");
         favouritesBtn.doClick();
 
-        JButton preferencesBtn = getButtonFromPanel(mainPageView, "Preferences");
+        JButton preferencesBtn = getButtonFromPanel(mainPageView, "   Preferences   ");
         preferencesBtn.doClick();
     }
 
