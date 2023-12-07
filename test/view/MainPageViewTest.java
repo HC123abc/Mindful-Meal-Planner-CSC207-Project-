@@ -58,7 +58,7 @@ import javax.swing.*;
 
 import java.awt.*;
 
-
+//button tests work for windows, may not work for mac os: sample size 1
 public class MainPageViewTest {
 
     @Test
@@ -167,6 +167,7 @@ public class MainPageViewTest {
         MainPageView mainPageView = new MainPageView(generateRecipeController,cookThisOrReRollViewModel,redirectToPreferenceController,favViewController,favViewViewModel,logoutController);
 
         // Simulate clicks on buttons and check if the controller methods are called
+        // Tests work on windows, may not work on mac for buttons (refer to above)
         JButton generateRecipeBtn = getButtonFromPanel(mainPageView, "   Generate Recipe   ");
         generateRecipeBtn.doClick();;
 
