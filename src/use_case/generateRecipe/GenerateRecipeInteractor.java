@@ -34,7 +34,7 @@ public class GenerateRecipeInteractor implements GenerateRecipeInputBoundary {
 //  the input data will be formatted as a string so we can just add it to the query when we call the API call
         String tags = preference.getTags();
         String intolerances = preference.getIntolerances();
-        String apiKey = "d6d8b743e3fd4afeac18d54cef0e21ff";
+        String apiKey = "a4f06a8b4e114ba3bd568fc678e095df";
         JSONObject recipeJSON = generateRecipeAPI.getRecipes(apiKey,tags, intolerances,20);
         if (recipeJSON == null){
 //          prepare fail view
